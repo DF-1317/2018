@@ -6,6 +6,8 @@ import java.util.*;
 import com.fasterxml.jackson.jr.ob.JSON;
 import com.fasterxml.jackson.jr.ob.JSONObjectException;
 
+//This class is the class that was used last year to retrieve messages from the Raspberry Pi.
+//The Raspberry Pi processed images from the camera and sent information to the RoboRIO
 class PacketReader {
 	
 	DatagramSocket serverSocket;
