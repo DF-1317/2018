@@ -14,6 +14,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	WPI_TalonSRX BRMotor;
 
 	public MecanumDriveTrainCAN() {
+		super();
 		FLMotor = new WPI_TalonSRX(RobotMap.FLMotorPort);
 		FRMotor = new WPI_TalonSRX(RobotMap.FRMotorPort);
 		BLMotor = new WPI_TalonSRX(RobotMap.BLMotorPort);
