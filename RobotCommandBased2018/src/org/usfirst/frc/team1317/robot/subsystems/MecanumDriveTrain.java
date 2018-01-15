@@ -27,10 +27,15 @@ public class MecanumDriveTrain extends Subsystem {
 	{
 		
 	}
+	
+	//set up the DriveTrain class with the motor controllers.
+	//The inheriting classes choose a specific type of SpeedController
 	public void Initialize(SpeedController FLMotor, SpeedController FRMotor, SpeedController BLMotor, SpeedController BRMotor) {
 		//set up the drive train
 		DriveTrain = new MecanumDrive(FLMotor, BLMotor, FRMotor, BRMotor);
 	}
+	
+	//basically these methods just let the methods from the MecanumDrive to be used from this class.
 	public void driveCartesian(double ySpeed, double xSpeed, double zRotation)
 	{
 		DriveTrain.driveCartesian(ySpeed, xSpeed, zRotation);

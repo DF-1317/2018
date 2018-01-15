@@ -22,7 +22,9 @@ public class OI {
 	// Joystick stick = new Joystick(port);
 	// Button button = new JoystickButton(stick, buttonNumber);
 	
+	//the first joystick from the left is the joystick used for turning the robot
 	public static final Joystick TurnJoystick = new Joystick(1);
+	//the second joystick from the left is the joystick used for moving the robot
 	public static final Joystick MoveJoystick = new Joystick(2);
 	
 	

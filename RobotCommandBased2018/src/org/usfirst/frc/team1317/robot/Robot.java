@@ -23,10 +23,12 @@ import org.usfirst.frc.team1317.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
+	//a class that represents the robot's drivetrain
 	public static final MecanumDriveTrain mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
 	public static OI m_oi;
 
+	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -54,6 +56,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		//Automatically runs the scheduler (which runs the commands)
 		Scheduler.getInstance().run();
 	}
 
@@ -90,6 +93,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		//runs commands during autonomous
 		Scheduler.getInstance().run();
 	}
 
@@ -109,6 +113,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		//runs commands during teleop
 		Scheduler.getInstance().run();
 	}
 

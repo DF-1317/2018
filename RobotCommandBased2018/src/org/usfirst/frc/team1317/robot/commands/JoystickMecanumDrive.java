@@ -17,19 +17,24 @@ import org.usfirst.frc.team1317.robot.Robot;
  */
 public class JoystickMecanumDrive extends Command {
 	public JoystickMecanumDrive() {
-		// Use requires() here to declare subsystem dependencies
+		//set up the base class
 		super("JoystickMecanumDrive");
+		//this command requires the mecanum drive train
 		requires(Robot.mecanumDriveTrain);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		//this command can be interrupted
+		setInterruptible(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		//the "MoveJoystick" causes the robot to move forward, backward, right, and left
+		//the "TurnJoystick" causes the robot to turn when the joystick is moved left and right
 		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getY(), OI.MoveJoystick.getX(), OI.TurnJoystick.getX());
 	}
 
@@ -42,6 +47,7 @@ public class JoystickMecanumDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		//stop the drive train from moving when the command is over
 		Robot.mecanumDriveTrain.stop();
 	}
 
@@ -49,6 +55,7 @@ public class JoystickMecanumDrive extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		//stops the drive train from moving when the command is interrupted
 		Robot.mecanumDriveTrain.stop();
 	}
 }

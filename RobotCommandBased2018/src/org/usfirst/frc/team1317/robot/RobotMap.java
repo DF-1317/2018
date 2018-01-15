@@ -16,7 +16,7 @@ package org.usfirst.frc.team1317.robot;
 public class RobotMap {
 	
 
-	//Drive train motors
+	//The ports for the drive train motors
 	public static int FLMotorPort = 2;
 	public static int FRMotorPort = 1;
 	public static int BLMotorPort = 4;
