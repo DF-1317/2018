@@ -35,7 +35,8 @@ public class PIDTurning implements PIDOutput {
 		turnController.setAbsoluteTolerance(kToleranceDegrees);
 		turnController.setContinuous(true);
 		TurnRate = 0.0;
-		LiveWindow.addActuator("Drive System", "Rotate Contoller", turnController);
+		turnController.setName("Drive System", "Rotate Controller");
+		LiveWindow.add(turnController);
 	}
 	
 	public Boolean TurnToDegrees(double degrees, double speed)

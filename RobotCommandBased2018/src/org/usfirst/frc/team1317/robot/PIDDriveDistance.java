@@ -30,7 +30,8 @@ public class PIDDriveDistance implements PIDOutput, PIDSource {
 		moveController.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
 		moveController.setOutputRange(-1.0, 1.0);
 		moveController.setContinuous(false);
-		LiveWindow.addActuator("Drive System", "Distance Contoller", moveController);
+		moveController.setName("Drive System", "Distance Controller");
+		LiveWindow.add(moveController);
 	}
 	
 	public Boolean driveForward(double distance, double speed, double heading)
