@@ -23,9 +23,11 @@ public class OI {
 	// Button button = new JoystickButton(stick, buttonNumber);
 	
 	//the first joystick from the left is the joystick used for turning the robot
-	public static final Joystick TurnJoystick = new Joystick(1);
+	public static final Joystick TurnJoystick = new Joystick(RobotMap.TurnJoystickPort);
 	//the second joystick from the left is the joystick used for moving the robot
-	public static final Joystick MoveJoystick = new Joystick(2);
+	public static final Joystick MoveJoystick = new Joystick(RobotMap.MoveJoystickPort);
+	//the third joystick from the left is the other joystick
+	public static final Joystick OtherJoystick = new Joystick(RobotMap.OtherJoystickPort);
 	
 	
 

@@ -8,9 +8,7 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj.drive.*;
-import org.usfirst.frc.team1317.robot.*;
 import org.usfirst.frc.team1317.robot.commands.JoystickMecanumDrive;
 
 import edu.wpi.first.wpilibj.*;
