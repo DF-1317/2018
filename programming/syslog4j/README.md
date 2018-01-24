@@ -5,15 +5,15 @@ For lots of info, [you want to visit their site](http://www.syslog4j.org)
 
 This is a copy taken from github that someone had on their account.
 To build this, use the command:
-'''bash
+```bash
 mvn install
-'''
+```
 
 This will put the artifact jar into your local repository.
 
 ## Testing
 The build does lots of testing. If they pass for the most part, but a few do not, your install may not work.
 I those cases do:
-'''bash
+```bash
 mvn -DskipTests install
-'''
+```
