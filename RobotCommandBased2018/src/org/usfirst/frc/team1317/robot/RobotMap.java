@@ -39,7 +39,8 @@ public class RobotMap {
 	public static int BRMotorEncoderPort2 = 7;
 	
 	public static int DriveTrainPistonPort = 0;
-	
+	public static int ClawPistonPort1 = 1;
+	public static int ClawPistonPort2 = 2;
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
