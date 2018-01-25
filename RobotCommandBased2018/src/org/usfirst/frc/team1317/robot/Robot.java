@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
 	//a class that represents the robot's drivetrain
 	public static final MecanumDriveTrainCAN mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
+	public static final Claw claw = new Claw();
 	public static OI m_oi;
 	public static final Elevator el = new Elevator();
 
@@ -119,6 +120,10 @@ public class Robot extends TimedRobot {
 		if(OI.MoveJoystick.getRawButtonPressed(1))
 		{
 			mecanumDriveTrain.ToggleTractionWheels();
+		}
+		if(OI.OtherJoystick.getRawButtonPressed(1))
+		{
+			claw.ToggleClaw();
 		}
 	}
 
