@@ -24,7 +24,7 @@ import org.usfirst.frc.team1317.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 	//a class that represents the robot's drivetrain
-	public static final MecanumDriveTrain mecanumDriveTrain
+	public static final MecanumDriveTrainCAN mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
 	public static OI m_oi;
 
@@ -115,6 +115,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		//runs commands during teleop
 		Scheduler.getInstance().run();
+		if(OI.MoveJoystick.getRawButtonPressed(1))
+		{
+			mecanumDriveTrain.ToggleTractionWheels();
+		}
 	}
 
 	/**
