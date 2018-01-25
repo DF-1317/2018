@@ -120,6 +120,7 @@ public class Robot extends TimedRobot {
 		{
 			mecanumDriveTrain.ToggleTractionWheels();
 		}
+		el.PrintEncoderPulses();
 	}
 
 	/**
