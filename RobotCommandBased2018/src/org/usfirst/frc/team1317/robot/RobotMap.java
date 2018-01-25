@@ -22,6 +22,8 @@ public class RobotMap {
 	public static int BLMotorPort = 4;
 	public static int BRMotorPort = 3;
 	
+	public static int ElevatorPort = 5;
+	
 	//joystick ports
 	public static int MoveJoystickPort = 2;
 	public static int TurnJoystickPort = 1;
@@ -37,6 +39,7 @@ public class RobotMap {
 	public static int BRMotorEncoderPort2 = 7;
 	
 	public static int DriveTrainPistonPort = 0;
+	
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

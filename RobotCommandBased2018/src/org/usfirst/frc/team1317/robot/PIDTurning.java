@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1317.robot.subsystems.*;
-import java.lang.Math;
 import com.kauailabs.navx.frc.AHRS;
 
 

@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
 	public static final MecanumDriveTrainCAN mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
 	public static OI m_oi;
+	public static final Elevator el = new Elevator();
 
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
