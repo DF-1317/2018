@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -21,13 +22,23 @@ public class Elevator extends Subsystem {
 		super();
 		// set up elevator motor
 		ElevatorMotor = new WPI_TalonSRX(RobotMap.ElevatorPort);
+		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPort1, RobotMap.ElevatorMotorEncoderPort2);
 		// Just in case
 		ElevatorMotor.setInverted(false);
 		
 	}
 	
+	public void PrintEncoderPulses() {
+		
+		SmartDashboard.putNumber("Elevator Position", ElevatorEncoder.get());
+	}
+	
 	public void move(double speed) {
 		ElevatorMotor.set(speed);
+	}
+	
+	public double getPosition() {
+		return ElevatorEncoder.get();
 	}
 
     public void initDefaultCommand() {

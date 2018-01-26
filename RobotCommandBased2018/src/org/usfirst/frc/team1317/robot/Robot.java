@@ -121,6 +121,9 @@ public class Robot extends TimedRobot {
 		{
 			mecanumDriveTrain.toggleTractionWheels();
 		}
+		
+		el.PrintEncoderPulses();
+
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
 			claw.toggleClaw();

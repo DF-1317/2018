@@ -37,6 +37,8 @@ public class RobotMap {
 	public static int BLMotorEncoderPort2 = 5;
 	public static int BRMotorEncoderPort1 = 6;
 	public static int BRMotorEncoderPort2 = 7;
+	public static int ElevatorMotorEncoderPort1 = 8;
+	public static int ElevatorMotorEncoderPort2 = 9;
 	
 	public static int DriveTrainPistonPort = 0;
 	public static int ClawPistonPort1 = 1;
