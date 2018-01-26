@@ -3,13 +3,13 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import com.fasterxml.jackson.jr.ob.JSON;
-import com.fasterxml.jackson.jr.ob.JSONObjectException;
+//import com.fasterxml.jackson.jr.ob.JSON;
+//import com.fasterxml.jackson.jr.ob.JSONObjectException;
 
 //This class is the class that was used last year to retrieve messages from the Raspberry Pi.
 //The Raspberry Pi processed images from the camera and sent information to the RoboRIO
 class PacketReader {
-	
+/*	
 	DatagramSocket serverSocket;
 	byte[] rData;
 	
@@ -47,7 +47,7 @@ class PacketReader {
 				c = JSON.std.mapFrom(msg);
 				System.out.println(c);
 			}
-			catch (SocketTimeoutException e){/*System.out.println("Did not receive packet within time period");*/}
+			catch (SocketTimeoutException e){System.out.println("Did not receive packet within time period");}
 			catch (JSONObjectException e)
 			{
 				e.printStackTrace();
@@ -60,5 +60,5 @@ class PacketReader {
 			return c;
 		}
 		else return null;
-	}
+	}*/
   }
