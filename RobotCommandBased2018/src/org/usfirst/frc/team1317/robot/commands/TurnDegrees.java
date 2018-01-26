@@ -27,7 +27,7 @@ public class TurnDegrees extends Command {
 	@Override
 	protected void execute()
 	{
-		done = turner.TurnDegrees(degrees, speed);
+		done = turner.turnDegrees(degrees, speed);
 	}
 	
 	@Override

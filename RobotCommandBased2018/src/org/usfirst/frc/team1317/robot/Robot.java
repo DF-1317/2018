@@ -119,11 +119,11 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		if(OI.MoveJoystick.getRawButtonPressed(1))
 		{
-			mecanumDriveTrain.ToggleTractionWheels();
+			mecanumDriveTrain.toggleTractionWheels();
 		}
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
-			claw.ToggleClaw();
+			claw.toggleClaw();
 		}
 	}
 

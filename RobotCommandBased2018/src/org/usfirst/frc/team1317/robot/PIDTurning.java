@@ -38,7 +38,7 @@ public class PIDTurning implements PIDOutput {
 		LiveWindow.add(turnController);
 	}
 	
-	public Boolean TurnToDegrees(double degrees, double speed)
+	public Boolean turnToDegrees(double degrees, double speed)
 	{
 		turnController.setSetpoint(degrees);
 		turnController.enable();
@@ -55,7 +55,7 @@ public class PIDTurning implements PIDOutput {
 		}
 	}
 	
-	public Boolean TurnDegrees(double degrees, double speed)
+	public Boolean turnDegrees(double degrees, double speed)
 	{
 		if(firstTime == true)
 		{

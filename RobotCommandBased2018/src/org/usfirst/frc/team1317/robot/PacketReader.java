@@ -18,7 +18,7 @@ class PacketReader {
 		rData = new byte[1024];
 	}
 	
-	public void InitializeSocket()
+	public void initializeSocket()
 	{
 		try {
 			serverSocket = new DatagramSocket(5800);
@@ -33,7 +33,7 @@ class PacketReader {
 	{
 		if(serverSocket == null)
 		{
-			InitializeSocket();
+			initializeSocket();
 		}
 		if(serverSocket != null)
 		{

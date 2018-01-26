@@ -46,7 +46,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
 	}
 	
-	public void PrintEncoderPulses()
+	public void printEncoderPulses()
 	{
 		System.out.println("FL: " + FLEncoder.get());
 		SmartDashboard.putNumber("FL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
@@ -55,17 +55,18 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		System.out.println("BL: " + BLEncoder.get());
 		System.out.println("BR: " + BREncoder.get());
 	}
+
 	
-	public void LowerTractionWheels()
+	public void lowerTractionWheels()
 	{
 		Piston.set(true);
 	}
-	public void RaiseTractionWheels()
+	public void raiseTractionWheels()
 	{
 		Piston.set(false);
 	}
 	
-	public void ToggleTractionWheels()
+	public void toggleTractionWheels()
 	{
 		Piston.set(!Piston.get());
 	}

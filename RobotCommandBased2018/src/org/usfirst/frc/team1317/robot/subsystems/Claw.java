@@ -23,23 +23,23 @@ public class Claw extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public void OpenClaw()
+	public void openClaw()
 	{
 		ClawPiston.set(Value.kForward);
 	}
 	
-	public void CloseClaw()
+	public void closeClaw()
 	{
 		ClawPiston.set(Value.kReverse);
 	}
 	
-	public void RelaxClaw()
+	public void relaxClaw()
 	{
 		LastValue = ClawPiston.get();
 		ClawPiston.set(Value.kOff);
 	}
 	
-	public void ToggleClaw()
+	public void toggleClaw()
 	{
 		if(ClawPiston.get() == Value.kForward)
 		{
