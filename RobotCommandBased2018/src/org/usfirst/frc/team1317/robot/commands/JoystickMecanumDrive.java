@@ -35,7 +35,7 @@ public class JoystickMecanumDrive extends Command {
 	protected void execute() {
 		//the "MoveJoystick" causes the robot to move forward, backward, right, and left
 		//the "TurnJoystick" causes the robot to turn when the joystick is moved left and right
-		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getY(), OI.MoveJoystick.getX(), OI.TurnJoystick.getX());
+		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX(), OI.TurnJoystick.getX(), -OI.MoveJoystick.getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
