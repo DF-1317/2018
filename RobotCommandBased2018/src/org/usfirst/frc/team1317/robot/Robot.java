@@ -135,5 +135,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		if(OI.MoveJoystick.getRawButton(5)) {
+			mecanumDriveTrain.FLMotor.set(0.3);
+		} else if(OI.MoveJoystick.getRawButton(6)) {
+			mecanumDriveTrain.FRMotor.set(0.3);
+		} else if(OI.MoveJoystick.getRawButton(3)) {
+			mecanumDriveTrain.BLMotor.set(0.3);
+		} else if(OI.MoveJoystick.getRawButton(4)) {
+			mecanumDriveTrain.BRMotor.set(0.3);
+		} else {
+			mecanumDriveTrain.stop();
+		}
 	}
 }

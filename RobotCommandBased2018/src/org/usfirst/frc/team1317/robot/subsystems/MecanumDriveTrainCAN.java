@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	// creates objects representing the Motor Controllers at the right ports
-	WPI_TalonSRX FLMotor;
-	WPI_TalonSRX FRMotor;
-	WPI_TalonSRX BLMotor;
-	WPI_TalonSRX BRMotor;
+	public WPI_TalonSRX FLMotor;
+	public WPI_TalonSRX FRMotor;
+	public WPI_TalonSRX BLMotor;
+	public WPI_TalonSRX BRMotor;
 	
 	//encoders
 	Encoder FLEncoder;
@@ -28,10 +28,12 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		FLMotor = new WPI_TalonSRX(RobotMap.FLMotorPort);
 		FRMotor = new WPI_TalonSRX(RobotMap.FRMotorPort);
 		BLMotor = new WPI_TalonSRX(RobotMap.BLMotorPort);
-		BRMotor = new WPI_TalonSRX(RobotMap.FRMotorPort);
+		BRMotor = new WPI_TalonSRX(RobotMap.BRMotorPort);
 		// Some of the motors need to be told the other direction is forward
-		FRMotor.setInverted(true);
 		BRMotor.setInverted(true);
+		FLMotor.setInverted(false);
+		BLMotor.setInverted(false);
+		FRMotor.setInverted(true);
 		// set up base class
 		Initialize(FLMotor,FRMotor,BLMotor,BRMotor);
 		//set up the encoders
