@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team1317.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,7 +30,8 @@ public class Robot extends TimedRobot {
 	public static final Claw claw = new Claw();
 	public static OI m_oi;
 	public static final Elevator el = new Elevator();
-
+	public AnalogInput Ultrasonic = new AnalogInput(0);
+	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -123,11 +125,16 @@ public class Robot extends TimedRobot {
 		}
 		
 		el.PrintEncoderPulses();
+		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getValue()*5);
 
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
 			claw.toggleClaw();
 		}
+		
+		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
+		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
+		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 	}
 
 	/**
