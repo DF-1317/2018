@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		el.PrintEncoderPulses();
-		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getValue()*5);
+		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getVoltage()*5/(4.88/1000));
 
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
