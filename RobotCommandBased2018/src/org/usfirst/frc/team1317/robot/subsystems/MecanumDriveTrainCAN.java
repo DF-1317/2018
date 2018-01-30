@@ -3,7 +3,9 @@ package org.usfirst.frc.team1317.robot.subsystems;
 import org.usfirst.frc.team1317.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.kauailabs.navx.frc.*;
 
 public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	// creates objects representing the Motor Controllers at the right ports
@@ -19,7 +21,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	Encoder BREncoder;
 	
 	Solenoid Piston;
-
+	
+	AHRS navX = new AHRS(Port.kMXP);
+	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
+	
 	final double distancePerPulse = 2;
 	
 	public MecanumDriveTrainCAN() {
@@ -56,6 +61,16 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		System.out.println("FR: " + FREncoder.get());
 		System.out.println("BL: " + BLEncoder.get());
 		System.out.println("BR: " + BREncoder.get());
+	}
+	
+	public void printAnalogGyroOutput()
+	{
+		SmartDashboard.putNumber("Analog Gyro", gyro.getAngle());
+	}
+	
+	public void printNavXYawOutput()
+	{
+		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
 	}
 
 	

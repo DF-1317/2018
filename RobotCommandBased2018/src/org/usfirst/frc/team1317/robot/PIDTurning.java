@@ -89,7 +89,7 @@ public class PIDTurning implements PIDOutput {
 	}
 
 	public void stop() {
-		DriveTrain.driveCartesian(0.0, 0.0, 0.0);
+		DriveTrain.stop();;
 	}
 
 }

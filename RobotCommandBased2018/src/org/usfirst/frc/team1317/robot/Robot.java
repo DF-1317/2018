@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
 	public static final Claw claw = new Claw();
 	public static OI m_oi;
 	public static final Elevator el = new Elevator();
+	
 	public AnalogInput Ultrasonic = new AnalogInput(0);
 	
 	//a command that tells the robot what to do in autonomous
