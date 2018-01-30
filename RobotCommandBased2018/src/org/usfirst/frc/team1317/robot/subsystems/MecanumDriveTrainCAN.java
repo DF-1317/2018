@@ -3,6 +3,7 @@ package org.usfirst.frc.team1317.robot.subsystems;
 import org.usfirst.frc.team1317.robot.PIDTurning;
 import org.usfirst.frc.team1317.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -61,13 +62,18 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
 		
 		turning = new PIDTurning(this, navX);
+
+		FLMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		FLMotor.setSensorPhase(true);
+		FRMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		FRMotor.setSensorPhase(true);
 	}
 	
 	public void printEncoderPulses()
 	{
 		System.out.println("FL: " + FLEncoder.get());
 		SmartDashboard.putNumber("FL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("FL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
+		SmartDashboard.putNumber("FR Sensor Velocity", FRMotor.getSensorCollection().getQuadratureVelocity());
 		System.out.println("FR: " + FREncoder.get());
 		System.out.println("BL: " + BLEncoder.get());
 		System.out.println("BR: " + BREncoder.get());
