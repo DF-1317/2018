@@ -22,6 +22,7 @@ public class DriveInches extends Command {
 	WPI_TalonSRX FRMotor;
 	
     public DriveInches(double inches, double speed) {
+    	super("DriveInches");
         requires(Robot.mecanumDriveTrain);
         rotations = inches / WHEEL_CIRCUMFERENCE;
         targetPos = TICKS_PER_REVOLUTION * rotations;
@@ -33,6 +34,7 @@ public class DriveInches extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     	Robot.mecanumDriveTrain.BRMotor.follow(FRMotor);
     	Robot.mecanumDriveTrain.BLMotor.follow(FLMotor);
     	int intSpeed = (int) Math.round(speed);

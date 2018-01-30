@@ -21,6 +21,7 @@ public class PositionElevator extends Command {
 	boolean finished = false;
 	
     public PositionElevator(int target) {
+    	super("Position Elevator");
         requires(Robot.el);
         setInterruptible(true);
         if(target == 0) {
