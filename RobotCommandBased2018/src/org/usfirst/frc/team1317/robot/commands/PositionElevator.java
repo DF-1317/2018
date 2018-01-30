@@ -13,11 +13,11 @@ public class PositionElevator extends Command {
 	
 	double currentPosition;
 	final double SPEED = 1;
-	final double BOTTOM_POS = 0;
-	final double TOP_POS = 10;
-	final double SWITCH_POS = 3;
-	final float ERROR = 0.1F;
-	double target;
+	final int BOTTOM_POS = 0;
+	final int TOP_POS = 1000;
+	final int SWITCH_POS = 300;
+	final int ERROR = 10;
+	int target;
 	boolean finished = false;
 	
     public PositionElevator(int target) {

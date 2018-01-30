@@ -9,10 +9,11 @@ public class TurnDegrees extends Command {
 	double degrees = 0;
 	double speed = 1.0;
 	boolean done = false;
-	public TurnDegrees(PIDTurning turning, double degrees, double speed)
+	public TurnDegrees(double degrees, double speed)
 	{
 		super("TurnDegrees");
-		turner=turning;
+		requires(Robot.mecanumDriveTrain);
+		turner = Robot.mecanumDriveTrain.turning;
 		this.degrees = degrees;
 		this.speed = speed;
 		setInterruptible(true);
