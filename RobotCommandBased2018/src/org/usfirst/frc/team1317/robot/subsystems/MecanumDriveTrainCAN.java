@@ -1,11 +1,16 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
+import org.usfirst.frc.team1317.robot.PIDTurning;
 import org.usfirst.frc.team1317.robot.RobotMap;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.*;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.kauailabs.navx.frc.*;
 
 public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	// creates objects representing the Motor Controllers at the right ports
@@ -21,6 +26,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	Encoder BREncoder;
 	
 	Solenoid Piston;
+	
+	public PIDTurning turning;
 	
 	AHRS navX = new AHRS(Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
@@ -50,7 +57,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		FREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setDistancePerPulse(distancePerPulse);
 		BREncoder.setDistancePerPulse(distancePerPulse);
+		
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
+		
+		turning = new PIDTurning(this, navX);
 	}
 	
 	public void printEncoderPulses()
