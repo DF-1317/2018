@@ -24,6 +24,18 @@ public class Arm extends Subsystem {
 	public void move(double speed) {
 		ArmMotor.set(speed);
 	}
+	
+	public boolean topSwitchPressed() {
+		return ArmMotor.getSensorCollection().isFwdLimitSwitchClosed();
+	}
+	
+	public boolean bottomSwitchPressed() {
+		return ArmMotor.getSensorCollection().isRevLimitSwitchClosed();
+	}
+	
+	public double getArmSpeed() {
+		return ArmMotor.get();
+	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

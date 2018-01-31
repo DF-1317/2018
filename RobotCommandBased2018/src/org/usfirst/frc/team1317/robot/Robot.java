@@ -133,6 +133,7 @@ public class Robot extends TimedRobot {
 		{
 			claw.toggleClaw();
 		}
+		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());

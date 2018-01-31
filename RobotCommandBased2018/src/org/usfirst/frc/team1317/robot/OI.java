@@ -8,6 +8,8 @@
 package org.usfirst.frc.team1317.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,12 +24,16 @@ public class OI {
 	// Joystick stick = new Joystick(port);
 	// Button button = new JoystickButton(stick, buttonNumber);
 	
+	
+	
 	//the first joystick from the left is the joystick used for turning the robot
 	public static final Joystick TurnJoystick = new Joystick(RobotMap.TurnJoystickPort);
 	//the second joystick from the left is the joystick used for moving the robot
 	public static final Joystick MoveJoystick = new Joystick(RobotMap.MoveJoystickPort);
 	//the third joystick from the left is the other joystick
 	public static final Joystick OtherJoystick = new Joystick(RobotMap.OtherJoystickPort);
+	
+	public static final Button toggleArmButton = new JoystickButton(OtherJoystick, 2);
 	
 	
 
