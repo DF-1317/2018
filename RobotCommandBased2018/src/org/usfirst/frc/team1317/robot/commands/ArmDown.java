@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1317.robot.commands;
 
+import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.subsystems.Arm;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArmDown extends Command {
 
-	// Arm arm;
+	Arm arm;
 
     public ArmDown() {
         super("ArmDown");
-        // requires(Robot.arm);
-        // arm = Robot.arm;
+        requires(Robot.arm);
+        arm = Robot.arm;
         setInterruptible(true);   
     }
 

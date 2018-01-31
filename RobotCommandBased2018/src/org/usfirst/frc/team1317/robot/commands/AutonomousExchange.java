@@ -13,9 +13,9 @@ public class AutonomousExchange extends CommandGroup {
     	addSequential(new TurnDegrees(90, 0.3));
     	addSequential(new DriveInches(EXCHANGE_DIST_FROM_LEFT - distanceFromLeftEdge, 30));
     	addSequential(new TurnDegrees(90, 0.3));
-    	// Deploy arm
+    	addSequential(new ArmDown());
     	addSequential(new DriveInches(16, 10));
-    	// Open arm
+    	addSequential(new ClawOpen());
     	addSequential(new DriveInches(-16, 10));
     }
 }
