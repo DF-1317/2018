@@ -11,13 +11,13 @@ public class UltrasonicHRLVMaxSonar extends SensorBase {
 		sensor = new AnalogInput(port);
 	}
 	
-	public double getdistancemm() {
+	public double getRangeMM() {
 		return sensor.getVoltage()*5/(4.88/1000);
 	}
 
 	@Override
 	public void initSendable(SendableBuilder builder) {
-		// TODO Auto-generated method stub
-		
+		builder.setSmartDashboardType("Ultrasonic");
+	    builder.addDoubleProperty("Value", this::getRangeMM, null);
 	}
 }
