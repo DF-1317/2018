@@ -88,7 +88,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	{
 		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
 	}
-
+	
+	public void zeroGyro() {
+		navX.zeroYaw();
+	}
 	
 	public void lowerTractionWheels()
 	{
