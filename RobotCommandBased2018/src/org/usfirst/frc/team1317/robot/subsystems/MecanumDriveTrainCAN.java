@@ -14,6 +14,12 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MecanumDriveTrainCAN extends MecanumDriveTrain {
+	
+	
+	public static final int TICKS_PER_REVOLUTION = 4096;
+	public static final double WHEEL_CIRCUMFERENCE = 19;
+	
+	
 	// creates objects representing the Motor Controllers at the right ports
 	public WPI_TalonSRX FLMotor;
 	public WPI_TalonSRX FRMotor;
@@ -73,7 +79,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	{
 		System.out.println("FL: " + FLEncoder.get());
 		SmartDashboard.putNumber("FL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("FR Sensor Velocity", FRMotor.getSensorCollection().getQuadratureVelocity());
+		SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("FL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
+		SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
+		SmartDashboard.putNumber("FL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
 		System.out.println("FR: " + FREncoder.get());
 		System.out.println("BL: " + BLEncoder.get());
 		System.out.println("BR: " + BREncoder.get());
@@ -88,7 +97,12 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	{
 		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
 	}
-
+	
+	public void resetEncoderDistance()
+	{
+		FLMotor.setSelectedSensorPosition(0,0,0);
+    	FRMotor.setSelectedSensorPosition(0,0,0);
+	}
 	
 	public void lowerTractionWheels()
 	{

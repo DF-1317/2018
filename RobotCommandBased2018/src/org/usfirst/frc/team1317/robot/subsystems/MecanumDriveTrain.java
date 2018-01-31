@@ -14,7 +14,7 @@ import org.usfirst.frc.team1317.robot.commands.JoystickMecanumDrive;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * 
  */
 public class MecanumDriveTrain extends Subsystem {
 
