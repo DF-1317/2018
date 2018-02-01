@@ -88,14 +88,23 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = new AutonomousForward();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		String mode = m_chooser.getSelected();
+		int position = positionChooser.getSelected();
+		boolean crossCourt = crossChooser.getSelected();
+		double delay = SmartDashboard.getNumber("Delay", 0);
+		
+		if(mode == "Forward") {
+			m_autonomousCommand = new AutonomousForward(delay);
+		}
+		else if(mode == "Switch") {
+			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossCourt, delay);
+		}
+		else if(mode == "Scale") {
+			m_autonomousCommand = new AutonomousScale(GameData, position, crossCourt, delay);
+		}
+		else if(mode == "Exchange") {
+			m_autonomousCommand = new AutonomousExchange(position, delay);
+		}
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

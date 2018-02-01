@@ -5,11 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousForward extends CommandGroup {
+public class AutonomousSwitch extends CommandGroup {
 
-    public AutonomousForward(double delay) {
-    	addSequential(new Wait(delay));
-    	addSequential(new DriveInches(100, 30));
+    public AutonomousSwitch(String plateLocations, int startingPosition, boolean crossCourt, double delay) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
