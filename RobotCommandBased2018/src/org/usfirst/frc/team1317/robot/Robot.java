@@ -129,6 +129,7 @@ public class Robot extends TimedRobot {
 			mecanumDriveTrain.zeroGyro();
 		}
 		
+		mecanumDriveTrain.printNavXYawOutput();
 		el.PrintEncoderPulses();
 		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getVoltage()*5/(4.88/1000));
 

@@ -17,7 +17,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	
 	
 	public static final int TICKS_PER_REVOLUTION = 4096;
-	public static final double WHEEL_CIRCUMFERENCE = 19;
+	public static final double WHEEL_CIRCUMFERENCE = 6*Math.PI;
 	
 	
 	// creates objects representing the Motor Controllers at the right ports
