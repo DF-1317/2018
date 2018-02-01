@@ -102,6 +102,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	{
 		FLMotor.setSelectedSensorPosition(0,0,0);
     	FRMotor.setSelectedSensorPosition(0,0,0);
+	}
 
 	public void zeroGyro() {
 		navX.zeroYaw();
