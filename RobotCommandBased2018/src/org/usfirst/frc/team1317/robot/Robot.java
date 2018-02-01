@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
 	Command m_autonomousCommand;
 	SendableChooser<String> m_chooser = new SendableChooser<>();
 	SendableChooser<Integer> positionChooser = new SendableChooser<>();
+	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -56,6 +57,17 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		positionChooser.addObject("Far Left", 0);
+		positionChooser.addObject("Left", 1);
+		positionChooser.addObject("Center", 2);
+		positionChooser.addObject("Right", 3);
+		positionChooser.addObject("Far Right", 4);
+		SmartDashboard.putData("Position", positionChooser);
+		
+		crossChooser.addObject("Front", true);
+		crossChooser.addObject("Behind", false);
+		SmartDashboard.putData("Cross", crossChooser);
+		
+		SmartDashboard.getNumber("Delay", 0);
 	}
 
 	/**
