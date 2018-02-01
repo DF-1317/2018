@@ -100,12 +100,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		if(GameData == ""||GameData == null)
+			GameData = DriverStation.getInstance().getGameSpecificMessage();
 		String mode = m_chooser.getSelected();
 		int position = positionChooser.getSelected();
 		boolean crossCourt = crossChooser.getSelected();
 		double delay = SmartDashboard.getNumber("Delay", 0);
 		
-		if(mode == "Forward") {
+		if(mode == "Forward"||GameData =="") {
 			m_autonomousCommand = new AutonomousForward(delay);
 		}
 		else if(mode == "Switch") {
