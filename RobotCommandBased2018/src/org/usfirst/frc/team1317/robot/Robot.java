@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1317.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,11 +33,14 @@ public class Robot extends TimedRobot {
 	public static final Elevator el = new Elevator();
 	public static final Arm arm = new Arm();
 	
+	String GameData = "";
+	
 	public AnalogInput Ultrasonic = new AnalogInput(0);
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<String> m_chooser = new SendableChooser<>();
+	SendableChooser<Integer> positionChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,9 +49,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new JoystickMecanumDrive());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		m_chooser.addDefault("Switch Auto", "Switch");
+		m_chooser.addObject("Scale Auto", "Scale");
+		m_chooser.addObject("DriveForward Auto", "Forward");
+		m_chooser.addObject("Exchange Auto", "Exchange");
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		positionChooser.addObject("Far Left", 0);
 	}
 
 	/**
@@ -57,13 +65,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		GameData = "";
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		//Automatically runs the scheduler (which runs the commands)
 		Scheduler.getInstance().run();
+		GameData = DriverStation.getInstance().getGameSpecificMessage();
 	}
 
 	/**
@@ -79,7 +88,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = new AutonomousForward();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
