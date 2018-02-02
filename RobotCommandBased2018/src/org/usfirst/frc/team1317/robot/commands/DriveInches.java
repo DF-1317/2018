@@ -20,13 +20,16 @@ public class DriveInches extends Command {
 	WPI_TalonSRX FLMotor;
 	WPI_TalonSRX FRMotor;
 	
+	/*
+	 * Speed is in inches per second
+	 * Max speed is 14.7 feet per second = 176.4 inches per second
+	 */
     public DriveInches(double inches, double speed) {
     	super("DriveInches");
         requires(Robot.mecanumDriveTrain);
         rotations = inches / MecanumDriveTrainCAN.WHEEL_CIRCUMFERENCE;
         targetPos = MecanumDriveTrainCAN.TICKS_PER_REVOLUTION * rotations;
-        this.speed = speed/MecanumDriveTrainCAN.TICKS_PER_REVOLUTION * MecanumDriveTrainCAN.WHEEL_CIRCUMFERENCE * 1000; //speed is currently in sensor units/100 milliseconds
-        //may possibly want to scale speed to other units
+        this.speed = speed/MecanumDriveTrainCAN.TICKS_PER_REVOLUTION * MecanumDriveTrainCAN.WHEEL_CIRCUMFERENCE * 1000;
         FLMotor = Robot.mecanumDriveTrain.FLMotor;
         FRMotor = Robot.mecanumDriveTrain.FRMotor;
     }
