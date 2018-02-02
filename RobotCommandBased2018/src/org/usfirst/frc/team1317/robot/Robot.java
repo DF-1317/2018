@@ -32,6 +32,12 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static final Elevator el = new Elevator();
 	public static final Arm arm = new Arm();
+	public static final int Far_Left_Position = 0;
+	public static final int Left_Position = 1;
+	public static final int Center_Position = 2;
+	public static final int Right_Position = 3;
+	public static final int Far_Right_Position = 4;
+	
 	
 	String GameData = "";
 	
@@ -56,11 +62,11 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Exchange Auto", "Exchange");
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
-		positionChooser.addObject("Far Left", 0);
-		positionChooser.addObject("Left", 1);
-		positionChooser.addObject("Center", 2);
-		positionChooser.addObject("Right", 3);
-		positionChooser.addObject("Far Right", 4);
+		positionChooser.addObject("Far Left", Far_Left_Position);
+		positionChooser.addObject("Left", Left_Position);
+		positionChooser.addObject("Center", Center_Position);
+		positionChooser.addObject("Right", Right_Position);
+		positionChooser.addObject("Far Right", Far_Right_Position);
 		SmartDashboard.putData("Position", positionChooser);
 		
 		crossChooser.addObject("Front", true);
@@ -106,7 +112,7 @@ public class Robot extends TimedRobot {
 		double delay = SmartDashboard.getNumber("Delay", 0);
 		
 		if(mode == "Forward") {
-			m_autonomousCommand = new AutonomousForward(delay);
+			m_autonomousCommand = new AutonomousForward(position, delay);
 		}
 		else if(mode == "Switch") {
 			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossCourt, delay);
