@@ -21,6 +21,8 @@ public class DriveInches extends Command {
 	WPI_TalonSRX FRMotor;
 	
 	/*
+	 * We might want to write a version of this class that uses encoders plugged into RoboRIO
+	 * 
 	 * Speed is in inches per second
 	 * Max speed is 14.7 feet per second = 176.4 inches per second
 	 */

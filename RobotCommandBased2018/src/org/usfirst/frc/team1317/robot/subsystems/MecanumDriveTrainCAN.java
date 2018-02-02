@@ -39,7 +39,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	AHRS navX = new AHRS(Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
 	
-	final double distancePerPulse = 2;
+	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
 	public MecanumDriveTrainCAN() {
 		super();
@@ -83,6 +83,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 		SmartDashboard.putNumber("FL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
 		SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
 		SmartDashboard.putNumber("FL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
+		SmartDashboard.putNumber("Encoder Position", FLEncoder.getDistance());
 		System.out.println("FR: " + FREncoder.get());
 		System.out.println("BL: " + BLEncoder.get());
 		System.out.println("BR: " + BREncoder.get());
