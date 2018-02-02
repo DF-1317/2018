@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1317.robot.commands.*;
 import org.usfirst.frc.team1317.robot.subsystems.*;
+import org.usfirst.frc.team1317.sensors.UltrasonicHRLVMaxSonar;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
 	
 	String GameData = "";
 	
-	public AnalogInput Ultrasonic = new AnalogInput(0);
+	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RobotMap.UltrasonicPort);
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
@@ -166,10 +167,6 @@ public class Robot extends TimedRobot {
 		if(OI.TurnJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.zeroGyro();
 		}
-		
-		mecanumDriveTrain.printNavXYawOutput();
-		el.PrintEncoderPulses();
-		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getVoltage()*5/(4.88/1000));
 
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
@@ -177,6 +174,11 @@ public class Robot extends TimedRobot {
 		}
 		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
+		
+		mecanumDriveTrain.printNavXYawOutput();
+		el.PrintEncoderPulses();
+		mecanumDriveTrain.printEncoderPulses();
+		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getRangeMM());
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
