@@ -10,6 +10,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar" sourcepath="/CTRE_Phoenix.sources"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar" sourcepath="/NAVX_FRC_LIB"/>
-	<classpathentry kind="lib" path="D:/Users/legoh/Java Libraries/syslog-java-client-1.1.2.jar"/>
+	<classpathentry kind="var" path="Syslog Library Path"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
