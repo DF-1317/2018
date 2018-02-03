@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class MecanumDriveTrainCAN extends MecanumDriveTrain {
+public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	
 	
 	public static final int TICKS_PER_REVOLUTION = 4096;
@@ -78,15 +78,17 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain {
 	public void printEncoderPulses()
 	{
 		System.out.println("FL: " + FLEncoder.get());
-		SmartDashboard.putNumber("FL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("FL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
-		SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
-		SmartDashboard.putNumber("FL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
-		SmartDashboard.putNumber("Encoder Position", FLEncoder.getDistance());
-		System.out.println("FR: " + FREncoder.get());
-		System.out.println("BL: " + BLEncoder.get());
-		System.out.println("BR: " + BREncoder.get());
+		//SmartDashboard.putNumber("BL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
+		//SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
+		//SmartDashboard.putNumber("BL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
+		//SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
+		//SmartDashboard.putNumber("BL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
+		SmartDashboard.putNumber("Encoder Position", BLEncoder.getDistance());
+		SmartDashboard.putNumber("Raw Encoder Position", BLEncoder.getRaw());
+		SmartDashboard.putNumber("Encoder Speed", BLEncoder.getRate());
+		//System.out.println("FR: " + FREncoder.get());
+		//System.out.println("BL: " + BLEncoder.get());
+		//fSystem.out.println("BR: " + BREncoder.get());
 	}
 	
 	public void printAnalogGyroOutput()
