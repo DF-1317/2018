@@ -1,6 +1,8 @@
-import org.productivity.java.syslog4j.Syslog;
-import org.productivity.java.syslog4j.SyslogConstants;
-import org.productivity.java.syslog4j.SyslogIF;
+import com.cloudbees.syslog.sender.UdpSyslogMessageSender;
+import com.cloudbees.syslog.Facility;
+import com.cloudbees.syslog.Severity;
+import com.cloudbees.syslog.SyslogMessage;
+import com.cloudbees.syslog.MessageFormat;
 
 /*
  * This code demonstrates using the syslog4j logging capability.
@@ -34,9 +36,10 @@ import org.productivity.java.syslog4j.SyslogIF;
  *  $RepeatedMsgReduction  off
  */
 public class Logger {
-    static final String         ServerHost      = "10.40.2.88";                 // address of the central log server
-    static final int            Facility        = SyslogIF.FACILITY_LOCAL0;     // what facility is labeled on the msg
-    SyslogIF                    sl;                                             // handle to the syslog framework
+    static final String         ServerHost      = "10.40.0.164";                 // address of the central log server
+    static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
+    static final Severity            Sev             = Severity.INFORMATIONAL;
+    UdpSyslogMessageSender      sl;
 
     /*
      * We get a handle to the syslog and declare that we are using UDP messaging; TCP is an option too,
@@ -44,10 +47,14 @@ public class Logger {
      * is just fine.
      */
     public Logger() {
-        sl = Syslog.getInstance(SyslogConstants.UDP);
-        sl.getConfig().setFacility(Facility);
-        sl.getConfig().setHost(ServerHost);
-        sl.getConfig().setPort(10000);  // optional
+        sl = new UdpSyslogMessageSender();
+        sl.setSyslogServerHostname(ServerHost);
+        sl.setSyslogServerPort(10000);  // optional
+        sl.setMessageFormat(MessageFormat.RFC_5424);
+
+        sl.setDefaultMessageHostname("jpl-PC");
+        sl.setDefaultFacility(Fac);
+        sl.setDefaultSeverity(Sev);
     }
 
     /*
@@ -57,8 +64,19 @@ public class Logger {
      */
     public void  log(String msg) {
         System.out.println("Sending: " + msg);
-        sl.info(msg);
-        sl.flush();
+        try {
+            SyslogMessage m = new SyslogMessage()
+                .withFacility(Fac)
+                .withSeverity(Sev)
+                .withHostname(ServerHost)
+                .withAppName("test-client")
+                .withProcId("Logger")
+                .withMsg(msg);
+            sl.sendMessage(m);
+        } catch (Exception e) {
+            System.err.println("Ouch: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /*
