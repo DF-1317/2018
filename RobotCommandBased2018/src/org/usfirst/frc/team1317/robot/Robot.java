@@ -7,7 +7,12 @@
 
 package org.usfirst.frc.team1317.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
+import com.cloudbees.syslog.sender.UdpSyslogMessageSender;
+import com.cloudbees.syslog.Facility;
+import com.cloudbees.syslog.Severity;
+import com.cloudbees.syslog.SyslogMessage;
+import com.cloudbees.syslog.MessageFormat;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -39,6 +44,11 @@ public class Robot extends TimedRobot {
 	public static final int Right_Position = 3;
 	public static final int Far_Right_Position = 4;
 	
+	// Syslog sender
+	static UdpSyslogMessageSender syslog = new UdpSyslogMessageSender();
+    static final String         ServerHost      = "10.40.0.164";                 // address of the central log server
+    static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
+    static final Severity            Sev             = Severity.INFORMATIONAL;
 	
 	String GameData = "";
 	
@@ -70,11 +80,17 @@ public class Robot extends TimedRobot {
 		positionChooser.addObject("Far Right", Far_Right_Position);
 		SmartDashboard.putData("Position", positionChooser);
 		
+		log("Position: " + positionChooser);
+		
 		crossChooser.addObject("Front", true);
 		crossChooser.addObject("Behind", false);
 		SmartDashboard.putData("Cross", crossChooser);
 		
+		log("Cross: " + crossChooser);
+		
 		SmartDashboard.getNumber("Delay", 0);
+		
+		log("Init Complete");
 	}
 
 	/**
@@ -131,6 +147,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
+		log("Autonomous Init Complete");
 	}
 
 	/**
@@ -151,6 +169,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		
+		log("Teleop Init Complete");
 	}
 
 	/**
@@ -189,16 +209,40 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		double speed = 0.3;
+		
+		if(OI.MoveJoystick.getRawButton(1)) {
+			speed = -0.3;
+		} else {
+			speed = 0.3;
+		}
+		
 		if(OI.MoveJoystick.getRawButton(5)) {
-			mecanumDriveTrain.FLMotor.set(0.3);
+			mecanumDriveTrain.FLMotor.set(speed);
 		} else if(OI.MoveJoystick.getRawButton(6)) {
-			mecanumDriveTrain.FRMotor.set(0.3);
+			mecanumDriveTrain.FRMotor.set(speed);
 		} else if(OI.MoveJoystick.getRawButton(3)) {
-			mecanumDriveTrain.BLMotor.set(0.3);
+			mecanumDriveTrain.BLMotor.set(speed);
 		} else if(OI.MoveJoystick.getRawButton(4)) {
-			mecanumDriveTrain.BRMotor.set(0.3);
+			mecanumDriveTrain.BRMotor.set(speed);
 		} else {
 			mecanumDriveTrain.stop();
 		}
+	}
+	
+	public static void log(String msg) {
+        try {
+            SyslogMessage m = new SyslogMessage()
+                .withFacility(Fac)
+                .withSeverity(Sev)
+                .withHostname(ServerHost)
+                .withAppName("Robot")
+                .withProcId("Logger")
+                .withMsg(msg);
+            syslog.sendMessage(m);
+        } catch (Exception e) {
+            System.err.println("Ouch: " + e.getMessage());
+            e.printStackTrace();
+        }
 	}
 }

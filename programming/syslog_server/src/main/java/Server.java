@@ -1,14 +1,15 @@
-import org.productivity.java.syslog4j.Syslog;
+import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.SyslogConstants;
-import org.productivity.java.syslog4j.SyslogIF;
+import org.productivity.java.syslog4j.server.SyslogServer;
+import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
 
-/*
+/**
  * This code demonstrates using the syslog4j logging capability.
  * Above are the imports needed to reference classes and handy constants.
  * At the top of this class we have a couple handy constants of our own and a data member
  * that will keep a reference to the Syslog instance doing all the work for us.
  *
- * This demo program needs Java 1.8 or above.
+ * This server program needs Java 1.x or above.
  *
  * What this logging framework allows for is the ability to have one to many systems and
  * programs, all send their logging data to a single central server to be collected into a
@@ -33,33 +34,9 @@ import org.productivity.java.syslog4j.SyslogIF;
  *  $DirCreateMode         0755
  *  $RepeatedMsgReduction  off
  */
-public class Logger {
-    static final String         ServerHost      = "10.40.2.88";                 // address of the central log server
-    static final int            Facility        = SyslogIF.FACILITY_LOCAL0;     // what facility is labeled on the msg
-    SyslogIF                    sl;                                             // handle to the syslog framework
-
-    /*
-     * We get a handle to the syslog and declare that we are using UDP messaging; TCP is an option too,
-     * but would increase bandwidth use on the network. Given the topology of the robot's network, UDP
-     * is just fine.
-     */
-    public Logger() {
-        sl = Syslog.getInstance(SyslogConstants.UDP);
-        sl.getConfig().setFacility(Facility);
-        sl.getConfig().setHost(ServerHost);
-        sl.getConfig().setPort(10000);  // optional
-    }
-
-    /*
-     * Simply send the message and flush it out. The flush is nice to help keep the messages as real-time as
-     * possible; yeah, it is less efficient.
-     * We always log 'info' messages, there are other choices like: debug, error, warn, crit...
-     */
-    public void  log(String msg) {
-        System.out.println("Sending: " + msg);
-        sl.info(msg);
-        sl.flush();
-    }
+public class Server {
+    //static final int            ServerPort      = SyslogConstants.SYSLOG_PORT_DEFAULT;
+    static final int            ServerPort      = 10000;
 
     /*
      * Where execution starts. We tell the user we have started, then check to see if they gave
@@ -67,13 +44,19 @@ public class Logger {
      * We create an instance of the logger class and log the message; they we are done.
      */
     public static void main(String[] args) {
-        System.out.println("Starting logger test...");
+        System.out.println("Starting logger server...");
+        System.setProperty("jsse.enableSNIExtension", "false");
 
-        String msg = (0 < args.length) ? String.join(" ",args) : "Test msg";
-        Logger l = new Logger();
-        l.log(msg);
+        SyslogServer.shutdown();
 
-        System.out.println("Logger done!");
+        SyslogServerConfigIF conf = new UDPSyslogServerConfig();
+        conf.setUseStructuredData(true);
+        conf.setHost("0.0.0.0");
+        conf.setPort(ServerPort);
+
+        SyslogServer.createThreadedInstance("udp", conf);
+
+        System.out.println("Logger running...");
     }
 
 }

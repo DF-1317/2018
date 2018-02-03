@@ -1,0 +1,5 @@
+2018-02-03T18:35:14.296Z 10.40.2.198 test-client Logger : Test msg
+2018-02-03T18:44:09.132Z 10.40.2.198 test-client Logger : Test msg
+2018-02-03T18:44:10.916Z 10.40.2.198 test-client Logger : Test msg
+2018-02-03T18:44:16.537Z 10.40.2.198 test-client Logger : Hello there!
+2018-02-03T18:44:45.590Z 10.40.2.198 test-client Logger : It works!

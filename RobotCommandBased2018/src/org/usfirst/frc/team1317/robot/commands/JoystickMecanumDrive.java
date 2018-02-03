@@ -15,7 +15,13 @@ import org.usfirst.frc.team1317.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
+
 public class JoystickMecanumDrive extends Command {
+	
+	boolean isTwistEnabled = false;
+	double turnModifier = 0;
+	double speedModifier = 0;
+	
 	public JoystickMecanumDrive() {
 		//set up the base class
 		super("JoystickMecanumDrive");
@@ -33,9 +39,25 @@ public class JoystickMecanumDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
+		// Only have extra control options when enabled
+		if(isTwistEnabled) {
+			turnModifier = OI.MoveJoystick.getTwist() * 0.3;
+			speedModifier = (OI.MoveJoystick.getThrottle() - 1) / -2;
+		} else {
+			turnModifier = 0;
+			speedModifier = 1;
+		}
+		
 		//the "MoveJoystick" causes the robot to move forward, backward, right, and left
 		//the "TurnJoystick" causes the robot to turn when the joystick is moved left and right
-		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX(), OI.TurnJoystick.getX(), -OI.MoveJoystick.getY());
+		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX() * speedModifier, (OI.TurnJoystick.getX() + turnModifier) *
+				speedModifier, -OI.MoveJoystick.getY() * speedModifier);
+		
+		// Toggle extra control options
+		if(OI.MoveJoystick.getRawButtonPressed(11)) {
+			isTwistEnabled = !isTwistEnabled;
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
