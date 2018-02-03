@@ -31,12 +31,12 @@ public class RobotMap {
 	public final static int OtherJoystickPort = 0;
 	
 	//DIO ports
-	public final static int FLMotorEncoderPort1 = 0;
-	public final static int FLMotorEncoderPort2 = 1;
+	public final static int FLMotorEncoderPort1 = 4;
+	public final static int FLMotorEncoderPort2 = 5;
 	public final static int FRMotorEncoderPort1 = 2;
 	public final static int FRMotorEncoderPort2 = 3;
-	public final static int BLMotorEncoderPort1 = 4;
-	public final static int BLMotorEncoderPort2 = 5;
+	public final static int BLMotorEncoderPort1 = 0;
+	public final static int BLMotorEncoderPort2 = 1;
 	public final static int BRMotorEncoderPort1 = 6;
 	public final static int BRMotorEncoderPort2 = 7;
 	public final static int ElevatorMotorEncoderPort1 = 8;
