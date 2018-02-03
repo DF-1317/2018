@@ -57,6 +57,7 @@ public class JoystickMecanumDrive extends Command {
 		// Toggle extra control options
 		if(OI.MoveJoystick.getRawButtonPressed(11)) {
 			isTwistEnabled = !isTwistEnabled;
+			Robot.log("Control mode toggled. Advanced controls: " + isTwistEnabled);
 		}
 	}
 
