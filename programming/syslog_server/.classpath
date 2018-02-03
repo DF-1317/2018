@@ -22,6 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Users/legoh/Java Libraries/syslog-java-client-1.1.2.jar"/>
+	<classpathentry kind="var" path="Syslog Library Path"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
