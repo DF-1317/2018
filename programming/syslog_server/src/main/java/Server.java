@@ -3,7 +3,7 @@ import org.productivity.java.syslog4j.SyslogConstants;
 import org.productivity.java.syslog4j.server.SyslogServer;
 import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
 
-/*
+/**
  * This code demonstrates using the syslog4j logging capability.
  * Above are the imports needed to reference classes and handy constants.
  * At the top of this class we have a couple handy constants of our own and a data member
