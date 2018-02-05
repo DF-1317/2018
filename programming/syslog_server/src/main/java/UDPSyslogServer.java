@@ -24,10 +24,12 @@ public class UDPSyslogServer extends UDPNetSyslogServer {
         try {
             this.ds = createDatagramSocket();
         } catch (Exception e) {
-            System.err.println("Failure to create databram socket");
+            System.err.println("Failure to create datagram socket");
             e.printStackTrace();
             throw new SyslogRuntimeException(e);
         }
+
+        // Setup our buffered file writer
         FileWriter fw = null;
         BufferedWriter bw = null;
         PrintWriter out = null;
@@ -39,6 +41,8 @@ public class UDPSyslogServer extends UDPNetSyslogServer {
             System.err.println("Faild to setup log file: " + e.getMessage());
         }
 
+        // Sit in our loop, getting UDP datagrams and outputting their contents to the user
+        // and the log file.
         byte[] data = new byte[SyslogConstants.SYSLOG_BUFFER_SIZE];
         while (!this.shutdown) {
             try {

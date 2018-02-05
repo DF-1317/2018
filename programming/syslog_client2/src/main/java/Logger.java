@@ -36,10 +36,11 @@ import com.cloudbees.syslog.MessageFormat;
  *  $RepeatedMsgReduction  off
  */
 public class Logger {
-    static final String         ServerHost      = "10.40.0.164";                 // address of the central log server
-    static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
-    static final Severity            Sev             = Severity.INFORMATIONAL;
-    UdpSyslogMessageSender      sl;
+    static final String             ServerHost     = "10.40.0.164";                // address of the central log server
+    static final int                ServerPort     = 10000;                        // port on the host where they are listening
+    static final Facility           Fac            = Facility.LOCAL0;              // what facility is labeled on the msg
+    static final Severity           Sev            = Severity.INFORMATIONAL;       // importance of the message
+    UdpSyslogMessageSender          sl;
 
     /*
      * We get a handle to the syslog and declare that we are using UDP messaging; TCP is an option too,
@@ -49,17 +50,15 @@ public class Logger {
     public Logger() {
         sl = new UdpSyslogMessageSender();
         sl.setSyslogServerHostname(ServerHost);
-        sl.setSyslogServerPort(10000);  // optional
+        sl.setSyslogServerPort(ServerPort);
         sl.setMessageFormat(MessageFormat.RFC_5424);
-
         sl.setDefaultMessageHostname("jpl-PC");
-        sl.setDefaultFacility(Fac);
-        sl.setDefaultSeverity(Sev);
     }
 
     /*
-     * Simply send the message and flush it out. The flush is nice to help keep the messages as real-time as
-     * possible; yeah, it is less efficient.
+     * Create a new message instance and set several if its fields. We could change the API to allow
+     * for an app-name and prod-id to be passed it. Those could then be indicators of whence the message
+     * was generated.
      * We always log 'info' messages, there are other choices like: debug, error, warn, crit...
      */
     public void  log(String msg) {
