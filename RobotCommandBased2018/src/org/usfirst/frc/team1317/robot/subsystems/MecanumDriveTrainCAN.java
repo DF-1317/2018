@@ -36,7 +36,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	
 	public PIDTurning turning;
 	
-	AHRS navX = new AHRS(Port.kMXP);
+	public AHRS navX = new AHRS(Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
 	
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
