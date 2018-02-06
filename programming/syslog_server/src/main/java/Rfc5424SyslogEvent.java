@@ -161,57 +161,31 @@ public class Rfc5424SyslogEvent implements SyslogServerEventIF {
         return -1;
     }
 
-    public String getPrioVersion() {
-        return prioVersion;
-    }
+    public String getPrioVersion() { return prioVersion; }
 
-    public int getFacility() {
-        return facility;
-    }
+    public int getFacility() { return facility; }
 
-    public int getLevel() {
-        return level;
-    }
+    public int getLevel() { return level; }
 
-    public int getVersion() {
-        return version;
-    }
+    public int getVersion() { return version; }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
+    public String getTimestamp() { return timestamp; }
 
-    public String getHost() {
-        return host;
-    }
+    public String getHost() { return host; }
 
-    public String getAppName() {
-        return appName;
-    }
+    public String getAppName() { return appName; }
 
-    public String getProcId() {
-        return procId;
-    }
+    public String getProcId() { return procId; }
 
-    public String getMsgId() {
-        return msgId;
-    }
+    public String getMsgId() { return msgId; }
 
-    public String getStructuredData() {
-        return structuredData;
-    }
+    public String getStructuredData() { return structuredData; }
 
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() { return message; }
 
-    public String getCharSet() {
-        return CHARSET;
-    }
+    public String getCharSet() { return CHARSET; }
 
-    public byte[] getRaw() {
-        return raw;
-    }
+    public byte[] getRaw() { return raw; }
 
     public Date getDate() {
         if (NIL.equals(timestamp)) {
@@ -228,29 +202,22 @@ public class Rfc5424SyslogEvent implements SyslogServerEventIF {
         return null;
     }
 
-    public void setCharSet(String charSet) {
-    }
+    public void setCharSet(String charSet) { }
 
-    public void setFacility(int facility) {
-    }
+    public void setFacility(int facility) { }
 
-    public void setDate(Date date) {
-    }
+    public void setDate(Date date) { }
 
-    public void setLevel(int level) {
-    }
+    public void setLevel(int level) { }
 
-    public void setHost(String host) {
-    }
+    public void setHost(String host) { }
 
-    public void setMessage(String message) {
-    }
+    public void setMessage(String message) { }
 
     @Override
-    public String toString() {
-        return toString2();
-    }
+    public String toString() { return toString2(); }
 
+    // Original format has all the fields
     public String toString1() {
         return "Rfc5424SyslogEvent [prioVersion=" + prioVersion + ", facility=" + facility + ", level=" + level
                 + ", version=" + version + ", timestamp=" + timestamp + ", host=" + host + ", appName=" + appName
@@ -258,6 +225,7 @@ public class Rfc5424SyslogEvent implements SyslogServerEventIF {
                 + message + "]";
     }
 
+    // More concise formatting
     public String toString2() {
         return timestamp
                 + " " + host

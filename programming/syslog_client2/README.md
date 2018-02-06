@@ -1,4 +1,4 @@
-# syslog_client
+# syslog_client V2
 
 This is used to demonstrate a tiny bit of the syslog4j functionality.
 This client is different that the other one in that the message format created is consistent with
