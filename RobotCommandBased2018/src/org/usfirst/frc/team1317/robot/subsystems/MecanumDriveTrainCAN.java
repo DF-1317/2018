@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -27,10 +29,12 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	public WPI_TalonSRX BRMotor;
 	
 	//encoders
-	Encoder FLEncoder;
-	Encoder FREncoder;
+	//Encoder FLEncoder;
+	//Encoder FREncoder;
 	Encoder BLEncoder;
-	Encoder BREncoder;
+	//Encoder BREncoder;
+	DigitalInput EncoderChannelA;
+	DigitalInput EncoderChannelB;
 	
 	Solenoid Piston;
 	
@@ -56,14 +60,19 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		// set up base class
 		Initialize(FLMotor,FRMotor,BLMotor,BRMotor);
 		//set up the encoders
-		FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
-		FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
-		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2);
-		BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
-		FLEncoder.setDistancePerPulse(distancePerPulse);
-		FREncoder.setDistancePerPulse(distancePerPulse);
+		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
+		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
+		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
+		//BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
+		EncoderChannelA = new DigitalInput(0);
+		EncoderChannelB = new DigitalInput(1);
+		//FLEncoder.setDistancePerPulse(distancePerPulse);
+		//FREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setDistancePerPulse(distancePerPulse);
-		BREncoder.setDistancePerPulse(distancePerPulse);
+		//BREncoder.setDistancePerPulse(distancePerPulse);
+		BLEncoder.setMaxPeriod(.1);
+		BLEncoder.setMinRate(10);
+		BLEncoder.setSamplesToAverage(7);
 		
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
 		
@@ -77,18 +86,19 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	
 	public void printEncoderPulses()
 	{
-		System.out.println("FL: " + FLEncoder.get());
+		//System.out.println("FL: " + FLEncoder.get());
 		//SmartDashboard.putNumber("BL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
 		//SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
 		//SmartDashboard.putNumber("BL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
 		//SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
 		//SmartDashboard.putNumber("BL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
-		SmartDashboard.putNumber("Encoder Position", BLEncoder.getDistance());
-		SmartDashboard.putNumber("Raw Encoder Position", BLEncoder.getRaw());
-		SmartDashboard.putNumber("Encoder Speed", BLEncoder.getRate());
+		SmartDashboard.putNumber("BL Encoder Position", BLEncoder.getDistance());
+		SmartDashboard.putNumber("BL Raw Encoder Position", BLEncoder.getRaw());
+		SmartDashboard.putNumber("BL Encoder Speed", BLEncoder.getRate());
+		SmartDashboard.putNumber("BL Percent Motor Output", BLMotor.getMotorOutputPercent());
 		//System.out.println("FR: " + FREncoder.get());
-		//System.out.println("BL: " + BLEncoder.get());
-		//fSystem.out.println("BR: " + BREncoder.get());
+		System.out.println("BL: " + BLEncoder.get());
+		//System.out.println("BR: " + BREncoder.get());
 	}
 	
 	public void printAnalogGyroOutput()
