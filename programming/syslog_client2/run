@@ -1,0 +1,8 @@
+#!/bin/bash
+cp ~/.m2/repository/com/cloudbees/syslog-java-client/1.1.3-SNAPSHOT/syslog-java-client-1.1.3-SNAPSHOT.jar \
+     target/syslog4j.jar
+
+CP="target/syslog-client-test-0.2.jar"
+CP="$CP;target/syslog4j.jar"
+
+java -cp $CP Logger $@

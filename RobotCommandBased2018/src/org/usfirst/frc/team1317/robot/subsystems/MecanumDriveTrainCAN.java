@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import org.usfirst.frc.team1317.robot.PIDTurning;
 import org.usfirst.frc.team1317.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -38,9 +37,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	
 	Solenoid Piston;
 	
-	public PIDTurning turning;
-	
-	AHRS navX = new AHRS(Port.kMXP);
+	public AHRS navX = new AHRS(Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
 	
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
@@ -75,8 +72,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		BLEncoder.setSamplesToAverage(7);
 		
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
-		
-		turning = new PIDTurning(this, navX);
 
 		FLMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		FLMotor.setSensorPhase(true);

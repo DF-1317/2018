@@ -13,9 +13,9 @@ public class PositionElevator extends Command {
 	
 	double currentPosition;
 	final double SPEED = 1;
-	final int BOTTOM_POS = 0;
-	final int TOP_POS = 1000;
-	final int SWITCH_POS = 300;
+	public static final int BOTTOM_POS = 0;
+	public static final int TOP_POS = 1000;
+	public static final int SWITCH_POS = 300;
 	final int ERROR = 10;
 	int target;
 	boolean finished = false;
@@ -24,15 +24,7 @@ public class PositionElevator extends Command {
     	super("Position Elevator");
         requires(Robot.el);
         setInterruptible(true);
-        if(target == 0) {
-        	this.target = BOTTOM_POS;
-        } else if(target == 1) {
-        	this.target = SWITCH_POS;
-        } else if(target == 2) {
-        	this.target = TOP_POS;
-        } else {
-        	System.out.println(":(");
-        }
+        this.target = target;
     }
 
     // Called just before this Command runs the first time

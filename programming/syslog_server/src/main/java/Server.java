@@ -9,7 +9,7 @@ import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
  * At the top of this class we have a couple handy constants of our own and a data member
  * that will keep a reference to the Syslog instance doing all the work for us.
  *
- * This server program needs Java 1.x or above.
+ * This server program needs Java 1.8 or above.
  *
  * What this logging framework allows for is the ability to have one to many systems and
  * programs, all send their logging data to a single central server to be collected into a
@@ -20,28 +20,23 @@ import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
  * and also any other computers on the robot's network. For example if a Rasberry Pi were doing
  * video processing of a camera input, that too could log to the same place the Rio was.
  *
- * You will need to adjust the ServerHost value below, depending on your environment. We do recommend
+ * You will need to adjust the ServerPort value below, depending on your environment. We do recommend
  * using a static IP address on the robot network so that the servers are at known locations; DHCP has
  * no guarantee of assigning the same IP to a system in successive runs.
  *
- * If your log server is a Linux box, like Ubuntu, you should configure the rsyslog facility to put
- * local0 messages into their own file. Add the following to the /etc/rsyslog.d/50-default.conf
- *  local0.*               /var/log/local0.log
- *
- * You will also want to relax the read permissions on files it creates and allow repeat messages.
- * Check the following in /etc/rsyslog.conf
- *  $FileCreateMode        0644
- *  $DirCreateMode         0755
- *  $RepeatedMsgReduction  off
+ * This example log server can take in all the log messages sent to it and display them on your
+ * screen while they are also being appended to a logging file: robo.log
+ * We do assume the messages coming into us are formatted according to RFC-5424.
  */
 public class Server {
     //static final int            ServerPort      = SyslogConstants.SYSLOG_PORT_DEFAULT;
-    static final int            ServerPort      = 10000;
+    static final int            ServerPort      = 10000;  // use a non-default port that should not have security issues
 
     /*
-     * Where execution starts. We tell the user we have started, then check to see if they gave
-     * us a message to send out.
-     * We create an instance of the logger class and log the message; they we are done.
+     * Where execution starts. We tell the user we have started.
+     * We call the shutdown() first to clear out any older thread that may still be hanging out.
+     * They we setup our new instance of a UDP type server. We direct it to listen on all the
+     * server ports [configured] on all interfaces on this machine.
      */
     public static void main(String[] args) {
         System.out.println("Starting logger server...");
@@ -54,9 +49,11 @@ public class Server {
         conf.setHost("0.0.0.0");
         conf.setPort(ServerPort);
 
+        // The working part of the log runs in its own thread...not that we need it here, but it is a
+        // nice feature.
         SyslogServer.createThreadedInstance("udp", conf);
 
-        System.out.println("Logger running...");
+        System.out.println("Logger running...use ^C to terminate");
     }
 
 }
