@@ -54,7 +54,6 @@ public class TurnDegrees extends Command implements PIDOutput {
 	@Override
 	protected void execute()
 	{
-		done = turner.turnDegrees(degrees, speed);
 		turnController.setSetpoint(TargetAngle);
 		turnController.enable();
 		DriveTrain.driveCartesian(0, 0, speed*TurnRate);
