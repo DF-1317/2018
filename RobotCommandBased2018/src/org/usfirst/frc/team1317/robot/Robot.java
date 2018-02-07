@@ -127,17 +127,17 @@ public class Robot extends TimedRobot {
 			GameData = DriverStation.getInstance().getGameSpecificMessage();
 		String mode = m_chooser.getSelected();
 		int position = positionChooser.getSelected();
-		boolean crossCourt = crossChooser.getSelected();
+		boolean crossFront = crossChooser.getSelected();
 		double delay = SmartDashboard.getNumber("Delay", 0);
 
 		if(mode == "Forward"||GameData =="") {
 			m_autonomousCommand = new AutonomousForward(position, delay);
 		}
 		else if(mode == "Switch") {
-			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossCourt, delay);
+			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossFront, delay);
 		}
 		else if(mode == "Scale") {
-			m_autonomousCommand = new AutonomousScale(GameData, position, crossCourt, delay);
+			m_autonomousCommand = new AutonomousScale(GameData, position, crossFront, delay);
 		}
 		else if(mode == "Exchange") {
 			m_autonomousCommand = new AutonomousExchange(position, delay);
