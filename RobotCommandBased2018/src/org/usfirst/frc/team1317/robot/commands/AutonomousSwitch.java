@@ -23,48 +23,45 @@ public class AutonomousSwitch extends CommandGroup {
     	addSequential( new Wait(delay) );
     	if(startingPosition == Robot.Center_Position)
     	{
-    		addSequential( new DriveInches(50.0, 70.0) );
-    		if(SwitchLeft)
-    			addSequential(TurnLeft);
-    		else
-    			addSequential(TurnRight);
-    		addSequential( new DriveInches(50.0, 70.0));
+    		addSequential( new DriveInches(50.0) );
+    		addSequential( SwitchLeft ? TurnLeft : TurnRight);
+    		addSequential( new DriveInches(50.0));
     		if(SwitchLeft)
     			addSequential(TurnRight);
     		else
     			addSequential(TurnLeft);
-    		addSequential( new DriveInches(50.0, 70.0) );
+    		addSequential( new DriveInches(50.0) );
     	}
     	else
     	{
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
-    			addSequential( new DriveInches(150.0, 70.0) );
+    			addSequential( new DriveInches(150.0) );
     			if(SwitchLeft) {
     				addSequential(TurnRight);
     			} else {
     				addSequential(TurnLeft);
     			}
-    			addSequential( new DriveInches(30.0, 70.0) );
+    			addSequential( new DriveInches(30.0) );
     		}
     		//if the switch and robot are on opposite sides
     		else {
     			if(crossFront) {
-	    			addSequential( new DriveInches(50.0, 70.0) );
+	    			addSequential( new DriveInches(50.0) );
 	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(300.0, 70.0) );
+	    			addSequential( new DriveInches(300.0) );
 	    			addSequential( SwitchLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInches(100.0, 70.0) );
+	    			addSequential( new DriveInches(100.0) );
 	    			addSequential( SwitchLeft ? TurnLeft : TurnRight );
     			} else {
-	    			addSequential( new DriveInches(250.0, 70.0) );
+	    			addSequential( new DriveInches(250.0) );
 	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(300.0, 70.0) );
+	    			addSequential( new DriveInches(300.0) );
 	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(100.0, 70.0) );
+	    			addSequential( new DriveInches(100.0) );
 	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
     			}
-    			addSequential( new DriveInches(30.0, 70.0) );
+    			addSequential( new DriveInches(30.0) );
     		}
     	}
     	// Always place the cube
