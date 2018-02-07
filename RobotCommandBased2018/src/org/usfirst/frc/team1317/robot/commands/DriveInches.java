@@ -14,6 +14,7 @@ public class DriveInches extends Command {
 
 	final int ACCELERATION = 6000;
 	final int ALLOWABLE_ERROR = 24; //allowable error in ticks
+	final static double DEFAULT_SPEED = 70.0;
 	double rotations;
 	double targetPos;
 	double speed;
@@ -34,6 +35,11 @@ public class DriveInches extends Command {
         this.speed = speed/MecanumDriveTrainCAN.TICKS_PER_REVOLUTION * MecanumDriveTrainCAN.WHEEL_CIRCUMFERENCE * 1000;
         FLMotor = Robot.mecanumDriveTrain.FLMotor;
         FRMotor = Robot.mecanumDriveTrain.FRMotor;
+    }
+    
+    public DriveInches(double inches)
+    {
+    	this(inches, DEFAULT_SPEED);
     }
 
     // Called just before this Command runs the first time
