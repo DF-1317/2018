@@ -31,7 +31,29 @@ public class AutonomousScale extends CommandGroup {
     		addSequential(new DriveInches(20.0));
     	}
     	else {
-    		
+    		//if the scale is on the same position as the robot
+    		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
+    			addSequential(new DriveInches(500.0));
+    			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+    			addSequential(new DriveInches(20,0));
+    		} else {
+    			if(crossFront) {
+    				addSequential( new DriveInches(50.0) );
+	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+	    			addSequential( new DriveInches(300.0) );
+	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+	    			addSequential( new DriveInches(500.0) );
+	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+    			} else {
+    				addSequential( new DriveInches(250.0) );
+	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+	    			addSequential( new DriveInches(300.0) );
+	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+	    			addSequential( new DriveInches(100.0) );
+	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+    			}
+    			addSequential(new DriveInches(20.0));
+    		}
     	}
     	addSequential(new PlaceCube());
     }
