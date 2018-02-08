@@ -1,5 +1,9 @@
 package org.usfirst.frc.team1317.robot;
 
+/**
+ * This class contains constants for field dimensions
+ */
+
 public class DistanceMap {
 	//all values are in inches.
 	

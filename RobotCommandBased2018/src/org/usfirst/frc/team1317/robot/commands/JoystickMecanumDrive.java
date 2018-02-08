@@ -13,11 +13,12 @@ import org.usfirst.frc.team1317.robot.OI;
 import org.usfirst.frc.team1317.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * This command attaches joystick input to the drive train
  */
 
 public class JoystickMecanumDrive extends Command {
 	
+	// variables storing values for button toggle
 	boolean isTwistEnabled = false;
 	double turnModifier = 0;
 	double speedModifier = 0;
@@ -42,9 +43,11 @@ public class JoystickMecanumDrive extends Command {
 		
 		// Only have extra control options when enabled
 		if(isTwistEnabled) {
+			// Enables joystick twist turning and throttle adjustment
 			turnModifier = OI.MoveJoystick.getTwist() * 0.3;
 			speedModifier = (OI.MoveJoystick.getThrottle() - 1) / -2;
 		} else {
+			// Disables joystick twist turning and throttle adjustment
 			turnModifier = 0;
 			speedModifier = 1;
 		}

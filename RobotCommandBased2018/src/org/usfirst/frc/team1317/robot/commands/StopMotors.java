@@ -4,6 +4,10 @@ import org.usfirst.frc.team1317.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Name says it all
+ */
+
 public class StopMotors extends Command {
 
 	StopMotors()

@@ -3,7 +3,9 @@ package org.usfirst.frc.team1317.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This literally does absolutely nothing.
+ * @see RaiseArm
+ * @deprecated instead use {@link ArmDown}
  */
 public class LowerArm extends Command {
 

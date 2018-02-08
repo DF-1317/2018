@@ -5,7 +5,7 @@ import org.usfirst.frc.team1317.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This moves the elevator to a specific position. Handy constants included.
  */
 public class PositionElevator extends Command {
 	
@@ -13,11 +13,19 @@ public class PositionElevator extends Command {
 	
 	double currentPosition;
 	final double SPEED = 1;
+	
+	// Constants for different encoder positions
 	public static final int BOTTOM_POS = 0;
 	public static final int TOP_POS = 1000;
 	public static final int SWITCH_POS = 300;
+	
+	// Number of pulses error
 	final int ERROR = 10;
+	
+	// Target position
 	int target;
+	
+	// Boolean to determine of command is finished
 	boolean finished = false;
 	
     public PositionElevator(int target) {

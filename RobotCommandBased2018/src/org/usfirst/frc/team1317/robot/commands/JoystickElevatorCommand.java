@@ -6,7 +6,7 @@ import org.usfirst.frc.team1317.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command attaches joystick input to the elevator
  */
 public class JoystickElevatorCommand extends Command {
 

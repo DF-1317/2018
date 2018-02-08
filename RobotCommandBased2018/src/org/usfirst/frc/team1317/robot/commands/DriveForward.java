@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team1317.robot.Robot;
 
+/**
+ * This command makes the robot drive a specific amount of time in seconds at a specific speed from 0 to 1.
+ * @see DriveInches
+ */
+
 public class DriveForward extends Command {
 
 	double TargetTime =0;

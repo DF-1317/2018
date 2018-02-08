@@ -8,7 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command makes the robot drive a specific number of inches at a specific speed in inches per second.
+ * @see DriveForward
  */
 public class DriveInches extends Command {
 

@@ -10,22 +10,38 @@ import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import com.kauailabs.navx.frc.AHRS;
 
+/**
+ * This command turns the robot a certain number of degrees and specific speed
+ */
 public class TurnDegrees extends Command implements PIDOutput {
-
+	
+	
+	// Objects representing the drive train, gyroscope, and a PID controller
 	MecanumDriveTrainCAN DriveTrain;
 	AHRS gyroSensor;
 	PIDController turnController;
+	
+	// Some things that do things
 	static final double kP = 0.01;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kToleranceDegrees = 5.0;
+	
+	// Variables representing speed and angle to turn
 	double degrees = 0;
 	double speed = 1.0;
+	
+	// Some other things I don't care about
 	boolean done = false;
 	double TurnRate;
 	double OriginalAngle;
 	double TargetAngle;
 	
+	/**
+	 * The constructor for the command
+	 * @param degrees - number of degrees to turn. Positive is clockwise.
+	 * @param speed - speed from 0 to 1 to turn at.
+	 */
 	public TurnDegrees(double degrees, double speed)
 	{
 		super("TurnDegrees");
@@ -44,6 +60,15 @@ public class TurnDegrees extends Command implements PIDOutput {
 		this.speed = speed;
 		setInterruptible(true);
 	}
+	
+	/**
+	 * Overloaded constructor with a default speed of 0.7
+	 * @param degrees number of degrees to turn. Positive is clockwise
+	 */
+	public TurnDegrees(double degrees) {
+		this(degrees, 0.7);
+	}
+	
 	@Override
 	protected void initialize()
 	{
