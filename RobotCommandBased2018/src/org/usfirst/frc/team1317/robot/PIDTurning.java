@@ -103,9 +103,9 @@ public class PIDTurning implements PIDOutput {
 		while(angle>180.0||angle<-180.0)
 		{
 			if(angle>180.0)
-				angle -=180.0;
+				angle -=360.0;
 			else if(angle<-180.0)
-				angle+=180.0;
+				angle+=360.0;
 		}
 		return angle;
 	}
