@@ -7,10 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * A command to deposit a cube in autonomous
  */
 public class AutonomousScale extends CommandGroup {
 
+	/**
+	 * creates a new command to deposit cube in autonomous
+	 * 
+	 * @param plateLocations - a string representing the positions of the plates
+	 * @param startingPosition - a number representing the starting position of the robot in autonomous
+	 * @param crossFront - a boolean value representing whether the robot will cross in front of the switch if it must cross the field. <code>true</code> represents that the robot will cross between the player station wall and the switch. <code>false</code> means that the robot will cross between the switch and the platform. 
+	 * @param delay - the time in seconds the robot will wait before starting its routine
+	 * 
+	 * @see AutonomousSwitch
+	 */
     public AutonomousScale(String plateLocations, int startingPosition, boolean crossFront, double delay) {
        
     	Boolean ScaleLeft = null;
