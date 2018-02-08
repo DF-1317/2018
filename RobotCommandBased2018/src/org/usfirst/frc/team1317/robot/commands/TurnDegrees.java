@@ -31,10 +31,9 @@ public class TurnDegrees extends Command implements PIDOutput {
 	double degrees = 0;
 	double speed = 1.0;
 	
-	// Some other things I don't care about
-	boolean done = false;
-	double TurnRate;
+	// A variable representing the angle the robot starts at
 	double OriginalAngle;
+	//a variable representing the angle the robot should come to
 	double TargetAngle;
 	
 	/**
@@ -53,7 +52,6 @@ public class TurnDegrees extends Command implements PIDOutput {
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(kToleranceDegrees);
 		turnController.setContinuous(true);
-		TurnRate = 0.0;
 		turnController.setName("Drive System", "Rotate Controller");
 		LiveWindow.add(turnController);
 		this.degrees = degrees;
@@ -72,8 +70,9 @@ public class TurnDegrees extends Command implements PIDOutput {
 	@Override
 	protected void initialize()
 	{
-		OriginalAngle = gyroSensor.getAngle();
+		OriginalAngle = gyroSensor.pidGet();
 		TargetAngle = OriginalAngle + degrees;
+		TargetAngle = PIDTurning.equivalentAngle(TargetAngle);
 	}
 	
 	@Override
@@ -81,7 +80,6 @@ public class TurnDegrees extends Command implements PIDOutput {
 	{
 		turnController.setSetpoint(TargetAngle);
 		turnController.enable();
-		DriveTrain.driveCartesian(0, 0, speed*TurnRate);
 	}
 	
 	@Override
@@ -105,7 +103,7 @@ public class TurnDegrees extends Command implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		TurnRate = output;
+		DriveTrain.driveCartesian(0, 0, speed*output);
 	}
 
 }

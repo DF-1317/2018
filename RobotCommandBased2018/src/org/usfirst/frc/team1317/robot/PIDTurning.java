@@ -91,5 +91,23 @@ public class PIDTurning implements PIDOutput {
 	public void stop() {
 		DriveTrain.stop();
 	}
+	
+
+	/**
+	 * converts an angle in degrees to its equivalent angle that is between -180° and 180°
+	 * @param angle - an angle in degrees
+	 * @return an angle between -180° and 180°
+	 */
+	public static double equivalentAngle(double angle)
+	{
+		while(angle>180.0||angle<-180.0)
+		{
+			if(angle>180.0)
+				angle -=180.0;
+			else if(angle<-180.0)
+				angle+=180.0;
+		}
+		return angle;
+	}
 
 }

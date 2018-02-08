@@ -46,7 +46,6 @@ public class PIDDriveDistance implements PIDOutput, PIDSource {
 		}
 		else
 		{
-			driveTrain.driveCartesian(0, speed*moveSpeed, 0.0);
 			return false;
 		}
 	}
@@ -86,7 +85,7 @@ public class PIDDriveDistance implements PIDOutput, PIDSource {
 	
 	@Override
 	public void pidWrite(double output) {
-		moveSpeed = output;
+		driveTrain.driveCartesian(0, output*moveSpeed, 0.0);
 	}
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
