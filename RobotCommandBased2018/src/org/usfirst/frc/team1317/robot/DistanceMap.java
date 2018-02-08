@@ -12,26 +12,32 @@ public class DistanceMap {
 	public static final double WALL_TO_NULL_ZONE = 288.0;
 	public static final double NULL_ZONE_LENGTH = 72.0;
 	public static final double PLAYER_STATION_WIDTH = 264.0;
-	public static final double VAULT_WIDTH = 29.69; //the distance parallel to the player station wall from 
+	public static final double PORTAL_WIDTH = 29.69; //the distance parallel to the player station wall from 
 	public static final double NULL_ZONE_WIDTH = 95.25;
 	public static final double SIDE_WALL_TO_SWITCH = 85.25;
 	
 	//these are robot constants. They will need to be changed
-	public static final double ROBOT_WIDTH = 32;
-	public static final double ROBOT_LENGTH = 32;
+	public static final double ROBOT_WIDTH = 26.0+3.0;
+	public static final double ROBOT_LENGTH = 32.5+3.0;
 	
 	
 	
 	// These are constants for field distances to be used in autonomous paths
-	public static final double MIDWAY_AUTO_LINE = 50.0;
-	public static final double AUTO_LINE = 100.0;
-	public static final double HORIZONTAL_PAST_SWITCH = 100.0;
-	public static final double MIDWAY_AUTO_TO_SCALE = 300.0;
-	public static final double MIDWAY_AUTO_TO_SWITCH = 50.0;
-	public static final double APPROACH_SWITCH = 30.0;
-	public static final double APPROACH_SWITCH_SIDE = 30.0;
+	public static final double MIDWAY_OFFSET = 30.0;
+	public static final double COURT_WIDTH = PORTAL_WIDTH * 2 + PLAYER_STATION_WIDTH;
+	public static final double SWITCH_WIDTH = COURT_WIDTH - SIDE_WALL_TO_SWITCH * 2;
+	
+	public static final double AUTO_LINE = WALL_TO_AUTO_LINE - ROBOT_LENGTH + 2.0;
+	public static final double MIDWAY_AUTO_LINE = AUTO_LINE - MIDWAY_OFFSET;
+	public static final double HORIZONTAL_PAST_SWITCH = (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
+	public static final double CROSS_COURT = HORIZONTAL_PAST_SWITCH * 2;
+	public static final double MIDWAY_AUTO_TO_SCALE = WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE;
+	public static final double MIDWAY_AUTO_TO_SWITCH = WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
+	public static final double APPROACH_SWITCH = (CROSS_COURT - SWITCH_WIDTH)/2;
+	public static final double APPROACH_SWITCH_SIDE = WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
 	public static final double APPROACH_SCALE = 20.0;
-	public static final double CROSS_COURT = 250.0;
-	public static final double SWITCH_TO_SCALE = 100.0;
-	public static final double SWITCH_TO_MIDWAY_SCALE = 70.0;
+	public static final double SWITCH_TO_SCALE = WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
+	public static final double SWITCH_TO_MIDWAY_SCALE = SWITCH_TO_SCALE / 2;
+	public static final double CENTER_TO_SWITCH = SWITCH_WIDTH / 2 - 10.0;
+	
 }

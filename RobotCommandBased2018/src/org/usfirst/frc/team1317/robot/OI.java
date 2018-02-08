@@ -16,15 +16,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-	
-	
 	
 	//the first joystick from the left is the joystick used for turning the robot
 	public static final Joystick TurnJoystick = new Joystick(RobotMap.TurnJoystickPort);
@@ -32,9 +23,27 @@ public class OI {
 	public static final Joystick MoveJoystick = new Joystick(RobotMap.MoveJoystickPort);
 	//the third joystick from the left is the other joystick
 	public static final Joystick OtherJoystick = new Joystick(RobotMap.OtherJoystickPort);
-	
+	// The button that toggles the arm
 	public static final Button toggleArmButton = new JoystickButton(OtherJoystick, 2);
 	
+	/* ######################################################################
+	 * #                                                                    #
+	 * #   						    Buttons						    		#
+	 * #                                                                    #
+	 * ######################################################################
+	 *
+	 * ### Other Joystick ###
+	 * Button 1: Toggles the claw (Robot.teleopPeriodic)
+	 * Button 2: Toggles the arm (this)
+	 *
+	 * ### Turn Joystick ###
+	 * Button 12: Zeroes the gyro rotation (Robot.teleopPeriodic)
+	 *
+	 * ### Move Joystick ###
+	 * Button 1: Toggles the traction wheels (Robot.teleopPeriodic)
+	 * Button 11: Toggles variable speed and joystick twist turning (JoystickMecanumDrive.execute)
+	 *
+	 */
 	
 
 	// There are a few additional built in buttons you can use. Additionally,
