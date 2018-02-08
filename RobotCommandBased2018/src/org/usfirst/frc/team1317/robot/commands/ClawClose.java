@@ -7,14 +7,18 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * A command to close the claw
  */
 public class ClawClose extends Command {
 	
+	//see comments for ClawOpen
 	Claw claw;
 	Timer timer;
 	final double COMPLETION_TIME = 0.5;
 
+	/**
+	 * creates a command to close the claw
+	 */
     public ClawClose() {
     	super("ClawClose");
     	requires(Robot.claw);

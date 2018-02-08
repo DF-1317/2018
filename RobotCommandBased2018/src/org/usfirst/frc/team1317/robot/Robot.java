@@ -31,13 +31,21 @@ import org.usfirst.frc.team1317.sensors.UltrasonicHRLVMaxSonar;
  * project.
  */
 public class Robot extends TimedRobot {
-	//a class that represents the robot's drivetrain
+
+	
+	//classes representing Robot subsystems
 	public static final MecanumDriveTrainCAN mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
 	public static final Claw claw = new Claw();
-	public static OI m_oi;
+	
 	public static final Elevator el = new Elevator();
 	public static final Arm arm = new Arm();
+	
+	//Class representing joysticks and driver station controls
+	public static OI m_oi;
+	
+	
+	//positions that the robot can start in
 	public static final int Far_Left_Position = 0;
 	public static final int Left_Position = 1;
 	public static final int Center_Position = 2;
@@ -50,12 +58,16 @@ public class Robot extends TimedRobot {
     static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
     static final Severity            Sev             = Severity.INFORMATIONAL;
 	
+    
+    //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
 	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RobotMap.UltrasonicPort);
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
+	
+	//Choosers for autonomous mode
 	SendableChooser<String> m_chooser = new SendableChooser<>();
 	SendableChooser<Integer> positionChooser = new SendableChooser<>();
 	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
@@ -67,27 +79,33 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
+		//adds options to autonomous mode choosers
 		m_chooser.addDefault("Switch Auto", "Switch");
 		m_chooser.addObject("Scale Auto", "Scale");
 		m_chooser.addObject("DriveForward Auto", "Forward");
 		m_chooser.addObject("Exchange Auto", "Exchange");
+		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
+		//adds options to the starting position chooser
 		positionChooser.addObject("Far Left", Far_Left_Position);
 		positionChooser.addObject("Left", Left_Position);
-		positionChooser.addObject("Center", Center_Position);
+		positionChooser.addDefault("Center", Center_Position);
 		positionChooser.addObject("Right", Right_Position);
 		positionChooser.addObject("Far Right", Far_Right_Position);
+		//puts chooser on dashboard
 		SmartDashboard.putData("Position", positionChooser);
 		
 		log("Position: " + positionChooser);
 		
+		//adds options to choosing gwhich way to cross court
 		crossChooser.addObject("Front", true);
-		crossChooser.addObject("Behind", false);
+		crossChooser.addDefault("Behind", false);
 		SmartDashboard.putData("Cross", crossChooser);
 		
 		log("Cross: " + crossChooser);
 		
+		//puts a box to input the delay before starting autonomous
 		SmartDashboard.getNumber("Delay", 0);
 		
 		log("Init Complete");
@@ -100,6 +118,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		//reset the game data when the robot is disabled
 		GameData = "";
 	}
 
@@ -107,6 +126,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		//Automatically runs the scheduler (which runs the commands)
 		Scheduler.getInstance().run();
+		//periodically tries to get the GameData
 		GameData = DriverStation.getInstance().getGameSpecificMessage();
 	}
 
@@ -123,13 +143,22 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		//if the game data has not been found, try to get it again
 		if(GameData == ""||GameData == null)
 			GameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		//get options from dashboard
 		String mode = m_chooser.getSelected();
 		int position = positionChooser.getSelected();
 		boolean crossFront = crossChooser.getSelected();
 		double delay = SmartDashboard.getNumber("Delay", 0);
+		
+		log("Auto Mode: " + mode);
+		log("Position: " + position);
+		log("Cross Front?" + crossFront);
+		log("Delay: " + delay);
 
+		//The autonomous command variable should hold the command for the sellected mode. If the game data has not been found, drive forward
 		if(mode == "Forward"||GameData =="") {
 			m_autonomousCommand = new AutonomousForward(position, delay);
 		}
@@ -143,9 +172,10 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new AutonomousExchange(position, delay);
 		}
 
-		// schedule the autonomous command (example)
+		//start the autonomous command if it exists
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
+			log("Starting Auto Command");
 		}
 		
 		log("Autonomous Init Complete");
@@ -180,21 +210,27 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		//runs commands during teleop
 		Scheduler.getInstance().run();
+		//toggle the traction wheels if the trigger is pressed on the move joystick
 		if(OI.MoveJoystick.getRawButtonPressed(1))
 		{
 			mecanumDriveTrain.toggleTractionWheels();
 		}
+		
+		//zero the gyro sensor when button 12 is pressed on the turn joystick
 		if(OI.TurnJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.zeroGyro();
+			log("Gyro zeroed");
 		}
 
+		//toggle the claw when the trigger is pressed on the other joystick
 		if(OI.OtherJoystick.getRawButtonPressed(1))
 		{
 			claw.toggleClaw();
 		}
+		//toggle the arm when the arm button is pressed
 		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
-		
+		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
 		el.PrintEncoderPulses();
 		mecanumDriveTrain.printEncoderPulses();
@@ -230,6 +266,10 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
+	/**
+	 * Sends message to server host
+	 * @param msg message to be sent to server host
+	 */
 	public static void log(String msg) {
         try {
             SyslogMessage m = new SyslogMessage()
