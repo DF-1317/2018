@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
 	
 	public static final Elevator el = new Elevator();
 	public static final Arm arm = new Arm();
+	public static final Climber climb = new Climber();
 	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;
@@ -229,6 +230,14 @@ public class Robot extends TimedRobot {
 		}
 		//toggle the arm when the arm button is pressed
 		OI.toggleArmButton.whenPressed(new ArmToggle());
+		
+		if(OI.OtherJoystick.getPOV() == 0) {
+			climb.move(1);
+		} else if(OI.OtherJoystick.getPOV() == 180) {
+			climb.move(-1);
+		} else {
+			climb.move(0);
+		}
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
