@@ -18,6 +18,7 @@ public class PositionElevatorPID extends Command {
 	static final double kP = 0.01;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
+	static final double kF = 0.00;
 	static final double kToleranceInches = 1.0;
 	
 	// Objects representing other things
@@ -38,7 +39,7 @@ public class PositionElevatorPID extends Command {
     	requires(Robot.el);
     	motor = Robot.el.ElevatorMotor;
     	encoder = Robot.el.ElevatorEncoder;
-    	moveController = new PIDController(kP, kI, kD, 0.0, encoder, motor);
+    	moveController = new PIDController(kP, kI, kD, kF, encoder, motor);
     	moveController.setOutputRange(-1.0, 1.0);
     	moveController.setAbsoluteTolerance(kToleranceInches);
     	moveController.setName("Elevator", "Height Controller");
