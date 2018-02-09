@@ -14,12 +14,20 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * 
+ * this class represents the specific drive train used on Digital Fusion's 2018 robot.
+ * The robot uses TalonSRX motor controllers over CAN.
+ * 
+ * @see MecanumDriveTrain
+ *
+ */
 public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	
-	
+	//constants representing encoder and wheel properties.
 	public static final int TICKS_PER_REVOLUTION = 4096;
 	public static final double WHEEL_CIRCUMFERENCE = 6*Math.PI;
-	
+	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
 	// creates objects representing the Motor Controllers at the right ports
 	public WPI_TalonSRX FLMotor;
@@ -35,13 +43,16 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	DigitalInput EncoderChannelA;
 	DigitalInput EncoderChannelB;
 	
+	//piston for moving 
 	Solenoid Piston;
 	
+	//gyro sensors
 	public AHRS navX = new AHRS(Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
 	
-	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
-	
+	/**
+	 * creates a new MecanumDriveTrainObject. This constructor also calls <code>initialize</code>, so it does not need to be called again.
+	 */
 	public MecanumDriveTrainCAN() {
 		super();
 		//set ups the motor controllers
@@ -55,8 +66,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		BLMotor.setInverted(false);
 		FRMotor.setInverted(true);
 		// set up base class
-		Initialize(FLMotor,FRMotor,BLMotor,BRMotor);
-		//set up the encoders
+		initialize(FLMotor,FRMotor,BLMotor,BRMotor);
+		//set up the encoders attached to the RoboRIO
 		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
 		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
 		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
@@ -71,14 +82,19 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		BLEncoder.setMinRate(10);
 		BLEncoder.setSamplesToAverage(7);
 		
+		//set up solenoid
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
 
+		//configure encoders attached to Talons
 		FLMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		FLMotor.setSensorPhase(true);
 		FRMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		FRMotor.setSensorPhase(true);
 	}
 	
+	/**
+	 * puts data from the encoder on the SmartDashboard and prints it to the console
+	 */
 	public void printEncoderPulses()
 	{
 		//System.out.println("FL: " + FLEncoder.get());
@@ -95,36 +111,59 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		System.out.println("BL: " + BLEncoder.get());
 		//System.out.println("BR: " + BREncoder.get());
 	}
-	
+	/**
+	 * puts data from the analog gyro to the SmartDashboard
+	 */
 	public void printAnalogGyroOutput()
 	{
 		SmartDashboard.putNumber("Analog Gyro", gyro.getAngle());
 	}
 	
+	/**
+	 * puts the yaw angle from the NavX MXP to the SmartDashboard
+	 */
 	public void printNavXYawOutput()
 	{
 		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
 	}
 	
+	/**
+	 * Resets the distance the encoders say they have traveled
+	 * Currently only works for encoders attached to Talons
+	 */
 	public void resetEncoderDistance()
 	{
 		FLMotor.setSelectedSensorPosition(0,0,0);
     	FRMotor.setSelectedSensorPosition(0,0,0);
 	}
 
+	/**
+	 * Resets the NavX's Yaw angle to zero
+	 */
 	public void zeroGyro() {
 		navX.zeroYaw();
 	}
 	
+	
+	/**
+	 * lowers the traction wheels on the drive train
+	 */
 	public void lowerTractionWheels()
 	{
 		Piston.set(true);
 	}
+	
+	/**
+	 * raises the traction wheels on the drive train
+	 */
 	public void raiseTractionWheels()
 	{
 		Piston.set(false);
 	}
 	
+	/**
+	 * toggles whether the traction wheels are up of down
+	 */
 	public void toggleTractionWheels()
 	{
 		Piston.set(!Piston.get());
