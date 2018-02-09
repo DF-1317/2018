@@ -35,6 +35,8 @@ public class OI {
 	 * ### Other Joystick ###
 	 * Button 1: Toggles the claw (Robot.teleopPeriodic)
 	 * Button 2: Toggles the arm (this)
+	 * POV Up: Climb
+	 * POV Down: Un-climb
 	 *
 	 * ### Turn Joystick ###
 	 * Button 12: Zeroes the gyro rotation (Robot.teleopPeriodic)
