@@ -21,8 +21,8 @@ public class DistanceMap {
 	public static final double SIDE_WALL_TO_SWITCH = 85.25;
 	
 	//these are robot constants. They will need to be changed
-	public static final double ROBOT_WIDTH = 26.0+3.0;
-	public static final double ROBOT_LENGTH = 32.5+3.0;
+	public static final double ROBOT_WIDTH = 26.0+7.0;
+	public static final double ROBOT_LENGTH = 32.5+7.0;
 	
 	
 	
