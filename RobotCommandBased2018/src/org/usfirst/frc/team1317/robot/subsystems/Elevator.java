@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Elevator extends Subsystem {
 	// create objects representing the motor controlling the elevator
-	WPI_TalonSRX ElevatorMotor;
+	public WPI_TalonSRX ElevatorMotor;
 	
 	// encoders
-	Encoder ElevatorEncoder;
+	public Encoder ElevatorEncoder;
 	
 	public Elevator() {
 		super();
