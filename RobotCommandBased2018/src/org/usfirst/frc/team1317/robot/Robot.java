@@ -293,9 +293,9 @@ public class Robot extends TimedRobot {
 		}
 		// Test climb motor (when added to robot and class made)
 		if(OI.OtherJoystick.getRawButton(5)) {
-			
+			climb.move(speed);
 		} else {
-			
+			climb.move(0);
 		}
 		// Test claw (toggle)
 		if(OI.OtherJoystick.getRawButtonPressed(6)) {
