@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- *
+ * Command that moves the elevator to a specific position
  */
 public class PositionElevatorPID extends Command {
 
@@ -19,7 +19,7 @@ public class PositionElevatorPID extends Command {
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kF = 0.00;
-	static final double kToleranceInches = 1.0;
+	static final int kTolerance = 200;
 	
 	// Objects representing other things
 	PIDController moveController;
@@ -41,7 +41,7 @@ public class PositionElevatorPID extends Command {
     	encoder = Robot.el.ElevatorEncoder;
     	moveController = new PIDController(kP, kI, kD, kF, encoder, motor);
     	moveController.setOutputRange(-1.0, 1.0);
-    	moveController.setAbsoluteTolerance(kToleranceInches);
+    	moveController.setAbsoluteTolerance(kTolerance);
     	moveController.setName("Elevator", "Height Controller");
     	LiveWindow.add(moveController);
     	this.position = position;
@@ -50,7 +50,6 @@ public class PositionElevatorPID extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
