@@ -24,6 +24,7 @@ public class RobotMap {
 	
 	public final static int ElevatorPort = 5;
 	public final static int ArmMotor = 6;
+	public static final int ClimberPort = 7;
 	
 	//joystick ports
 	public final static int MoveJoystickPort = 2;

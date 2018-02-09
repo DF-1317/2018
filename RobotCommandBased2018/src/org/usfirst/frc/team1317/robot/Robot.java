@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
 	
 	public static final Elevator el = new Elevator();
 	public static final Arm arm = new Arm();
+	public static final Climber climb = new Climber();
 	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;
@@ -230,6 +231,14 @@ public class Robot extends TimedRobot {
 		//toggle the arm when the arm button is pressed
 		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
+		if(OI.OtherJoystick.getPOV() == 0) {
+			climb.move(1);
+		} else if(OI.OtherJoystick.getPOV() == 180) {
+			climb.move(-1);
+		} else {
+			climb.move(0);
+		}
+		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
 		el.PrintEncoderPulses();
@@ -247,7 +256,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		double speed = 0.3;
 		
-		if(OI.MoveJoystick.getRawButton(1)) {
+		if(OI.MoveJoystick.getRawButton(1) || OI.OtherJoystick.getRawButton(1)) {
 			speed = -0.3;
 		} else {
 			speed = 0.3;
@@ -255,14 +264,42 @@ public class Robot extends TimedRobot {
 		
 		if(OI.MoveJoystick.getRawButton(5)) {
 			mecanumDriveTrain.FLMotor.set(speed);
-		} else if(OI.MoveJoystick.getRawButton(6)) {
+		}
+		if(OI.MoveJoystick.getRawButton(6)) {
 			mecanumDriveTrain.FRMotor.set(speed);
-		} else if(OI.MoveJoystick.getRawButton(3)) {
+		}
+		if(OI.MoveJoystick.getRawButton(3)) {
 			mecanumDriveTrain.BLMotor.set(speed);
-		} else if(OI.MoveJoystick.getRawButton(4)) {
+		}
+		if(OI.MoveJoystick.getRawButton(4)) {
 			mecanumDriveTrain.BRMotor.set(speed);
-		} else {
+		}
+		if(!(OI.MoveJoystick.getRawButton(3) || OI.MoveJoystick.getRawButton(4) ||
+				OI.MoveJoystick.getRawButton(5) || OI.MoveJoystick.getRawButton(6))){
 			mecanumDriveTrain.stop();
+		}
+		
+		// Test arm motor
+		if(OI.OtherJoystick.getRawButton(3)) {
+			arm.move(speed);
+		} else {
+			arm.move(0);
+		}
+		// Test elevator motor
+		if(OI.OtherJoystick.getRawButton(4)) {
+			el.move(speed);
+		} else {
+			el.move(0);
+		}
+		// Test climb motor (when added to robot and class made)
+		if(OI.OtherJoystick.getRawButton(5)) {
+			climb.move(speed);
+		} else {
+			climb.move(0);
+		}
+		// Test claw (toggle)
+		if(OI.OtherJoystick.getRawButtonPressed(6)) {
+			claw.toggleClaw();
 		}
 	}
 	
