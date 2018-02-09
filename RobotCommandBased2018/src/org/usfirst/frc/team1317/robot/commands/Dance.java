@@ -59,7 +59,7 @@ public class Dance extends Command {
     		claw.closeClaw();
     		climber.move(-1);
     	}
-    	else if(AutoTimer.get() < 4) {
+    	else if(AutoTimer.get() < 3) {
     		AutoTimer.reset();
     	}
     		
