@@ -54,6 +54,11 @@ public class MecanumDriveTrain extends Subsystem {
 		DriveTrain.driveCartesian(ySpeed, xSpeed, zRotation);
 	}
 	
+	public void driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle)
+	{
+		DriveTrain.driveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
+	}
+	
 	/**
 	 * drives the robot using polar coordinates
 	 * 

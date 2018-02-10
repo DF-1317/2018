@@ -23,11 +23,15 @@ public class JoystickMecanumDrive extends Command {
 	double turnModifier = 0;
 	double speedModifier = 0;
 	
+	boolean isAlignedEnabled;
+	double gyroPosition;
+	
 	public JoystickMecanumDrive() {
 		//set up the base class
 		super("JoystickMecanumDrive");
 		//this command requires the mecanum drive train
 		requires(Robot.mecanumDriveTrain);
+		isAlignedEnabled = false;
 	}
 
 	// Called just before this Command runs the first time
@@ -52,15 +56,26 @@ public class JoystickMecanumDrive extends Command {
 			speedModifier = 1;
 		}
 		
+		if(isAlignedEnabled) {
+			gyroPosition = Robot.mecanumDriveTrain.navX.getAngle();
+		} else {
+			gyroPosition = 0;
+		}
+		
 		//the "MoveJoystick" causes the robot to move forward, backward, right, and left
 		//the "TurnJoystick" causes the robot to turn when the joystick is moved left and right
 		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX() * speedModifier, (OI.TurnJoystick.getX() + turnModifier) *
-				speedModifier, -OI.MoveJoystick.getY() * speedModifier);
+				speedModifier, -OI.MoveJoystick.getY() * speedModifier, gyroPosition);
 		
 		// Toggle extra control options
 		if(OI.MoveJoystick.getRawButtonPressed(11)) {
 			isTwistEnabled = !isTwistEnabled;
 			Robot.log("Control mode toggled. Advanced controls: " + isTwistEnabled);
+		}
+		
+		if(OI.MoveJoystick.getRawButtonPressed(10)) {
+			isAlignedEnabled = !isAlignedEnabled;
+			Robot.log("Control mode toggled. Movement aligned to field: " + isAlignedEnabled);
 		}
 	}
 
