@@ -11,13 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team1317.robot.OI;
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.Logger;
 
 /**
  * This command attaches joystick input to the drive train
  */
 
 public class JoystickMecanumDrive extends Command {
-	
+
+	static final Logger syslog = new Logger("1317", JoystickMecanumDrive.class.getSimpleName());
+
 	// variables storing values for button toggle
 	boolean isTwistEnabled = false;
 	double turnModifier = 0;
@@ -28,6 +31,7 @@ public class JoystickMecanumDrive extends Command {
 		super("JoystickMecanumDrive");
 		//this command requires the mecanum drive train
 		requires(Robot.mecanumDriveTrain);
+		syslog.log("JoystickMecanumDrive constructed");
 	}
 
 	// Called just before this Command runs the first time
@@ -60,7 +64,7 @@ public class JoystickMecanumDrive extends Command {
 		// Toggle extra control options
 		if(OI.MoveJoystick.getRawButtonPressed(11)) {
 			isTwistEnabled = !isTwistEnabled;
-			Robot.log("Control mode toggled. Advanced controls: " + isTwistEnabled);
+			syslog.log("Control mode toggled. Advanced controls: " + isTwistEnabled);
 		}
 	}
 
