@@ -13,7 +13,7 @@ public class PIDTurning implements PIDOutput {
 	MecanumDriveTrain DriveTrain;
 	AHRS gyroSensor;
 	PIDController turnController;
-	static final double kP = 0.01;
+	static final double kP = 0.02;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kToleranceDegrees = 5.0;

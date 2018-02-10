@@ -7,7 +7,7 @@ import com.cloudbees.syslog.Severity;
 import com.cloudbees.syslog.SyslogMessage;
 import com.cloudbees.syslog.MessageFormat;
 
-class Logger {
+public class Logger {
     // Syslog sender
     static UdpSyslogMessageSender syslog;
 
@@ -22,12 +22,16 @@ class Logger {
     int     interval;
     int     count;
 
-    public Logger(String app, String proc, int interval = 1) {
+    public Logger(String app, String proc, int interval) {
         this.app        = app;
         this.proc       = proc;
         this.interval   = (0 < interval) ? interval : 1;
         this.count      = 0;
     } // Logger
+    
+    public Logger(String app, String proc) {
+    	this(app, proc, 1);
+    }
 
     private static void init() {
         if (! needInit) return;

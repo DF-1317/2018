@@ -60,7 +60,7 @@ public class PIDDriveDistance implements PIDOutput, PIDSource {
 		lastTime=Timer.getFPGATimestamp();
 	}
 	
-	void calculateDistance()
+	public double calculateDistance()
 	{
 		//gets the current time
 		double currentTime = Timer.getFPGATimestamp();
@@ -80,7 +80,7 @@ public class PIDDriveDistance implements PIDOutput, PIDSource {
 		oldVelocity = velocity;
 		oldAcceleration = currentAcceleration;
 		lastTime = currentTime;
-
+		return distancetravelled;
 	}
 	
 	@Override

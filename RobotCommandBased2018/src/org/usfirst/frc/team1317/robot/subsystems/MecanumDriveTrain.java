@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.*;
 public class MecanumDriveTrain extends Subsystem {
 
 	//object representing drivetrain
-	MecanumDrive DriveTrain;
+	protected MecanumDrive DriveTrain;
+	
 
 	public MecanumDriveTrain()
 	{
@@ -78,6 +79,7 @@ public class MecanumDriveTrain extends Subsystem {
 	{
 		DriveTrain.stopMotor();
 	}
+	
 	
 	@Override
 	public void initDefaultCommand()

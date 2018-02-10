@@ -13,7 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 /**
  * This command turns the robot a certain number of degrees and specific speed
  */
-public class TurnDegrees extends Command implements PIDOutput {
+public class TurnToAngle extends Command implements PIDOutput {
 	
 	
 	// Objects representing the drive train, gyroscope, and a PID controller
@@ -28,20 +28,16 @@ public class TurnDegrees extends Command implements PIDOutput {
 	static final double kToleranceDegrees = 1.0;
 	
 	// Variables representing speed and angle to turn
-	double degrees = 0.0;
+	double TargetAngle = 0.0;
 	double speed = 1.0;
 	
-	// A variable representing the angle the robot starts at
-	double OriginalAngle;
-	//a variable representing the angle the robot should come to
-	double TargetAngle;
 	
 	/**
 	 * The constructor for the command
-	 * @param degrees - number of degrees to turn. Positive is clockwise.
+	 * @param degrees - The angle to turn to in degrees
 	 * @param speed - speed from 0 to 1 to turn at.
 	 */
-	public TurnDegrees(double degrees, double speed)
+	public TurnToAngle(double degrees, double speed)
 	{
 		super("TurnDegrees");
 		requires(Robot.mecanumDriveTrain);
@@ -52,9 +48,9 @@ public class TurnDegrees extends Command implements PIDOutput {
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(kToleranceDegrees);
 		turnController.setContinuous(true);
-		turnController.setName("Drive System", "Rotate Controller");
+		turnController.setName("Drive System", "Rotate Controller2");
 		LiveWindow.add(turnController);
-		this.degrees = degrees;
+		this.TargetAngle = degrees;
 		this.speed = speed;
 		setInterruptible(true);
 	}
@@ -63,18 +59,14 @@ public class TurnDegrees extends Command implements PIDOutput {
 	 * Overloaded constructor with a default speed of 0.7
 	 * @param degrees number of degrees to turn. Positive is clockwise
 	 */
-	public TurnDegrees(double degrees) {
+	public TurnToAngle(double degrees) {
 		this(degrees, 0.7);
 	}
 	
 	@Override
 	protected void initialize()
 	{
-		OriginalAngle = gyroSensor.pidGet();
-		Robot.log("Original Angle: " + OriginalAngle);
-		TargetAngle = OriginalAngle + degrees;
-		TargetAngle = PIDTurning.equivalentAngle(TargetAngle);
-		Robot.log("Target Angle: " + TargetAngle);
+		
 	}
 	
 	@Override

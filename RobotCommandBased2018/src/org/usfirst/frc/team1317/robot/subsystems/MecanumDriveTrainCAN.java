@@ -29,6 +29,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	public static final double WHEEL_CIRCUMFERENCE = 6*Math.PI;
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
+	
+	
 	// creates objects representing the Motor Controllers at the right ports
 	public WPI_TalonSRX FLMotor;
 	public WPI_TalonSRX FRMotor;
@@ -103,9 +105,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		SmartDashboard.putNumber("BL Raw Encoder Position", BLEncoder.getRaw());
 		SmartDashboard.putNumber("BL Encoder Speed", BLEncoder.getRate());
 		SmartDashboard.putNumber("BL Percent Motor Output", BLMotor.getMotorOutputPercent());
-		//System.out.println("FR: " + FREncoder.get());
-		System.out.println("BL: " + BLEncoder.get());
-		//System.out.println("BR: " + BREncoder.get());
 	}
 	/**
 	 * puts data from the analog gyro to the SmartDashboard
@@ -121,6 +120,14 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	public void printNavXYawOutput()
 	{
 		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
+		SmartDashboard.putNumber("NavX Yaw PIDget", navX.pidGet());
+	}
+	
+	public void printNavXDistance()
+	{
+		SmartDashboard.putNumber("Distance X", navX.getDisplacementX());
+		SmartDashboard.putNumber("Distance Y", navX.getDisplacementY());
+		SmartDashboard.putNumber("Distance Z", navX.getDisplacementZ());
 	}
 	
 	/**
@@ -138,6 +145,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	 */
 	public void zeroGyro() {
 		navX.zeroYaw();
+	}
+	
+	public void resetNavXDistance() {
+		navX.resetDisplacement();
 	}
 	
 	
@@ -164,5 +175,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	{
 		Piston.set(!Piston.get());
 	}
+	
+
 
 }
