@@ -22,7 +22,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	PIDController turnController;
 	
 	// Some things that do things
-	static final double kP = 0.015;
+	static final double kP = 0.02;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kToleranceDegrees = 1.0;
