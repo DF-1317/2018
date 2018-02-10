@@ -120,6 +120,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	public void printNavXYawOutput()
 	{
 		SmartDashboard.putNumber("NavX Yaw", navX.getAngle());
+		SmartDashboard.putNumber("NavX Yaw PIDget", navX.pidGet());
 	}
 	
 	public void printNavXDistance()

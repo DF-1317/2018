@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
 	SendableChooser<Integer> positionChooser = new SendableChooser<>();
 	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
 	
-	Command TurnCommand = new TurnDegrees(90.0);
+	Command TurnCommand = new TurnToAngle(90.0);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Scale Auto", "Scale");
 		m_chooser.addObject("DriveForward Auto", "Forward");
 		m_chooser.addObject("Exchange Auto", "Exchange");
+		m_chooser.addObject("Turn Testing", "TestTurn");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -167,6 +168,7 @@ public class Robot extends TimedRobot {
 		boolean crossFront = crossChooser.getSelected();
 		double delay = SmartDashboard.getNumber("Delay", 0);
 		
+		log("Game Data: " + GameData);
 		log("Auto Mode: " + mode);
 		log("Position: " + position);
 		log("Cross Front?" + crossFront);
@@ -185,6 +187,9 @@ public class Robot extends TimedRobot {
 		else if(mode == "Exchange") {
 			m_autonomousCommand = new AutonomousExchange(position, delay);
 		}
+		else if(mode == "TestTurn") {
+			m_autonomousCommand = TurnCommand;
+		}
 
 		//start the autonomous command if it exists
 		if (m_autonomousCommand != null) {
@@ -202,6 +207,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		//runs commands during autonomous
 		Scheduler.getInstance().run();
+		mecanumDriveTrain.printNavXYawOutput();
 	}
 
 	@Override
@@ -320,6 +326,7 @@ public class Robot extends TimedRobot {
 		if(OI.OtherJoystick.getRawButtonPressed(6)) {
 			claw.toggleClaw();
 		}
+		OI.testTurnButton.whenPressed(TurnCommand);
 	}
 	
 	/**
