@@ -99,7 +99,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		DriveTrain.driveCartesian(0, speed*output, 0.0);
+		DriveTrain.driveCartesian(0, 0.0, speed*output);
 	}
 
 }
