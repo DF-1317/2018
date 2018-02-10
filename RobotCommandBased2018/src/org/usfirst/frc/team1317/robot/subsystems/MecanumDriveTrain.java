@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team1317.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.*;
 import org.usfirst.frc.team1317.robot.commands.JoystickMecanumDrive;
@@ -20,6 +21,7 @@ public class MecanumDriveTrain extends Subsystem {
 
 	//object representing drivetrain
 	MecanumDrive DriveTrain;
+	
 
 	public MecanumDriveTrain()
 	{
@@ -73,6 +75,7 @@ public class MecanumDriveTrain extends Subsystem {
 	{
 		DriveTrain.stopMotor();
 	}
+	
 	
 	@Override
 	public void initDefaultCommand()

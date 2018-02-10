@@ -75,6 +75,8 @@ public class Robot extends TimedRobot {
 	SendableChooser<String> m_chooser = new SendableChooser<>();
 	SendableChooser<Integer> positionChooser = new SendableChooser<>();
 	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
+	
+	Command TurnCommand = new TurnDegrees(90.0);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -84,6 +86,9 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		// Set logging port
 	    syslog.setSyslogServerPort(5800);
+	    syslog.setSyslogServerHostname(ServerHost);
+	    syslog.setMessageFormat(MessageFormat.RFC_5424);
+	    syslog.setDefaultMessageHostname("1317");
 	    
 		m_oi = new OI();
 		//adds options to autonomous mode choosers
@@ -153,7 +158,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//if the game data has not been found, try to get it again
-		if(GameData == ""||GameData == null)
+		if(GameData == null||GameData == "")
 			GameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		//get options from dashboard
@@ -208,6 +213,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		log("Canceld Autonomous command");
 		
 		log("Teleop Init Complete");
 	}
@@ -239,6 +245,10 @@ public class Robot extends TimedRobot {
 		//toggle the arm when the arm button is pressed
 		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
+		if(OI.MoveJoystick.getRawButtonPressed(12)) {
+			mecanumDriveTrain.resetNavXDistance();
+		}
+		
 		if(OI.OtherJoystick.getPOV() == 0) {
 			climb.move(1);
 		} else if(OI.OtherJoystick.getPOV() == 180) {
@@ -249,8 +259,10 @@ public class Robot extends TimedRobot {
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
+		mecanumDriveTrain.printNavXDistance();
 		el.PrintEncoderPulses();
 		mecanumDriveTrain.printEncoderPulses();
+		mecanumDriveTrain.resetNavXDistance();
 		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getRangeMM());
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
@@ -282,10 +294,9 @@ public class Robot extends TimedRobot {
 		if(OI.MoveJoystick.getRawButton(4)) {
 			mecanumDriveTrain.BRMotor.set(speed);
 		}
-		if(!(OI.MoveJoystick.getRawButton(3) || OI.MoveJoystick.getRawButton(4) ||
-				OI.MoveJoystick.getRawButton(5) || OI.MoveJoystick.getRawButton(6))){
+		if(OI.MoveJoystick.getRawButton(2)){
 			mecanumDriveTrain.stop();
-		}
+		} 
 		
 		// Test arm motor
 		if(OI.OtherJoystick.getRawButton(3)) {
