@@ -230,7 +230,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		//zero the gyro sensor when button 12 is pressed on the turn joystick
-		if(OI.TurnJoystick.getRawButtonPressed(12)) {
+		if(OI.TurnJoystick.getRawButtonPressed(9)) {
 			mecanumDriveTrain.zeroGyro();
 			log("Gyro zeroed");
 		}
@@ -269,7 +269,7 @@ public class Robot extends TimedRobot {
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
-		log(joyMsg);
+		//log(joyMsg);
 	}
 
 	/**

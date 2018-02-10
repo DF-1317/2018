@@ -93,7 +93,7 @@ public class TurnDegrees extends Command implements PIDOutput {
 	protected void end()
 	{
 		turnController.disable();
-		DriveTrain.stop();
+		DriveTrain.stop();	
 		Robot.log("Done Turning");
 		Robot.log("Current Angle: " + gyroSensor.pidGet());
 	}
@@ -107,7 +107,7 @@ public class TurnDegrees extends Command implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		DriveTrain.driveCartesian(0, speed*output, 0.0);
+		DriveTrain.driveCartesian(0, 0.0, speed*output);
 	}
 
 }

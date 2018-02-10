@@ -56,20 +56,19 @@ public class JoystickMecanumDrive extends Command {
 			speedModifier = (OI.MoveJoystick.getThrottle() - 1) / -2;
 		} else {
 			// Disables joystick twist turning and throttle adjustment
-			turnModifier = 0;
-			speedModifier = 1;
+			turnModifier = 0.0;
+			speedModifier = 1.0;
 		}
 		
 		if(isAlignedEnabled) {
 			gyroPosition = Robot.mecanumDriveTrain.navX.getAngle();
 		} else {
-			gyroPosition = 0;
+			gyroPosition = 0.0;
 		}
 		
 		//the "MoveJoystick" causes the robot to move forward, backward, right, and left
 		//the "TurnJoystick" causes the robot to turn when the joystick is moved left and right
-		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX() * speedModifier, (OI.TurnJoystick.getX() + turnModifier) *
-				speedModifier, -OI.MoveJoystick.getY() * speedModifier, gyroPosition);
+		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX() * speedModifier, (OI.MoveJoystick.getY()*speedModifier), (OI.TurnJoystick.getX()+ turnModifier)*speedModifier,gyroPosition);
 		
 		// Toggle extra control options
 		if(OI.MoveJoystick.getRawButtonPressed(11)) {

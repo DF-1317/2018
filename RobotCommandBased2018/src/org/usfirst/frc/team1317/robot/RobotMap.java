@@ -25,9 +25,9 @@ public class RobotMap {
 
 	//The ports for the drive train motors
 	public final static int FLMotorPort = 2;
-	public final static int FRMotorPort = 3;
+	public final static int FRMotorPort = 1;
 	public final static int BLMotorPort = 4;
-	public final static int BRMotorPort = 1;
+	public final static int BRMotorPort = 3;
 	
 	public final static int ElevatorPort = 5;
 	public final static int ArmMotor = 6;

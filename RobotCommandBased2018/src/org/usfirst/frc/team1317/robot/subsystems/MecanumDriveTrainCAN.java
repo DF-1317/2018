@@ -61,10 +61,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		BLMotor = new WPI_TalonSRX(RobotMap.BLMotorPort);
 		BRMotor = new WPI_TalonSRX(RobotMap.BRMotorPort);
 		// Some of the motors need to be told the other direction is forward
-		BRMotor.setInverted(true);
+		BRMotor.setInverted(false);
 		FLMotor.setInverted(false);
 		BLMotor.setInverted(false);
-		FRMotor.setInverted(true);
+		FRMotor.setInverted(false);
 		// set up base class
 		initialize(FLMotor,FRMotor,BLMotor,BRMotor);
 		//set up the encoders attached to the RoboRIO
