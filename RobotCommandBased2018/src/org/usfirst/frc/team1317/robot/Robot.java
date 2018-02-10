@@ -58,9 +58,10 @@ public class Robot extends TimedRobot {
 	
 	// Syslog sender
 	static UdpSyslogMessageSender syslog = new UdpSyslogMessageSender();
-    static final String         ServerHost      = "10.13.17.6";                 // address of the central log server
-    static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
-    static final Severity            Sev             = Severity.INFORMATIONAL;
+    static final String          ServerHost      = "10.13.17.6";                // address of the central log server
+	static final int			 ServerPort		 = 5800;						// port for logging
+    static final Facility        Fac             = Facility.LOCAL0;             // what facility is labeled on the msg
+    static final Severity        Sev             = Severity.INFORMATIONAL;		// class of our messages
 	
     
     //Data telling where our plates for the switches and scale
@@ -83,7 +84,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// Set logging port
-	    syslog.setSyslogServerPort(5800);
+	    syslog.setSyslogServerPort(ServerPort);
+	    log("Entering robotInit");
 	    
 		m_oi = new OI();
 		//adds options to autonomous mode choosers
@@ -152,6 +154,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		log("Entering autonomousInit");
 		//if the game data has not been found, try to get it again
 		if(GameData == ""||GameData == null)
 			GameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -201,6 +204,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		log("Entering teleopInit");
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -255,6 +259,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
+		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
+		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
+		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
+		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
+		log(joyMsg);
 	}
 
 	/**
@@ -262,6 +271,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		log("Entering testPeriodic");
 		double speed = 0.3;
 		
 		if(OI.MoveJoystick.getRawButton(1) || OI.OtherJoystick.getRawButton(1)) {
