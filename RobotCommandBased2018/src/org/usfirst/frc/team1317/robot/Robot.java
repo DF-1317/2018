@@ -13,6 +13,7 @@ import com.cloudbees.syslog.Severity;
 import com.cloudbees.syslog.SyslogMessage;
 import com.cloudbees.syslog.MessageFormat;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -42,6 +43,8 @@ public class Robot extends TimedRobot {
 	public static final Arm arm = new Arm();
 	public static final Climber climb = new Climber();
 	
+	public static final Compressor compressor = new Compressor();
+	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;
 	
@@ -55,7 +58,7 @@ public class Robot extends TimedRobot {
 	
 	// Syslog sender
 	static UdpSyslogMessageSender syslog = new UdpSyslogMessageSender();
-    static final String         ServerHost      = "10.40.0.164";                 // address of the central log server
+    static final String         ServerHost      = "10.13.17.6";                 // address of the central log server
     static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
     static final Severity            Sev             = Severity.INFORMATIONAL;
 	
@@ -79,6 +82,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// Set logging port
+	    syslog.setSyslogServerPort(5800);
+	    
 		m_oi = new OI();
 		//adds options to autonomous mode choosers
 		m_chooser.addDefault("Switch Auto", "Switch");
@@ -108,6 +114,8 @@ public class Robot extends TimedRobot {
 		
 		//puts a box to input the delay before starting autonomous
 		SmartDashboard.getNumber("Delay", 0);
+		
+		compressor.stop();
 		
 		log("Init Complete");
 	}

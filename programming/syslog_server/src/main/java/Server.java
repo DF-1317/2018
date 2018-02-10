@@ -30,7 +30,7 @@ import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
  */
 public class Server {
     //static final int            ServerPort      = SyslogConstants.SYSLOG_PORT_DEFAULT;
-    static final int            ServerPort      = 10000;  // use a non-default port that should not have security issues
+    static final int            ServerPort      = 5800;  // use a non-default port that should not have security issues
 
     /*
      * Where execution starts. We tell the user we have started.

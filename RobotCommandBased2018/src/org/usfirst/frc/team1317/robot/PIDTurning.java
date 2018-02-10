@@ -94,9 +94,9 @@ public class PIDTurning implements PIDOutput {
 	
 
 	/**
-	 * converts an angle in degrees to its equivalent angle that is between -180° and 180°
+	 * converts an angle in degrees to its equivalent angle that is between -180 degrees and 180 degrees
 	 * @param angle - an angle in degrees
-	 * @return an angle between -180° and 180°
+	 * @return an angle between -180 degrees and 180 degrees
 	 */
 	public static double equivalentAngle(double angle)
 	{

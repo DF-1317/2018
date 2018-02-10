@@ -40,8 +40,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	//Encoder FREncoder;
 	Encoder BLEncoder;
 	//Encoder BREncoder;
-	DigitalInput EncoderChannelA;
-	DigitalInput EncoderChannelB;
 	
 	//piston for moving 
 	Solenoid Piston;
@@ -72,8 +70,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
 		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
 		//BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
-		EncoderChannelA = new DigitalInput(0);
-		EncoderChannelB = new DigitalInput(1);
 		//FLEncoder.setDistancePerPulse(distancePerPulse);
 		//FREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setDistancePerPulse(distancePerPulse);

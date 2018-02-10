@@ -38,7 +38,7 @@ import com.cloudbees.syslog.MessageFormat;
  *  $RepeatedMsgReduction  off
  */
 public class Logger {
-    static final String         ServerHost      = "10.40.2.198";                 // address of the central log server
+    static final String         ServerHost      = "10.13.17.6";                 // address of the central log server
     static final Facility            Fac             = Facility.LOCAL0;              // what facility is labeled on the msg
     static final Severity            Sev             = Severity.INFORMATIONAL;
     UdpSyslogMessageSender      sl;
@@ -51,7 +51,7 @@ public class Logger {
     public Logger() {
         sl = new UdpSyslogMessageSender();
         sl.setSyslogServerHostname(ServerHost);
-        sl.setSyslogServerPort(10000);  // optional
+        sl.setSyslogServerPort(5800);  // optional
         sl.setMessageFormat(MessageFormat.RFC_5424);
 
         sl.setDefaultMessageHostname("jpl-PC");

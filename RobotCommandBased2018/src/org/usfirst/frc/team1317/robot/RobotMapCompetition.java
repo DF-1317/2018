@@ -5,11 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-/*
- * ####################################
- * #  THIS IS THE TEST CONFIGURATION  #
- * ####################################
- */
 package org.usfirst.frc.team1317.robot;
 
 /**
@@ -17,17 +12,15 @@ package org.usfirst.frc.team1317.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
- * 
- * This is the test configuration
  */
-public class RobotMap {
-	//this is the test configuration
+public class RobotMapCompetition {
+	
 
 	//The ports for the drive train motors
-	public final static int FLMotorPort = 2;
-	public final static int FRMotorPort = 3;
+	public final static int FLMotorPort = 3;
+	public final static int FRMotorPort = 1;
 	public final static int BLMotorPort = 4;
-	public final static int BRMotorPort = 1;
+	public final static int BRMotorPort = 2;
 	
 	public final static int ElevatorPort = 5;
 	public final static int ArmMotor = 6;
@@ -58,9 +51,6 @@ public class RobotMap {
 	//Analog Ports
 	public final static int UltrasonicPort = 0;
 	public final static int AnalogGyroPort = 1;
-	
-	
-	//THIS IS THE TEST CONFIGURATION
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
