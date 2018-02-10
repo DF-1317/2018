@@ -33,7 +33,8 @@ import org.usfirst.frc.team1317.sensors.UltrasonicHRLVMaxSonar;
  */
 public class Robot extends TimedRobot {
 
-	
+	public static final syslog = new Logger("1317", Robot.class.getSimpleName());
+
 	//classes representing Robot subsystems
 	public static final MecanumDriveTrainCAN mecanumDriveTrain
 			= new MecanumDriveTrainCAN();
@@ -55,14 +56,6 @@ public class Robot extends TimedRobot {
 	public static final int Center_Position = 2;
 	public static final int Right_Position = 3;
 	public static final int Far_Right_Position = 4;
-	
-	// Syslog sender
-	static UdpSyslogMessageSender syslog = new UdpSyslogMessageSender();
-    static final String          ServerHost      = "10.13.17.6";                // address of the central log server
-	static final int			 ServerPort		 = 5800;						// port for logging
-    static final Facility        Fac             = Facility.LOCAL0;             // what facility is labeled on the msg
-    static final Severity        Sev             = Severity.INFORMATIONAL;		// class of our messages
-	
     
     //Data telling where our plates for the switches and scale
 	String GameData = "";
@@ -83,8 +76,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// Set logging port
-	    syslog.setSyslogServerPort(ServerPort);
 	    log("Entering robotInit");
 	    
 		m_oi = new OI();
@@ -326,18 +317,6 @@ public class Robot extends TimedRobot {
 	 * @param msg message to be sent to server host
 	 */
 	public static void log(String msg) {
-        try {
-            SyslogMessage m = new SyslogMessage()
-                .withFacility(Fac)
-                .withSeverity(Sev)
-                .withHostname(ServerHost)
-                .withAppName("Robot")
-                .withProcId("Logger")
-                .withMsg(msg);
-            syslog.sendMessage(m);
-        } catch (Exception e) {
-            System.err.println("Ouch: " + e.getMessage());
-            e.printStackTrace();
-        }
+		syslog.log(msg);
 	}
 }
