@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
  * @author Digital Fusion
  *
  */
-public class UltrasonicHRLVMaxSonar extends SensorBase implements PIDSource {
+public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
 	
 	protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
 	/**
-	 * represents the units the sesnor can use
+	 * represents the units the sensor can use
 	 *
 	 */
 	public enum Unit
@@ -28,7 +28,7 @@ public class UltrasonicHRLVMaxSonar extends SensorBase implements PIDSource {
 	 * @param port the analog port the ultrasonic sensor is plugged into
 	 */
 	public UltrasonicHRLVMaxSonar(int port) {
-		sensor = new AnalogInput(port);
+		super(port);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class UltrasonicHRLVMaxSonar extends SensorBase implements PIDSource {
 	 * @param units the units the class will use by default
 	 */
 	public UltrasonicHRLVMaxSonar(int port, Unit units) {
-		sensor = new AnalogInput(port);
+		super(port);
 		setUnit(units);
 	}
 	/**
