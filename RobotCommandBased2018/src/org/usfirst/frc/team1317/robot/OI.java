@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	
 	//the first joystick from the left is the joystick used for turning the robot
-	public static final Joystick TurnJoystick = new Joystick(RoboMapTest.TurnJoystickPort);
+	public static final Joystick TurnJoystick = new Joystick(RobotMap.TurnJoystickPort);
 	//the second joystick from the left is the joystick used for moving the robot
-	public static final Joystick MoveJoystick = new Joystick(RoboMapTest.MoveJoystickPort);
+	public static final Joystick MoveJoystick = new Joystick(RobotMap.MoveJoystickPort);
 	//the third joystick from the left is the other joystick
-	public static final Joystick OtherJoystick = new Joystick(RoboMapTest.OtherJoystickPort);
+	public static final Joystick OtherJoystick = new Joystick(RobotMap.OtherJoystickPort);
 	// The button that toggles the arm
 	public static final Button toggleArmButton = new JoystickButton(OtherJoystick, 2);
 	public static final Button testTurnButton = new JoystickButton(MoveJoystick, 10);

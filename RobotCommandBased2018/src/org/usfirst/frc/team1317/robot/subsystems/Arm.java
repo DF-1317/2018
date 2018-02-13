@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import org.usfirst.frc.team1317.robot.RoboMapTest;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -16,7 +16,7 @@ public class Arm extends Subsystem {
 	public Arm() {
 		super();
 		// set up motor
-		ArmMotor = new WPI_TalonSRX(RoboMapTest.ArmMotor);
+		ArmMotor = new WPI_TalonSRX(RobotMap.ArmMotor);
 		
 		ArmMotor.setInverted(false);
 	}

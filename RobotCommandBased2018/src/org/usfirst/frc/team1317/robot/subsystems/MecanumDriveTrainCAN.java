@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import org.usfirst.frc.team1317.robot.RoboMapTest;
 import org.usfirst.frc.team1317.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -44,7 +43,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	//gyro sensors
 	public AHRS navX = new AHRS(SPI.Port.kMXP);
-	AnalogGyro gyro = new AnalogGyro(RoboMapTest.AnalogGyroPort);
+	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
 	
 	/**
 	 * creates a new MecanumDriveTrainObject. This constructor also calls <code>initialize</code>, so it does not need to be called again.
@@ -52,10 +51,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	public MecanumDriveTrainCAN() {
 		super();
 		//set ups the motor controllers
-		FLMotor = new WPI_TalonSRX(RoboMapTest.FLMotorPort);
-		FRMotor = new WPI_TalonSRX(RoboMapTest.FRMotorPort);
-		BLMotor = new WPI_TalonSRX(RoboMapTest.BLMotorPort);
-		BRMotor = new WPI_TalonSRX(RoboMapTest.BRMotorPort);
+		FLMotor = new WPI_TalonSRX(RobotMap.FLMotorPort);
+		FRMotor = new WPI_TalonSRX(RobotMap.FRMotorPort);
+		BLMotor = new WPI_TalonSRX(RobotMap.BLMotorPort);
+		BRMotor = new WPI_TalonSRX(RobotMap.BRMotorPort);
 		// Some of the motors need to be told the other direction is forward
 		BRMotor.setInverted(false);
 		FLMotor.setInverted(false);
@@ -77,7 +76,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		BLEncoder.setSamplesToAverage(7);
 		
 		//set up solenoid
-		Piston = new Solenoid(RoboMapTest.DriveTrainPistonPort);
+		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
 
 		//configure encoders attached to Talons
 		FLMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);

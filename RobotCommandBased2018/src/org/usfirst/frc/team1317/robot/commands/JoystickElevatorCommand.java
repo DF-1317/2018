@@ -22,7 +22,7 @@ public class JoystickElevatorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.el.move(OI.OtherJoystick.getY());
+    	Robot.el.move(-OI.OtherJoystick.getY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

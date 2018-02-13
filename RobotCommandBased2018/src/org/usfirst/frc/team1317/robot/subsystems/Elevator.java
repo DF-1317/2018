@@ -1,11 +1,11 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import org.usfirst.frc.team1317.robot.RoboMapTest;
+import org.usfirst.frc.team1317.robot.RobotMap;
 import org.usfirst.frc.team1317.robot.commands.JoystickElevatorCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,8 +22,8 @@ public class Elevator extends Subsystem {
 	public Elevator() {
 		super();
 		// set up elevator motor
-		ElevatorMotor = new WPI_TalonSRX(RoboMapTest.ElevatorPort);
-		ElevatorEncoder = new Encoder(RoboMapTest.ElevatorMotorEncoderPort1, RoboMapTest.ElevatorMotorEncoderPort2);
+		ElevatorMotor = new WPI_TalonSRX(RobotMap.ElevatorPort);
+		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPort1, RobotMap.ElevatorMotorEncoderPort2);
 		// Just in case
 		ElevatorMotor.setInverted(false);
 		

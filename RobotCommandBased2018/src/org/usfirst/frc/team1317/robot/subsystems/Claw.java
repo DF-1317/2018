@@ -1,11 +1,10 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
-import org.usfirst.frc.team1317.robot.RoboMapTest;
-
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * A class representing the claw on the robot.
@@ -17,7 +16,7 @@ public class Claw extends Subsystem {
 	
 	public Claw()
 	{
-		ClawPiston = new DoubleSolenoid(RoboMapTest.ClawPistonPort1,RoboMapTest.ClawPistonPort2);
+		ClawPiston = new DoubleSolenoid(RobotMap.ClawPistonPort1,RobotMap.ClawPistonPort2);
 	}
 	
     /**
