@@ -22,13 +22,7 @@ public class AutonomousDrivingController implements PIDOutput {
 	public void pidWrite(double output) {
 		double distanceOutput = output;
 		double steeringOutput =turncontroller.getSteeringError();
-		//I may have to change around + and - signs 
-		double left_Speed = forwardSpeed*distanceOutput + turningSpeed*steeringOutput;
-		double right_Speed = forwardSpeed*distanceOutput - turningSpeed*steeringOutput;
-		Robot.mecanumDriveTrain.FLMotor.set(left_Speed);
-		Robot.mecanumDriveTrain.BLMotor.set(left_Speed);
-		Robot.mecanumDriveTrain.FRMotor.set(right_Speed);
-		Robot.mecanumDriveTrain.BRMotor.set(right_Speed);
+		Robot.mecanumDriveTrain.driveCartesian(0.0, forwardSpeed*distanceOutput, turningSpeed*steeringOutput);
 	}
 
 }
