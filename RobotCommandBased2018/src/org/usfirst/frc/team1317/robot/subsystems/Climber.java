@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
-import org.usfirst.frc.team1317.robot.RobotMap;
+import org.usfirst.frc.team1317.robot.RoboMapTest;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -16,7 +16,7 @@ public class Climber extends Subsystem {
 	public Climber() {
 		super();
 		// Declare climber motor
-		ClimberMotor = new WPI_TalonSRX(RobotMap.ClimberPort);
+		ClimberMotor = new WPI_TalonSRX(RoboMapTest.ClimberPort);
 		// Just in case
 		ClimberMotor.setInverted(false);
 	}

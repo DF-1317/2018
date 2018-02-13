@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
-	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RobotMap.UltrasonicPort);
+	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RoboMapTest.UltrasonicPort);
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
