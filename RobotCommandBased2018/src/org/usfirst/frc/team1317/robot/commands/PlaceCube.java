@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PlaceCube extends CommandGroup {
 
     public PlaceCube() {
+    	super("PlaceCube");
     	addSequential(new ArmDown());
     	addSequential(new Wait (0.2));
     	addSequential(new ClawOpen());

@@ -16,7 +16,7 @@ public class ArmToggle extends ConditionalCommand {
 	Arm arm;
 	
     public ArmToggle() {
-    	super(new ArmUp(), new ArmDown());
+    	super("ArmToggle", new ArmUp(), new ArmDown());
     	arm = Robot.arm;
     }
 

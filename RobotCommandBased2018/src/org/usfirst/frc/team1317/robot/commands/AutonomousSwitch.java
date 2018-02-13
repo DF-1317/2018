@@ -19,7 +19,7 @@ public class AutonomousSwitch extends CommandGroup {
 	 * @param delay Delay in seconds the robot waits after the match starts before running this command (The elevator will still go up immediately.)
 	 */
     public AutonomousSwitch(String plateLocations, int startingPosition, boolean crossFront, double delay) {
-    	
+    	super("AutonomousSwitch");
     	// Commands for turning
     	Command TurnLeft = new TurnDegrees(-90.0, 1.0);
         Command TurnRight = new TurnDegrees(90.0, 1.0);

@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1317.robot.commands.*;
 import org.usfirst.frc.team1317.robot.subsystems.*;
-import org.usfirst.frc.team1317.sensors.UltrasonicHRLVMaxSonar;
+import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
 	public static final Climber climb = new Climber();
 	
 	public static final Compressor compressor = new Compressor();
+	public static final AnalogUltrasonic Ultrasonic = new AnalogUltrasonic(RobotMap.UltrasonicPort);
 	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;

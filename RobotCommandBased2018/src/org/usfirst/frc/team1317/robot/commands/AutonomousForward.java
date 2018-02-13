@@ -14,6 +14,7 @@ public class AutonomousForward extends CommandGroup {
 	 * @param delay - the time in seconds to wait before driving forward
 	 */
     public AutonomousForward(int position, double delay) {
+    	super("AutonomousForward");
     	//wait the determined number of seconds
     	addSequential(new Wait(delay));
     	//drive forward to 
