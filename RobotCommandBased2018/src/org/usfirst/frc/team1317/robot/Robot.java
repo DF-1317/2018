@@ -61,8 +61,6 @@ public class Robot extends TimedRobot {
     //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
-	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RoboMapTest.UltrasonicPort);
-	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
 	
@@ -211,8 +209,8 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
+			log("Canceled Autonomous command");
 		}
-		log("Canceld Autonomous command");
 		
 		log("Teleop Init Complete");
 	}

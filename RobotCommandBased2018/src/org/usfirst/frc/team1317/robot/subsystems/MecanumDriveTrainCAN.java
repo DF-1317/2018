@@ -1,12 +1,13 @@
-<<<<<<< HEAD
 package org.usfirst.frc.team1317.robot.subsystems;
 
 import org.usfirst.frc.team1317.robot.RoboMapTest;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -42,7 +43,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	Solenoid Piston;
 	
 	//gyro sensors
-	public AHRS navX = new AHRS(Port.kMXP);
+	public AHRS navX = new AHRS(SPI.Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RoboMapTest.AnalogGyroPort);
 	
 	/**
@@ -65,7 +66,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		//set up the encoders attached to the RoboRIO
 		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
 		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
-		BLEncoder = new Encoder(RoboMapTest.BLMotorEncoderPort1,RoboMapTest.BLMotorEncoderPort2, false, EncodingType.k4X);
+		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
 		BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
 		//FLEncoder.setDistancePerPulse(distancePerPulse);
 		//FREncoder.setDistancePerPulse(distancePerPulse);
@@ -172,6 +173,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	@Override
 	public void pidWrite(double output) {
-		driveCartesian(0.0,output,0.0)
+		driveCartesian(0.0,output,0.0);
 	}
 }
