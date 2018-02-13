@@ -51,6 +51,7 @@ public class DriveInchesPID extends Command implements PIDSource {
 	 * @param turningSpeed - the speed the robot should turn at
 	 */
     public DriveInchesPID(double inches, double heading, double drivingSpeed, double turningSpeed) {
+    	super("DriveInchesPID");
         requires(Robot.mecanumDriveTrain);
         LeftEncoder = Robot.mecanumDriveTrain.BLEncoder;
         RightEncoder = Robot.mecanumDriveTrain.BREncoder;

@@ -13,6 +13,7 @@ public class AutonomousExchange extends CommandGroup {
 	 * @param delay - time to wait in seconds before starting
 	 */
     public AutonomousExchange(double distanceFromLeftEdge, double delay) {
+    	super("Autonomus Exchange");
     	//wait before starting
     	addSequential(new Wait(delay));
     	//drive forward to cross auto line

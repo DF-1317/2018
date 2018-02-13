@@ -39,7 +39,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	 */
 	public TurnToAngle(double degrees, double speed)
 	{
-		super("TurnDegrees");
+		super("TurnToAngle");
 		requires(Robot.mecanumDriveTrain);
 		DriveTrain = Robot.mecanumDriveTrain;
 		gyroSensor = Robot.mecanumDriveTrain.navX;

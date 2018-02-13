@@ -5,14 +5,7 @@ import org.usfirst.frc.team1317.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @see MecanumDriveTrain
  *
  */
-public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
+public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput {
 	
 	//constants representing encoder and wheel properties.
 	public static final int TICKS_PER_REVOLUTION = 4096;
@@ -174,6 +167,11 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	public void toggleTractionWheels()
 	{
 		Piston.set(!Piston.get());
+	}
+
+	@Override
+	public void pidWrite(double output) {
+		driveCartesian(0.0,output,0.0);
 	}
 
 }
