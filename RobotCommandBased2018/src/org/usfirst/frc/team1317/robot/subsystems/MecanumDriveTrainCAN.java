@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -40,8 +41,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	//encoders
 	//Encoder FLEncoder;
 	//Encoder FREncoder;
-	Encoder BLEncoder;
-	//Encoder BREncoder;
+	public Encoder BLEncoder;
+	public Encoder BREncoder;
 	
 	//piston for moving 
 	Solenoid Piston;
@@ -71,7 +72,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
 		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
 		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
-		//BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
+		BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
 		//FLEncoder.setDistancePerPulse(distancePerPulse);
 		//FREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setDistancePerPulse(distancePerPulse);
@@ -95,7 +96,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	 */
 	public void printEncoderPulses()
 	{
-		//System.out.println("FL: " + FLEncoder.get());
 		//SmartDashboard.putNumber("BL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
 		//SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
 		//SmartDashboard.putNumber("BL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
@@ -175,7 +175,5 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain  {
 	{
 		Piston.set(!Piston.get());
 	}
-	
-
 
 }
