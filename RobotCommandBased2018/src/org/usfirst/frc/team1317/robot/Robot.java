@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
 	public static final Climber climb = new Climber();
 	
 	public static final Compressor compressor = new Compressor();
+	public static final AnalogUltrasonic Ultrasonic = new AnalogUltrasonic(RobotMap.UltrasonicPort);
 	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;
@@ -60,7 +61,7 @@ public class Robot extends TimedRobot {
     //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
-	public AnalogUltrasonic Ultrasonic = new AnalogUltrasonic(RobotMap.UltrasonicPort);
+	
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;
