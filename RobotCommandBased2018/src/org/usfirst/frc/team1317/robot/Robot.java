@@ -34,6 +34,7 @@ import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 public class Robot extends TimedRobot {
 
 	public static final Logger syslog = new Logger("1317", Robot.class.getSimpleName());
+	public static final Logger periodicLog = new Logger("1317", Robot.class.getSimpleName(), 250);
 
 	//classes representing Robot subsystems
 	public static final MecanumDriveTrainCAN mecanumDriveTrain
@@ -254,6 +255,10 @@ public class Robot extends TimedRobot {
 			climb.move(0);
 		}
 		
+		if(OI.TurnJoystick.getPOV() != -1) {
+			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV())).start();
+		}
+		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
 		mecanumDriveTrain.printNavXDistance();
@@ -264,11 +269,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
+		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
-		//log(joyMsg);
+		joyMsg += ", Turn Joytcick POV " + OI.TurnJoystick.getPOV();
+		periodicLog.log(joyMsg);
 	}
 
 	/**
