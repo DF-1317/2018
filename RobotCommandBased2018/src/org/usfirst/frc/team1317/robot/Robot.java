@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1317.robot.commands.*;
 import org.usfirst.frc.team1317.robot.subsystems.*;
-import org.usfirst.frc.team1317.sensors.UltrasonicHRLVMaxSonar;
+import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
-	public UltrasonicHRLVMaxSonar Ultrasonic = new UltrasonicHRLVMaxSonar(RobotMap.UltrasonicPort);
+	public AnalogUltrasonic Ultrasonic = new AnalogUltrasonic(RobotMap.UltrasonicPort);
 	
 	//a command that tells the robot what to do in autonomous
 	Command m_autonomousCommand;

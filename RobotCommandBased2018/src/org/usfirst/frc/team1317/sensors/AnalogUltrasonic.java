@@ -3,31 +3,27 @@ package org.usfirst.frc.team1317.sensors;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
+//much of this class is based on the class edu.wpi.first.wpilibj.Ultrasonic
+
 /**
  * Represents an analog ultrasonic sensor, specifically MB1013-000, which reads 5mm/5mV
  * @author Digital Fusion
  *
  */
-public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
+public class AnalogUltrasonic extends AnalogInput implements PIDSource {
 	
 	protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
-	/**
-	 * represents the units the sensor can use
-	 *
-	 */
-	public enum Unit
-	{
-		kInches,
-		kMillimeters
-	}
+	//in mm/mV
+	protected double scaleFactor = 5/4.88;
 	
-	Unit units = Unit.kMillimeters;
+	
+	Ultrasonic.Unit units = Ultrasonic.Unit.kMillimeters;
 	AnalogInput sensor;
 	/**
 	 * 
 	 * @param port the analog port the ultrasonic sensor is plugged into
 	 */
-	public UltrasonicHRLVMaxSonar(int port) {
+	public AnalogUltrasonic(int port) {
 		super(port);
 	}
 	
@@ -36,16 +32,36 @@ public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
 	 * @param port the analog port the ultrasonic sensor is plugged into
 	 * @param units the units the class will use by default
 	 */
-	public UltrasonicHRLVMaxSonar(int port, Unit units) {
+	public AnalogUltrasonic(int port, Ultrasonic.Unit units) {
 		super(port);
 		setUnit(units);
 	}
+	
+	/**
+	 * Sets the scale factor for converting the voltage of the sensor to distance in mm/mV
+	 * 
+	 * @param factor - How many millimeters one millivolt of sensor data represents 
+	 */
+	public void setScaleFactor(double factor)
+	{
+		scaleFactor = factor;
+	}
+	
+	/**
+	 * gets the current scale factor set
+	 * @return the current scale factor in mm/mV
+	 */
+	public double getScaleFactor()
+	{
+		return scaleFactor;
+	}
+	
 	/**
 	 * 
 	 * @return the range the detected in millimeters
 	 */
 	public double getRangeMM() {
-		return sensor.getVoltage()*5/(4.88/1000);
+		return getVoltage()*1000*scaleFactor;
 	}
 	
 	/**
@@ -61,7 +77,7 @@ public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
 	 * @return the range in the default units
 	 */
 	public double getRange() {
-		if(units == Unit.kInches) {
+		if(units == Ultrasonic.Unit.kInches) {
 			return getRangeInches();
 		}
 		else {
@@ -72,7 +88,7 @@ public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
 	 * Sets the default units for use in <code>get()</code> and <code>pidGet</code>
 	 * @param unit the default unit to set
 	 */
-	public void setUnit(Unit unit)
+	public void setUnit(Ultrasonic.Unit unit)
 	{
 		units = unit;
 	}
@@ -81,7 +97,7 @@ public class UltrasonicHRLVMaxSonar extends AnalogInput implements PIDSource {
 	 * 
 	 * @return the current default unit
 	 */
-	public Unit getUnits() {
+	public Ultrasonic.Unit getUnits() {
 		return units;
 	}
 
