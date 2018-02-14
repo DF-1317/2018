@@ -7,11 +7,18 @@
 
 package org.usfirst.frc.team1317.robot;
 
-import com.cloudbees.syslog.sender.UdpSyslogMessageSender;
-import com.cloudbees.syslog.Facility;
-import com.cloudbees.syslog.Severity;
-import com.cloudbees.syslog.SyslogMessage;
-import com.cloudbees.syslog.MessageFormat;
+import org.usfirst.frc.team1317.robot.commands.ArmToggle;
+import org.usfirst.frc.team1317.robot.commands.AutonomousExchange;
+import org.usfirst.frc.team1317.robot.commands.AutonomousForward;
+import org.usfirst.frc.team1317.robot.commands.AutonomousScale;
+import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
+import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
+import org.usfirst.frc.team1317.robot.subsystems.Arm;
+import org.usfirst.frc.team1317.robot.subsystems.Claw;
+import org.usfirst.frc.team1317.robot.subsystems.Climber;
+import org.usfirst.frc.team1317.robot.subsystems.Elevator;
+import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
+import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -20,9 +27,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1317.robot.commands.*;
-import org.usfirst.frc.team1317.robot.subsystems.*;
-import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 /**
  * The VM is configured to automatically run this class, and to call the
