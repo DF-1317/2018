@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
 import org.usfirst.frc.team1317.robot.RobotMap;
+import org.usfirst.frc.team1317.robot.commands.JoystickArmCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -38,8 +39,7 @@ public class Arm extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new JoystickArmCommand());
     }
 }
 

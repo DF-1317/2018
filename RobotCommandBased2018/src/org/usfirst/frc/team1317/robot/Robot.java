@@ -251,6 +251,7 @@ public class Robot extends TimedRobot {
 			mecanumDriveTrain.resetNavXDistance();
 		}
 		
+		
 		if(OI.OtherJoystick.getPOV() == 0) {
 			climb.move(1);
 		} else if(OI.OtherJoystick.getPOV() == 180) {
