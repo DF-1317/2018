@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Claw extends Subsystem {
 
 	DoubleSolenoid ClawPiston;
-	Value LastValue;
+	Value LastValue = Value.kReverse;
 	
 	public Claw()
 	{
