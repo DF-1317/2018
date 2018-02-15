@@ -4,7 +4,7 @@
 
 * Joystick y-axis controls elevator.
 * Button 1 (trigger) toggles the claw.
-* Button 2 toggles the arm between up and down positons.
+* Hold Button 2 to make joystick y-axis control the arm.
 * POV controls climber.
 * Button 5 moves arm up.
 * Button 3 moves arm down.
