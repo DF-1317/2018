@@ -22,6 +22,9 @@ public class AutonomousDrivingController implements PIDSource, PIDOutput {
 		turncontroller = controller;
 		this.forwardSpeed = forwardSpeed;
 		this.turningSpeed = turningSpeed;
+	}
+	
+	public void initializeEncoders() {
 		LeftEncoder = Robot.mecanumDriveTrain.BLEncoder;
 		RightEncoder = Robot.mecanumDriveTrain.BREncoder;
 	}

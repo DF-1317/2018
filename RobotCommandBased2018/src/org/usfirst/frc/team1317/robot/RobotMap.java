@@ -12,9 +12,15 @@ package org.usfirst.frc.team1317.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * This is the competition configuration
  */
 public class RobotMap {
-	
+	/*
+	 * To withhold from competition robot:
+	 * NavX MXP (gyro)
+	 * Ultrasonic Sensor
+	 */
 
 	//The ports for the drive train motors
 	public final static int FLMotorPort = 3;
@@ -45,8 +51,8 @@ public class RobotMap {
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;
-	public final static int ClawPistonPort1 = 1;
-	public final static int ClawPistonPort2 = 2;
+	public final static int ClawPistonPort1 = 6;
+	public final static int ClawPistonPort2 = 7;
 	
 	//Analog Ports
 	public final static int UltrasonicPort = 0;

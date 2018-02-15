@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
+import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.RobotMap;
 import org.usfirst.frc.team1317.robot.navigation.AutonomousDrivingController;
 import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController;
@@ -133,7 +134,11 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		distanceController.setContinuous(false);
 	    distanceController.setOutputRange(-1.0, 1.0);
 	    distanceController.setAbsoluteTolerance(driveToleranceInches);
-	    
+	    UltrasonicDrivingController = new PIDController(UltrasonicP, UltrasonicI, UltrasonicD, UltrasonicF, Robot.Ultrasonic, this);
+	    UltrasonicDrivingController.setContinuous(false);
+	    UltrasonicDrivingController.setOutputRange(-1.0, 1.0);
+	    UltrasonicDrivingController.setAbsoluteTolerance(UltrasonicTolerance); 
+	    driveNavigator.initializeEncoders();
 	}
 	
 	/**
