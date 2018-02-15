@@ -39,16 +39,16 @@ public class RobotMapTest {
 	public final static int OtherJoystickPort = 0;
 	
 	//DIO ports
-	public final static int FLMotorEncoderPort1 = 4;
-	public final static int FLMotorEncoderPort2 = 5;
-	public final static int FRMotorEncoderPort1 = 2;
-	public final static int FRMotorEncoderPort2 = 3;
-	public final static int BLMotorEncoderPort1 = 0;
-	public final static int BLMotorEncoderPort2 = 1;
-	public final static int BRMotorEncoderPort1 = 6;
-	public final static int BRMotorEncoderPort2 = 7;
-	public final static int ElevatorMotorEncoderPort1 = 8;
-	public final static int ElevatorMotorEncoderPort2 = 9;
+	public final static int FLMotorEncoderPortA = 4;
+	public final static int FLMotorEncoderPortB = 5;
+	public final static int FRMotorEncoderPortA = 2;
+	public final static int FRMotorEncoderPortB = 3;
+	public final static int BLMotorEncoderPortA = 0;
+	public final static int BLMotorEncoderPortB = 1;
+	public final static int BRMotorEncoderPortA = 6;
+	public final static int BRMotorEncoderPortB = 7;
+	public final static int ElevatorMotorEncoderPortA = 8;
+	public final static int ElevatorMotorEncoderPortB = 9;
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;

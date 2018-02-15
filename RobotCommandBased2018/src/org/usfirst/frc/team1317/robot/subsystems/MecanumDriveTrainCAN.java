@@ -96,8 +96,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		//set up the encoders attached to the RoboRIO
 		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
 		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
-		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPort1,RobotMap.BLMotorEncoderPort2, false, EncodingType.k4X);
-		BREncoder = new Encoder(RobotMap.BRMotorEncoderPort1,RobotMap.BRMotorEncoderPort2);
+		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPortA,RobotMap.BLMotorEncoderPortB, false, EncodingType.k4X);
+		BREncoder = new Encoder(RobotMap.BRMotorEncoderPortA,RobotMap.BRMotorEncoderPortB);
 		//FLEncoder.setDistancePerPulse(distancePerPulse);
 		//FREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setDistancePerPulse(distancePerPulse);

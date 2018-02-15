@@ -28,7 +28,7 @@ public class JoystickArmCommand extends Command {
     @Override
     protected void execute() {
     	if(OI.OtherJoystick.getRawButton(2)) {
-    		arm.move(0.5*OI.OtherJoystick.getY());
+    		arm.move(-0.5*OI.OtherJoystick.getY());
     	}
     	else if(OI.OtherJoystick.getRawButton(5)) {
     		arm.move(0.3);
