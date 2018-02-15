@@ -27,7 +27,10 @@ public class JoystickArmCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	if(OI.OtherJoystick.getRawButton(5)) {
+    	if(OI.OtherJoystick.getRawButton(2)) {
+    		arm.move(0.5*OI.OtherJoystick.getY());
+    	}
+    	else if(OI.OtherJoystick.getRawButton(5)) {
     		arm.move(0.3);
     	}
     	else if(OI.OtherJoystick.getRawButton(3)) {

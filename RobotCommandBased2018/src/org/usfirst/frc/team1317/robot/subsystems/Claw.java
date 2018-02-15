@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
+import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Claw extends Subsystem {
 
 	DoubleSolenoid ClawPiston;
-	Value LastValue = Value.kReverse;
+	Value LastValue = Value.kForward;
 	
 	public Claw()
 	{
@@ -25,6 +26,7 @@ public class Claw extends Subsystem {
 	public void openClaw()
 	{
 		ClawPiston.set(Value.kForward);
+		Robot.log("Claw Opened");
 	}
 	
 	/**
@@ -33,6 +35,7 @@ public class Claw extends Subsystem {
 	public void closeClaw()
 	{
 		ClawPiston.set(Value.kReverse);
+		Robot.log("Claw Closed");
 	}
 	
 	/**
