@@ -75,6 +75,10 @@ public class Robot extends TimedRobot {
 	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
 	
 	Command TurnCommand = new TurnToAngle(90.0);
+	
+	// Booleans for controlling robot with POVs
+	boolean armMoving = false;
+	boolean climberMoving = false;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -251,13 +255,28 @@ public class Robot extends TimedRobot {
 			mecanumDriveTrain.resetNavXDistance();
 		}
 		
-		
-		if(OI.OtherJoystick.getPOV() == 0) {
+		// Climb up and down
+		if(OI.MoveJoystick.getPOV() == 0) {
 			climb.move(1);
-		} else if(OI.OtherJoystick.getPOV() == 180) {
+			climberMoving = true;
+		} else if(OI.MoveJoystick.getPOV() == 180) {
 			climb.move(-1);
-		} else {
+			climberMoving = true;
+		} else if(climberMoving) {
 			climb.move(0);
+			climberMoving = false;
+		}
+		
+		// Move arm up and down
+		if(OI.OtherJoystick.getPOV() == 0) {
+			arm.move(1);
+			armMoving = true;
+		} else if(OI.MoveJoystick.getPOV() == 180) {
+			arm.move(-1);
+			armMoving = true;
+		} else if(armMoving) {
+			arm.move(0);
+			armMoving = false;
 		}
 		
 		if(OI.TurnJoystick.getPOV() != -1) {
