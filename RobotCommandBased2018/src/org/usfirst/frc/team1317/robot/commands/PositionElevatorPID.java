@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1317.robot.commands;
 
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.subsystems.Elevator;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -14,17 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class PositionElevatorPID extends Command {
 
-	// Some things that do things
-	static final double kP = 0.01;
-	static final double kI = 0.00;
-	static final double kD = 0.00;
-	static final double kF = 0.00;
-	static final int kTolerance = 200;
-	
-	// Objects representing other things
-	PIDController moveController;
-	Encoder encoder;
-	WPI_TalonSRX motor;
+	Elevator el;
 	
 	// Variable representing the target position of the elevator
 	double position;
@@ -37,13 +28,7 @@ public class PositionElevatorPID extends Command {
     	
     	super("PositionElevatorPID");
     	requires(Robot.el);
-    	motor = Robot.el.ElevatorMotor;
-    	encoder = Robot.el.ElevatorEncoder;
-    	moveController = new PIDController(kP, kI, kD, kF, encoder, motor);
-    	moveController.setOutputRange(-1.0, 1.0);
-    	moveController.setAbsoluteTolerance(kTolerance);
-    	moveController.setName("Elevator", "Height Controller");
-    	LiveWindow.add(moveController);
+    	el = Robot.el;
     	this.position = position;
     	setInterruptible(true);
     }
@@ -54,25 +39,25 @@ public class PositionElevatorPID extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	moveController.setSetpoint(position);
-    	moveController.enable();
+    	el.setSetpoint(position);
+    	el.enable();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return moveController.onTarget();
+        return el.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	moveController.disable();
-    	motor.stopMotor();
+    	el.disable();
+    	el.ElevatorMotor.stopMotor();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	moveController.disable();
-    	motor.stopMotor();
+    	el.disable();
+    	el.ElevatorMotor.stopMotor();
     }
 }

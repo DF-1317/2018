@@ -6,13 +6,21 @@ import org.usfirst.frc.team1317.robot.commands.JoystickElevatorCommand;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
  */
-public class Elevator extends Subsystem {
+public class Elevator extends PIDSubsystem {
+	
+	public static final double kP = 0.01;
+	public static final double kI = 0.0;
+	public static final double kD = 0.0;
+	public static final double kF = 0.0;
+	public static final double kTolerance = 10;
+	
 	// create objects representing the motor controlling the elevator
 	public WPI_TalonSRX ElevatorMotor;
 	
@@ -20,13 +28,14 @@ public class Elevator extends Subsystem {
 	public Encoder ElevatorEncoder;
 	
 	public Elevator() {
-		super();
+		super("Elevator Controller", kP, kI, kD, kF);
 		// set up elevator motor
 		ElevatorMotor = new WPI_TalonSRX(RobotMap.ElevatorPort);
 		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPort1, RobotMap.ElevatorMotorEncoderPort2);
 		// Just in case
 		ElevatorMotor.setInverted(false);
-		
+		setAbsoluteTolerance(kTolerance);
+		setOutputRange(-1.0,1.0);
 	}
 	
 	/**
@@ -57,5 +66,15 @@ public class Elevator extends Subsystem {
     public void initDefaultCommand() {
     	setDefaultCommand(new JoystickElevatorCommand());
     }
+
+	@Override
+	protected double returnPIDInput() {
+		return ElevatorEncoder.getRaw();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		move(output);
+	}
 }
 
