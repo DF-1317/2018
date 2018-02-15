@@ -46,13 +46,13 @@ public class RobotMap {
 	public final static int BLMotorEncoderPortB = 1;
 	public final static int BRMotorEncoderPortA = 8;
 	public final static int BRMotorEncoderPortB = 9;
-	public final static int ElevatorMotorEncoderPort1 = 8;
-	public final static int ElevatorMotorEncoderPort2 = 9;
+	public final static int ElevatorMotorEncoderPortA = 6;
+	public final static int ElevatorMotorEncoderPortB = 7;
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;
-	public final static int ClawPistonPort1 = 6;
-	public final static int ClawPistonPort2 = 7;
+	public final static int ClawPistonPort1 = 7;
+	public final static int ClawPistonPort2 = 6;
 	
 	//Analog Ports
 	public final static int UltrasonicPort = 0;

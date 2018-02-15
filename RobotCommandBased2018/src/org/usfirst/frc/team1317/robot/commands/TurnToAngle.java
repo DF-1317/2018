@@ -42,6 +42,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	{
 		super("TurnToAngle");
 		requires(Robot.mecanumDriveTrain);
+		DriveTrain = Robot.mecanumDriveTrain;
 		this.TargetAngle = degrees;
 		this.speed = speed;
 		setInterruptible(true);

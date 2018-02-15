@@ -31,7 +31,7 @@ public class Elevator extends PIDSubsystem {
 		super("Elevator Controller", kP, kI, kD, kF);
 		// set up elevator motor
 		ElevatorMotor = new WPI_TalonSRX(RobotMap.ElevatorPort);
-		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPort1, RobotMap.ElevatorMotorEncoderPort2);
+		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPortA, RobotMap.ElevatorMotorEncoderPortB);
 		// Just in case
 		ElevatorMotor.setInverted(false);
 		setAbsoluteTolerance(kTolerance);
