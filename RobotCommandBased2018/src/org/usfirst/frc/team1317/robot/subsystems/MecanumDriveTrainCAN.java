@@ -65,8 +65,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	PIDController UltrasonicDrivingController;
 	
 	//Navigators
-	AutonomousTurningController turnNavigator = new AutonomousTurningController();
-	AutonomousDrivingController driveNavigator = new AutonomousDrivingController(turnNavigator);
+	AutonomousTurningController turnNavigator;
+	AutonomousDrivingController driveNavigator;
 	
 	
 	/**
@@ -96,8 +96,14 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		BLEncoder.setDistancePerPulse(distancePerPulse);
 		BREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setMaxPeriod(.1);
+		BREncoder.setMaxPeriod(.1);
 		BLEncoder.setMinRate(10);
+		BREncoder.setMinRate(10);
 		BLEncoder.setSamplesToAverage(7);
+		BREncoder.setSamplesToAverage(7);
+		
+		turnNavigator = new AutonomousTurningController();
+		driveNavigator = new AutonomousDrivingController(turnNavigator);
 		
 		//set up solenoid
 		Piston = new Solenoid(RobotMap.DriveTrainPistonPort);
