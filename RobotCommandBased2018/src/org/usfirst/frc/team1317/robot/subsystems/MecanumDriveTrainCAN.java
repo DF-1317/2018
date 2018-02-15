@@ -202,45 +202,88 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		navX.zeroYaw();
 	}
 	
+	/**
+	 * resets the displacement that the NavX has calculated to zero
+	 */
 	public void resetNavXDistance() {
 		navX.resetDisplacement();
 	}
 	
+	/**
+	 * enables the PID controller that controls the robot turning to a desired angle
+	 * 
+	 * @param setpoint - the angle in degrees to which the drive train should turn
+	 */
 	public void enableTurnController(double setpoint) {
 		turnController.setSetpoint(setpoint);
 		turnController.enable();
 	}
 	
+	/**
+	 * disables the controller that autonomously turns the robot
+	 */
 	public void disableTurnController() {
 		turnController.disable();
 	}
 	
+	/**
+	 * Returns if the turncontroller detects that the robot is at the target angle
+	 * 
+	 * @return - true if the robot is facing the desired angle (within the tolerance) false otherwise
+	 */
 	public boolean turnControllerOnTarget() {
 		return turnController.onTarget();
 	}
 	
+	/**
+	 * sets whether the turn controller is being used with the <code>AutonomousDrivingController</code>.
+	 * 
+	 * @param mode - <code>TurnMode.withDriving</code> if the turncontroller is being used with <code>AutonomousDrivingController</code>. <code>TurnMode.withoutDriving> otherwise.
+	 */
 	public void setTurnControllerMode(AutonomousTurningController.TurnMode mode) {
 		turnNavigator.setMode(mode);
 	}
 	
+	
+	/**
+	 * enables the PIDcontroller that allows the robot to autonomously move the desired distance
+	 * 
+	 * @param setpoint - the distance in inches the robot should move to.
+	 */
 	public void enableMoveController(double setpoint) {
 		distanceController.setSetpoint(setpoint);
 		distanceController.enable();
 	}
 	
+	/**
+	 * disables the controller that autonomously moves the robot forward
+	 */
 	public void disableMoveController() {
 		distanceController.disable();
 	}
 	
+	/**
+	 * returns if the move controller has moved the robot the desired distance
+	 * 
+	 * @return - true if the robot is on target, false otherwise
+	 */
 	public boolean moveControllerOnTarget() {
 		return distanceController.onTarget();
 	}
 	
+	/**
+	 * enables the PIDController that allows the robot to move a certain distance from the wall. 
+	 * 
+	 * @param setpoint - the distance from an object that the robot should be at
+	 */
 	public void enableUltrasonicController(double setpoint) {
 		UltrasonicDrivingController.setSetpoint(setpoint);
 		UltrasonicDrivingController.enable();
 	}
 	
+	/**
+	 * disables the controller that allows the robot to move based on an ultrasonic sensor
+	 */
 	public void disableUltrasonicController() {
 		UltrasonicDrivingController.disable();
 	}
