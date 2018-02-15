@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1317.robot.*;
+import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController.TurnMode;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -19,14 +20,6 @@ public class TurnDegrees extends Command implements PIDOutput {
 	// Objects representing the drive train, gyroscope, and a PID controller
 	MecanumDriveTrainCAN DriveTrain;
 	AHRS gyroSensor;
-	PIDController turnController;
-	
-	// Some things that do things
-	static final double kP = 0.02;
-	static final double kI = 0.00;
-	static final double kD = 0.00;
-	static final double kToleranceDegrees = 1.0;
-	
 	// Variables representing speed and angle to turn
 	double degrees = 0.0;
 	double speed = 1.0;
@@ -47,13 +40,6 @@ public class TurnDegrees extends Command implements PIDOutput {
 		requires(Robot.mecanumDriveTrain);
 		DriveTrain = Robot.mecanumDriveTrain;
 		gyroSensor = Robot.mecanumDriveTrain.navX;
-		turnController = new PIDController(kP,kI,kD,0.0,gyroSensor,this);
-		turnController.setInputRange(-180.0F, 180.0F);
-		turnController.setOutputRange(-1.0, 1.0);
-		turnController.setAbsoluteTolerance(kToleranceDegrees);
-		turnController.setContinuous(true);
-		turnController.setName("Drive System", "Rotate Controller");
-		LiveWindow.add(turnController);
 		this.degrees = degrees;
 		this.speed = speed;
 		setInterruptible(true);
@@ -75,24 +61,24 @@ public class TurnDegrees extends Command implements PIDOutput {
 		TargetAngle = OriginalAngle + degrees;
 		TargetAngle = PIDTurning.equivalentAngle(TargetAngle);
 		Robot.log("Target Angle: " + TargetAngle);
+		DriveTrain.setTurnControllerMode(TurnMode.withoutDriving);
 	}
 	
 	@Override
 	protected void execute()
 	{
-		turnController.setSetpoint(TargetAngle);
-		turnController.enable();
+		DriveTrain.enableTurnController(TargetAngle);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return turnController.onTarget();
+		return DriveTrain.turnControllerOnTarget();
 	}
 	
 	@Override
 	protected void end()
 	{
-		turnController.disable();
+		DriveTrain.disableTurnController();
 		DriveTrain.stop();	
 		Robot.log("Done Turning");
 		Robot.log("Current Angle: " + gyroSensor.pidGet());
@@ -101,7 +87,7 @@ public class TurnDegrees extends Command implements PIDOutput {
 	@Override
 	public void interrupted()
 	{
-		turnController.disable();
+		DriveTrain.disableTurnController();
 		DriveTrain.stop();
 	}
 	

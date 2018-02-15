@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1317.robot.*;
+import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController.TurnMode;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -41,15 +42,6 @@ public class TurnToAngle extends Command implements PIDOutput {
 	{
 		super("TurnToAngle");
 		requires(Robot.mecanumDriveTrain);
-		DriveTrain = Robot.mecanumDriveTrain;
-		gyroSensor = Robot.mecanumDriveTrain.navX;
-		turnController = new PIDController(kP,kI,kD,0.0,gyroSensor,this);
-		turnController.setInputRange(-180.0F, 180.0F);
-		turnController.setOutputRange(-1.0, 1.0);
-		turnController.setAbsoluteTolerance(kToleranceDegrees);
-		turnController.setContinuous(true);
-		turnController.setName("Drive System", "Rotate Controller2");
-		LiveWindow.add(turnController);
 		this.TargetAngle = degrees;
 		this.speed = speed;
 		setInterruptible(true);
@@ -60,20 +52,19 @@ public class TurnToAngle extends Command implements PIDOutput {
 	 * @param degrees number of degrees to turn. Positive is clockwise
 	 */
 	public TurnToAngle(double degrees) {
-		this(degrees, 0.7);
+		this(degrees, 0.5);
 	}
 	
 	@Override
 	protected void initialize()
 	{
-		
+		DriveTrain.setTurnControllerMode(TurnMode.withoutDriving);
 	}
 	
 	@Override
 	protected void execute()
 	{
-		turnController.setSetpoint(TargetAngle);
-		turnController.enable();
+		DriveTrain.enableTurnController(TargetAngle);
 	}
 	
 	@Override
@@ -84,7 +75,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	@Override
 	protected void end()
 	{
-		turnController.disable();
+		DriveTrain.disableTurnController();
 		DriveTrain.stop();
 		Robot.log("Done Turning");
 		Robot.log("Current Angle: " + gyroSensor.pidGet());
@@ -93,7 +84,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	@Override
 	public void interrupted()
 	{
-		turnController.disable();
+		DriveTrain.disableTurnController();
 		DriveTrain.stop();
 	}
 	

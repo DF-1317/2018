@@ -1,12 +1,15 @@
 package org.usfirst.frc.team1317.robot.subsystems;
 
 import org.usfirst.frc.team1317.robot.RobotMap;
+import org.usfirst.frc.team1317.robot.navigation.AutonomousDrivingController;
+import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -24,7 +27,18 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	public static final double WHEEL_CIRCUMFERENCE = 6*Math.PI;
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
+	//PID Constants
+	final double driveP = 0.01;
+	final double driveI = 0.0;
+	final double driveD = 0.0;
+	final double driveF = 0.0;
+	final double driveToleranceInches = 1.0;
 	
+	final double turnP = 0.02;
+	final double turnI = 0.0;
+	final double turnD = 0.0;
+	final double turnF = 0.0;
+	final double toleranceDegrees = 1.0;
 	
 	// creates objects representing the Motor Controllers at the right ports
 	public WPI_TalonSRX FLMotor;
@@ -44,6 +58,16 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	//gyro sensors
 	public AHRS navX = new AHRS(SPI.Port.kMXP);
 	AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroPort);
+	
+	//PID Controllers
+	PIDController turnController;
+	PIDController distanceController;
+	PIDController UltrasonicDrivingController;
+	
+	//Navigators
+	AutonomousTurningController turnNavigator = new AutonomousTurningController();
+	AutonomousDrivingController driveNavigator = new AutonomousDrivingController(turnNavigator);
+	
 	
 	/**
 	 * creates a new MecanumDriveTrainObject. This constructor also calls <code>initialize</code>, so it does not need to be called again.
@@ -83,6 +107,20 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		FLMotor.setSensorPhase(true);
 		FRMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		FRMotor.setSensorPhase(true);
+	}
+	
+	public void initPIDControllers() {
+		turnController = new PIDController(turnP, turnI, turnD, turnF, navX, turnNavigator);
+		turnController.setInputRange(-180.0F, 180.0F);
+		turnController.setOutputRange(-1.0, 1.0);
+		turnController.setAbsoluteTolerance(toleranceDegrees);
+		turnController.setContinuous(true);
+		turnController.setName("Drive System", "Turn Controller");
+		LiveWindow.add(turnController);
+		distanceController = new PIDController(driveP, driveI, driveD, driveF, driveNavigator, driveNavigator);
+		distanceController.setContinuous(false);
+	    distanceController.setOutputRange(-1.0, 1.0);
+	    distanceController.setAbsoluteTolerance(driveToleranceInches);
 	}
 	
 	/**
@@ -130,6 +168,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	 */
 	public void resetEncoderDistance()
 	{
+		BLEncoder.reset();
+		BREncoder.reset();
 		FLMotor.setSelectedSensorPosition(0,0,0);
     	FRMotor.setSelectedSensorPosition(0,0,0);
 	}
@@ -143,6 +183,36 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	public void resetNavXDistance() {
 		navX.resetDisplacement();
+	}
+	
+	public void enableTurnController(double setpoint) {
+		turnController.setSetpoint(setpoint);
+		turnController.enable();
+	}
+	
+	public void disableTurnController() {
+		turnController.disable();
+	}
+	
+	public boolean turnControllerOnTarget() {
+		return turnController.onTarget();
+	}
+	
+	public void setTurnControllerMode(AutonomousTurningController.TurnMode mode) {
+		turnNavigator.setMode(mode);
+	}
+	
+	public void enableMoveController(double setpoint) {
+		distanceController.setSetpoint(setpoint);
+		distanceController.enable();
+	}
+	
+	public void disableMoveController() {
+		distanceController.disable();
+	}
+	
+	public boolean moveControllerOnTarget() {
+		return distanceController.onTarget();
 	}
 	
 	
@@ -174,4 +244,5 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	public void pidWrite(double output) {
 		driveCartesian(0.0,output,0.0);
 	}
+
 }
