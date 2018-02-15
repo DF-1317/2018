@@ -115,8 +115,6 @@ public class Robot extends TimedRobot {
 		//puts a box to input the delay before starting autonomous
 		SmartDashboard.getNumber("Delay", 0);
 		
-		compressor.stop();
-		
 		log("Init Complete");
 	}
 
@@ -261,7 +259,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		if(OI.TurnJoystick.getPOV() != -1) {
-			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV())).start();
+			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
 		
 		//print stuff to smart dashboard or console
