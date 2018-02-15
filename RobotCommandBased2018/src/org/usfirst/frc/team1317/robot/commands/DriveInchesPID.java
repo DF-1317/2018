@@ -24,6 +24,9 @@ public class DriveInchesPID extends Command {
 	double drivingSpeed;
 	double turningSpeed;
 	
+	final static double TURNING_DEFAULT = 0.5;
+	final static double DRIVING_DEFAULT = 0.7;
+	
 	/**
 	 * constructs this command
 	 * 
@@ -41,6 +44,10 @@ public class DriveInchesPID extends Command {
         headingSetpoint = turningSpeed;
         this.drivingSpeed = drivingSpeed;
         this.turningSpeed = turningSpeed;
+    }
+    
+    public DriveInchesPID(double inches, double heading) {
+    	this(inches, heading, DRIVING_DEFAULT, TURNING_DEFAULT);
     }
 
     // Called just before this Command runs the first time
