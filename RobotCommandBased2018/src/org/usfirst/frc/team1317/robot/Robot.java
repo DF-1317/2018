@@ -23,6 +23,7 @@ import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -89,6 +90,10 @@ public class Robot extends TimedRobot {
 	    log("Entering robotInit");
 	    
 		m_oi = new OI();
+		
+		mecanumDriveTrain.initPIDControllers();
+		Ultrasonic.setUnit(Unit.kInches);
+		
 		//adds options to autonomous mode choosers
 		m_chooser.addDefault("Switch Auto", "Switch");
 		m_chooser.addObject("Scale Auto", "Scale");
@@ -109,7 +114,7 @@ public class Robot extends TimedRobot {
 		
 		log("Position: " + positionChooser);
 		
-		//adds options to choosing gwhich way to cross court
+		//adds options to choosing which way to cross court
 		crossChooser.addObject("Front", true);
 		crossChooser.addDefault("Behind", false);
 		SmartDashboard.putData("Cross", crossChooser);

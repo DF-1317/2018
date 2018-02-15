@@ -21,6 +21,8 @@ public class DriveInchesPID extends Command {
 	
 	double distanceSetpoint;
 	double headingSetpoint;
+	double drivingSpeed;
+	double turningSpeed;
 	
 	/**
 	 * constructs this command
@@ -37,6 +39,8 @@ public class DriveInchesPID extends Command {
         RightEncoder = Robot.mecanumDriveTrain.BREncoder;
         distanceSetpoint = inches;
         headingSetpoint = turningSpeed;
+        this.drivingSpeed = drivingSpeed;
+        this.turningSpeed = turningSpeed;
     }
 
     // Called just before this Command runs the first time
@@ -45,6 +49,8 @@ public class DriveInchesPID extends Command {
     	LeftEncoder.reset();
     	RightEncoder.reset();
     	Robot.mecanumDriveTrain.setTurnControllerMode(TurnMode.withDriving);
+    	Robot.mecanumDriveTrain.driveNavigator.setForwardSpeed(drivingSpeed);
+    	Robot.mecanumDriveTrain.driveNavigator.setTurningSpeed(turningSpeed);
     }
 
     // Called repeatedly when this Command is scheduled to run

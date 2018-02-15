@@ -40,6 +40,12 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	final double turnF = 0.0;
 	final double toleranceDegrees = 1.0;
 	
+	final double UltrasonicP = 0.01;
+	final double UltrasonicI = 0.0;
+	final double UltrasonicD = 0.0;
+	final double UltrasonicF = 0.0;
+	final double UltrasonicTolerance = 2.0;
+	
 	// creates objects representing the Motor Controllers at the right ports
 	public WPI_TalonSRX FLMotor;
 	public WPI_TalonSRX FRMotor;
@@ -65,8 +71,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	PIDController UltrasonicDrivingController;
 	
 	//Navigators
-	AutonomousTurningController turnNavigator;
-	AutonomousDrivingController driveNavigator;
+	public AutonomousTurningController turnNavigator;
+	public AutonomousDrivingController driveNavigator;
 	
 	
 	/**
@@ -127,6 +133,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		distanceController.setContinuous(false);
 	    distanceController.setOutputRange(-1.0, 1.0);
 	    distanceController.setAbsoluteTolerance(driveToleranceInches);
+	    
 	}
 	
 	/**

@@ -3,12 +3,7 @@ package org.usfirst.frc.team1317.robot.commands;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.subsystems.Elevator;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * Command that moves the elevator to a specific position
