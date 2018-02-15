@@ -12,6 +12,7 @@ import org.usfirst.frc.team1317.robot.commands.AutonomousExchange;
 import org.usfirst.frc.team1317.robot.commands.AutonomousForward;
 import org.usfirst.frc.team1317.robot.commands.AutonomousScale;
 import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
+import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
 import org.usfirst.frc.team1317.robot.subsystems.Claw;
@@ -198,6 +199,8 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.start();
 			log("Starting Auto Command");
 		}
+		
+		(new ClawClose()).start();
 		
 		log("Autonomous Init Complete");
 	}
