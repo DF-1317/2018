@@ -256,10 +256,10 @@ public class Robot extends TimedRobot {
 		}
 		
 		// Climb up and down
-		if(OI.MoveJoystick.getPOV() == 0) {
+		if(OI.OtherJoystick.getPOV() == 0) {
 			climb.move(1);
 			climberMoving = true;
-		} else if(OI.MoveJoystick.getPOV() == 180) {
+		} else if(OI.OtherJoystick.getPOV() == 180) {
 			climb.move(-1);
 			climberMoving = true;
 		} else if(climberMoving) {
@@ -268,7 +268,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		// Move arm up and down
-		if(OI.OtherJoystick.getPOV() == 0) {
+		/*if(OI.OtherJoystick.getPOV() == 0) {
 			arm.move(1);
 			armMoving = true;
 		} else if(OI.MoveJoystick.getPOV() == 180) {
@@ -277,7 +277,7 @@ public class Robot extends TimedRobot {
 		} else if(armMoving) {
 			arm.move(0);
 			armMoving = false;
-		}
+		}*/
 		
 		if(OI.TurnJoystick.getPOV() != -1) {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV())).start();

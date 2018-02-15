@@ -36,8 +36,8 @@ public class OI {
 	 * ### Other Joystick ###
 	 * Button 1: Toggles the claw (Robot.teleopPeriodic)
 	 * Button 2: Toggles the arm (this)
-	 * POV Up: Move arm up (Robot.teleopPeriodic)
-	 * POV Down: Move arm down (Robot.teleopPeriodic)
+	 * POV Up: Climb (Robot.teleopPeriodic)
+	 * POV Down: Un-climb (Robot.teleopPeriodic)
 	 *
 	 * ### Turn Joystick ###
 	 * Button 9: Zeroes the gyro rotation (Robot.teleopPeriodic)
@@ -47,8 +47,6 @@ public class OI {
 	 * Button 1: Toggles the traction wheels (Robot.teleopPeriodic)
 	 * Button 11: Toggles variable speed and joystick twist turning (JoystickMecanumDrive.execute)
 	 * Button 12: Resets the NavX distance (Robot.teleopPeridodic)
-	 * POV Up: Climb (Robot.teleopPeriodic)
-	 * POV Down: Un-climb (Robot.teleopPeriodic)
 	 */
 	
 
