@@ -252,7 +252,7 @@ public class Robot extends TimedRobot {
 			claw.toggleClaw();
 		}
 		//toggle the arm when the arm button is pressed
-		OI.toggleArmButton.whenPressed(new ArmToggle());
+		//OI.toggleArmButton.whenPressed(new ArmToggle());
 		
 		if(OI.MoveJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.resetNavXDistance();

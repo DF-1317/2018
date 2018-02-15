@@ -10,30 +10,17 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * A command to drive the robot until the ultrasonic sensor is within a certain distance 
  */
 public class UltrasonicDriveToDistance extends Command {
-
-	static final double kP = 0.01;
-	static final double kI = 0.00;
-	static final double kD = 0.00;
-	static final double kF = 0.00;
-	static final double kTolerance = 10.0;
-	
-	PIDController moveController;
 	
 	double target;
 	
 	/**
 	 * constructs the command 
-	 * @param millimetersFromObject - the target millimeters from an object that the robot should be at
+	 * @param millimetersFromObject - the target inches from an object that the robot should be at
 	 */
-    public UltrasonicDriveToDistance(double millimetersFromObject) {
+    public UltrasonicDriveToDistance(double inchesFromObject) {
     	super("UltrasonicDriveToDistance");
         requires(Robot.mecanumDriveTrain);
-        moveController = new PIDController(kP, kI, kD, kF, Robot.Ultrasonic, Robot.mecanumDriveTrain);
-    	moveController.setOutputRange(-1.0, 1.0);
-    	moveController.setAbsoluteTolerance(kTolerance);
-    	moveController.setName("Drive System", "Ultrasonic Controller");
-    	LiveWindow.add(moveController);
-    	target = millimetersFromObject;
+    	target = inchesFromObject;
     }
 
     // Called just before this Command runs the first time
@@ -45,19 +32,18 @@ public class UltrasonicDriveToDistance extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	moveController.setSetpoint(target);
-    	moveController.enable();
+    	Robot.mecanumDriveTrain.enableUltrasonicController(target);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return moveController.onTarget();
+        return Robot.mecanumDriveTrain.ultrasonicControllerOnTarget();
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-    	moveController.disable();
+    	Robot.mecanumDriveTrain.disableUltrasonicController();
     	Robot.mecanumDriveTrain.stop();
     }
 
@@ -65,7 +51,7 @@ public class UltrasonicDriveToDistance extends Command {
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-    	moveController.disable();
+    	Robot.mecanumDriveTrain.disableUltrasonicController();
     	Robot.mecanumDriveTrain.stop();
     }
 }

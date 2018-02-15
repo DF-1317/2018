@@ -233,6 +233,19 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		return distanceController.onTarget();
 	}
 	
+	public void enableUltrasonicController(double setpoint) {
+		UltrasonicDrivingController.setSetpoint(setpoint);
+		UltrasonicDrivingController.enable();
+	}
+	
+	public void disableUltrasonicController() {
+		UltrasonicDrivingController.disable();
+	}
+	
+	public boolean ultrasonicControllerOnTarget() {
+		return UltrasonicDrivingController.onTarget();
+	}
+	
 	
 	/**
 	 * lowers the traction wheels on the drive train
