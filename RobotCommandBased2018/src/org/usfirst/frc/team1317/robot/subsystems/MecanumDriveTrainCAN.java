@@ -155,6 +155,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		SmartDashboard.putNumber("BL Raw Encoder Position", BLEncoder.getRaw());
 		SmartDashboard.putNumber("BL Encoder Speed", BLEncoder.getRate());
 		SmartDashboard.putNumber("BL Percent Motor Output", BLMotor.getMotorOutputPercent());
+		SmartDashboard.putNumber("BR Encoder Position", BREncoder.getDistance());
+		SmartDashboard.putNumber("BR Raw Encoder Position", BREncoder.getRaw());
+		SmartDashboard.putNumber("BR Encoder Speed", BREncoder.getRate());
+		SmartDashboard.putNumber("BR Percent Motor Output", BRMotor.getMotorOutputPercent());
 	}
 	/**
 	 * puts data from the analog gyro to the SmartDashboard
@@ -182,7 +186,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	/**
 	 * Resets the distance the encoders say they have traveled
-	 * Currently only works for encoders attached to Talons
 	 */
 	public void resetEncoderDistance()
 	{

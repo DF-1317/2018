@@ -259,6 +259,7 @@ public class Robot extends TimedRobot {
 		
 		if(OI.MoveJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.resetNavXDistance();
+			mecanumDriveTrain.resetEncoderDistance();
 		}
 		
 		// Climb up and down
