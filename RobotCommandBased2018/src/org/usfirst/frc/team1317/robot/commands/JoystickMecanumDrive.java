@@ -83,6 +83,7 @@ public class JoystickMecanumDrive extends Command {
 		}
 		
 		SmartDashboard.putBoolean("Advanced Controls", isAdvancedEnabled);
+		SmartDashboard.putBoolean("Field Oriented Drive", isAlignedEnabled);
 		
 	}
 
