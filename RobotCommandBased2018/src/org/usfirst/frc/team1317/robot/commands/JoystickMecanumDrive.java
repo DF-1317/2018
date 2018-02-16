@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1317.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1317.robot.OI;
 import org.usfirst.frc.team1317.robot.Robot;
@@ -22,7 +23,7 @@ public class JoystickMecanumDrive extends Command {
 	static final Logger syslog = new Logger("1317", JoystickMecanumDrive.class.getSimpleName());
 
 	// variables storing values for button toggle
-	boolean isTwistEnabled = false;
+	boolean isAdvancedEnabled = false;
 	double turnModifier = 0;
 	double speedModifier = 0;
 	
@@ -50,7 +51,7 @@ public class JoystickMecanumDrive extends Command {
 	protected void execute() {
 		
 		// Only have extra control options when enabled
-		if(isTwistEnabled) {
+		if(isAdvancedEnabled) {
 			// Enables joystick twist turning and throttle adjustment
 			turnModifier = OI.MoveJoystick.getTwist() * 0.3;
 			speedModifier = (OI.MoveJoystick.getThrottle() - 1) / -2;
@@ -72,14 +73,17 @@ public class JoystickMecanumDrive extends Command {
 		
 		// Toggle extra control options
 		if(OI.MoveJoystick.getRawButtonPressed(11)) {
-			isTwistEnabled = !isTwistEnabled;
-			syslog.log("Control mode toggled. Advanced controls: " + isTwistEnabled);
+			isAdvancedEnabled = !isAdvancedEnabled;
+			syslog.log("Control mode toggled. Advanced controls: " + isAdvancedEnabled);
 		}
 		
 		if(OI.MoveJoystick.getRawButtonPressed(10)) {
 			isAlignedEnabled = !isAlignedEnabled;
 			Robot.log("Control mode toggled. Movement aligned to field: " + isAlignedEnabled);
 		}
+		
+		SmartDashboard.putBoolean("Advanced Controls", isAdvancedEnabled);
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
