@@ -19,8 +19,6 @@ public class TurnToAngle extends Command implements PIDOutput {
 	
 	// Objects representing the drive train, gyroscope, and a PID controller
 	MecanumDriveTrainCAN DriveTrain;
-	AHRS gyroSensor;
-	PIDController turnController;
 	
 	// Some things that do things
 	static final double kP = 0.02;
@@ -70,7 +68,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	
 	@Override
 	protected boolean isFinished() {
-		return turnController.onTarget();
+		return DriveTrain.turnControllerOnTarget();
 	}
 	
 	@Override
@@ -79,7 +77,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 		DriveTrain.disableTurnController();
 		DriveTrain.stop();
 		Robot.log("Done Turning");
-		Robot.log("Current Angle: " + gyroSensor.pidGet());
+		Robot.log("Current Angle: " + Robot.mecanumDriveTrain.navX.pidGet());
 	}
 	
 	@Override
