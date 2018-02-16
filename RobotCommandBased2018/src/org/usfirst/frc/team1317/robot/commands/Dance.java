@@ -49,15 +49,15 @@ public class Dance extends Command {
     protected void execute() {
     	if(AutoTimer.get() < 1) {
     		driveTrain.driveCartesian(0, 0, 0.5);
-    		elevator.move(1);
+    		elevator.move(0.5);
     		claw.openClaw();
-    		climber.move(1);
+    		climber.move(0.5);
     	}
     	else if(AutoTimer.get() < 2) {
     		driveTrain.driveCartesian(0, 0, -0.5);
-    		elevator.move(-1);
+    		elevator.move(-0.5);
     		claw.closeClaw();
-    		climber.move(-1);
+    		climber.move(-0.5);
     	}
     	else if(AutoTimer.get() < 3) {
     		AutoTimer.reset();

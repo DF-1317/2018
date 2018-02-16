@@ -7,12 +7,13 @@
 
 package org.usfirst.frc.team1317.robot;
 
-import org.usfirst.frc.team1317.robot.commands.ArmToggle;
 import org.usfirst.frc.team1317.robot.commands.AutonomousExchange;
 import org.usfirst.frc.team1317.robot.commands.AutonomousForward;
 import org.usfirst.frc.team1317.robot.commands.AutonomousScale;
 import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
 import org.usfirst.frc.team1317.robot.commands.ClawClose;
+import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
+import org.usfirst.frc.team1317.robot.commands.Dance;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
 import org.usfirst.frc.team1317.robot.subsystems.Claw;
@@ -77,6 +78,7 @@ public class Robot extends TimedRobot {
 	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
 	
 	Command TurnCommand = new TurnToAngle(90.0);
+	Command endgameAlert = new ClimbAlertWait();
 	
 	// Booleans for controlling robot with POVs
 	boolean armMoving = false;
@@ -101,6 +103,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("DriveForward Auto", "Forward");
 		m_chooser.addObject("Exchange Auto", "Exchange");
 		m_chooser.addObject("Turn Testing", "TestTurn");
+		m_chooser.addObject("Dance Mode", "Dance");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -137,6 +140,8 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		//reset the game data when the robot is disabled
 		GameData = "";
+		SmartDashboard.putBoolean("Endgame", false);
+		endgameAlert.cancel();
 	}
 
 	@Override
@@ -192,6 +197,8 @@ public class Robot extends TimedRobot {
 		}
 		else if(mode == "TestTurn") {
 			m_autonomousCommand = TurnCommand;
+		} else if(mode == "Dance") {
+			m_autonomousCommand = new Dance();
 		}
 
 		//start the autonomous command if it exists
@@ -226,6 +233,8 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 			log("Canceled Autonomous command");
 		}
+		
+		endgameAlert.start();
 		
 		log("Teleop Init Complete");
 	}
