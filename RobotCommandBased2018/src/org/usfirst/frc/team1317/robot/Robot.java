@@ -14,6 +14,7 @@ import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
 import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
 import org.usfirst.frc.team1317.robot.commands.Dance;
+import org.usfirst.frc.team1317.robot.commands.DanceSine;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
 import org.usfirst.frc.team1317.robot.subsystems.Claw;
@@ -104,6 +105,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Exchange Auto", "Exchange");
 		m_chooser.addObject("Turn Testing", "TestTurn");
 		m_chooser.addObject("Dance Mode", "Dance");
+		m_chooser.addObject("Dance Sine", "DanceSine");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -197,8 +199,12 @@ public class Robot extends TimedRobot {
 		}
 		else if(mode == "TestTurn") {
 			m_autonomousCommand = TurnCommand;
-		} else if(mode == "Dance") {
+		}
+		else if(mode == "Dance") {
 			m_autonomousCommand = new Dance();
+		}
+		else if(mode == "DanceSine") {
+			m_autonomousCommand = new DanceSine();
 		}
 
 		//start the autonomous command if it exists
