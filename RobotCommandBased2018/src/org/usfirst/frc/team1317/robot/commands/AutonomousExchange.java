@@ -17,22 +17,22 @@ public class AutonomousExchange extends CommandGroup {
     	//wait before starting
     	addSequential(new Wait(delay));
     	//drive forward to cross auto line
-    	addSequential(new DriveInches(100, 30));
+    	addSequential(new DriveInchesPID(100.0, 0.0));
     	//back up
-    	addSequential(new DriveInches(-80, 30));
+    	addSequential(new DriveInchesPID(-100.0, 0.0));
     	//turn right
-    	addSequential(new TurnDegrees(90, 0.3));
+    	addSequential(new TurnToAngle(90.0));
     	//drive to the exchange
-    	addSequential(new DriveInches(EXCHANGE_DIST_FROM_LEFT - distanceFromLeftEdge, 30));
+    	addSequential(new DriveInchesPID(EXCHANGE_DIST_FROM_LEFT - distanceFromLeftEdge, 90.0));
     	//turn right
-    	addSequential(new TurnDegrees(90, 0.3));
+    	addSequential(new TurnToAngle(180.0));
     	//lower arm
     	addSequential(new ArmDown());
     	//drive forward to exchange
-    	addSequential(new DriveInches(16, 10));
+    	addSequential(new DriveInchesPID(16.0, 180.0));
     	//open claw
     	addSequential(new ClawOpen());
     	//back up
-    	addSequential(new DriveInches(-16, 10));
+    	addSequential(new DriveInchesPID(-16.0, 180));
     }
 }
