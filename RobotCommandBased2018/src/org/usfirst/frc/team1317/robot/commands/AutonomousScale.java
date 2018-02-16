@@ -25,12 +25,15 @@ public class AutonomousScale extends CommandGroup {
        
     	//a variable representing where the scale is
     	Boolean ScaleLeft = null;
+    	double heading = 90.0;
     	//commands for turning right or left
     	Command TurnLeft = new TurnDegrees(-90.0, 1.0);
         Command TurnRight = new TurnDegrees(90.0, 1.0);
         //stores plate locations in variable
-    	if (plateLocations.charAt(1) == 'L')
+    	if (plateLocations.charAt(1) == 'L') {
     		ScaleLeft = true;
+    		heading = -heading;
+    	}
     	else if (plateLocations.charAt(1) == 'R')
     		ScaleLeft = false;
     	//elevator starts moving up
@@ -39,42 +42,42 @@ public class AutonomousScale extends CommandGroup {
     	addSequential(new Wait(delay));
     	//if the robot is in the center position
     	if (startingPosition == Robot.Center_Position) {
-    		addSequential(new DriveInches(DistanceMap.MIDWAY_AUTO_LINE));
+    		addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0));
     		addSequential(ScaleLeft ? TurnLeft:TurnRight);
-    		addSequential(new DriveInches(DistanceMap.HORIZONTAL_PAST_SWITCH));
+    		addSequential(new DriveInchesPID(DistanceMap.HORIZONTAL_PAST_SWITCH, heading));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInches(DistanceMap.MIDWAY_AUTO_TO_SCALE));
+    		addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SCALE, 0.0));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInches(DistanceMap.APPROACH_SCALE));
+    		addSequential(new DriveInchesPID(DistanceMap.APPROACH_SCALE, -heading));
     	}
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
-    			addSequential(new DriveInches(DistanceMap.MIDWAY_AUTO_LINE+DistanceMap.MIDWAY_AUTO_TO_SCALE));
+    			addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE+DistanceMap.MIDWAY_AUTO_TO_SCALE, 0.0));
     			addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    			addSequential(new DriveInches(DistanceMap.APPROACH_SCALE));
+    			addSequential(new DriveInchesPID(DistanceMap.APPROACH_SCALE, -heading));
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
-    				addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE) );
+    				addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(DistanceMap.CROSS_COURT) );
+	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, -heading) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
+	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH, 0.0) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
     			} else { //if we're crossing behind the switch
-    				addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+    				addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInches(DistanceMap.CROSS_COURT) );
+	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, heading) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(DistanceMap.SWITCH_TO_SCALE - DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+	    			addSequential( new DriveInchesPID(DistanceMap.SWITCH_TO_SCALE - DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
     			}
 
     		}
     	}
     	//approach the scale, regardless of path taken
-    	addSequential(new DriveInches(DistanceMap.APPROACH_SCALE));
+    	addSequential(new DriveInches(DistanceMap.APPROACH_SCALE, ScaleLeft ? 90.0 : -90.0));
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
     }
