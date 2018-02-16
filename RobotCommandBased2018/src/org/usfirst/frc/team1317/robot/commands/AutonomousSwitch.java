@@ -23,6 +23,9 @@ public class AutonomousSwitch extends CommandGroup {
     	// Commands for turning
     	Command TurnLeft = new TurnDegrees(-90.0, 1.0);
         Command TurnRight = new TurnDegrees(90.0, 1.0);
+        Command FaceForward = new TurnToAngle(0.0);
+        Command FaceLeft = new TurnToAngle(-90.0);
+        Command FaceRight = new TurnToAngle(90.0);
         // Variable to determine if switch is on the left
     	Boolean SwitchLeft = null; 
     	
@@ -41,47 +44,47 @@ public class AutonomousSwitch extends CommandGroup {
     	{	
     		// Drive midway to the auto line, turn based on the side of the switch is ours, 
     		// drive level to the side of the switch, turn towards the switch, and approach it.
-    		addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE) );
-    		addSequential( SwitchLeft ? TurnLeft : TurnRight);
-    		addSequential( new DriveInches(DistanceMap.HORIZONTAL_PAST_SWITCH));
-    		addSequential( SwitchLeft ? TurnRight : TurnLeft );
-    		addSequential( new DriveInches(DistanceMap.APPROACH_SWITCH_SIDE) );
+    		addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
+    		addSequential( SwitchLeft ? FaceLeft : FaceRight);
+    		addSequential( new DriveInchesPID(DistanceMap.HORIZONTAL_PAST_SWITCH, SwitchLeft ? -90.0 : 90.0));
+    		addSequential( FaceForward );
+    		addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH_SIDE, 0.0) );
     	}
     	else
     	{
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
-    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE) );
+    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
     			if(SwitchLeft) {
-    				addSequential(TurnRight);
+    				addSequential(FaceRight);
     			} else {
-    				addSequential(TurnLeft);
+    				addSequential(FaceLeft);
     			}
-    			addSequential( new DriveInches(DistanceMap.APPROACH_SWITCH) );
+    			addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0: -90.0) );
     		}
     		//if the switch and robot are on opposite sides
     		else {
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
     			if(crossFront) {
-	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(DistanceMap.CROSS_COURT) );
-	    			addSequential( SwitchLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
-	    			addSequential( SwitchLeft ? TurnLeft : TurnRight );
+	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE,0.0) );
+	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
+	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, SwitchLeft ? -90.0 : 90.0) );
+	    			addSequential( FaceForward );
+	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH,0.0) );
+	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
     			} else {
-	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(DistanceMap.CROSS_COURT) );
-	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInches(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? TurnRight : TurnLeft );
+	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE), 0.0 );
+	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
+	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, SwitchLeft ? -90.0 : 90.0) );
+	    			addSequential( FaceForward );
+	    			addSequential( new DriveInchesPID(DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
+	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
     			}
     			// The robot will always approach the switch
-    			addSequential( new DriveInches(DistanceMap.APPROACH_SWITCH) );
+    			addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0 : -90.0) );
     		}
     	}
     	// Always place the cube
-		addSequential( new PlaceCube());
+		addSequential( new PlaceCube() );
     }
 }
