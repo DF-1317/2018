@@ -49,7 +49,7 @@ public class DanceSine extends Command {
     protected void execute() {
 		driveTrain.driveCartesian(0, 0, Math.sin(AutoTimer.get()) * 0.5);
 		elevator.move(Math.sin(AutoTimer.get() * (1/6)) * 0.5);
-		climber.move(Math.sin(AutoTimer.get() * (1/6)) * 0.5);
+		arm.move(Math.sin(AutoTimer.get() * (1/6)) * 0.1);
 		if((AutoTimer.get() / 2) % 2 == 0) {
 			claw.toggleClaw();
 		}

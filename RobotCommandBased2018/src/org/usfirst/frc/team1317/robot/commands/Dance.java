@@ -51,13 +51,13 @@ public class Dance extends Command {
     		driveTrain.driveCartesian(0, 0, 0.5);
     		elevator.move(0.5);
     		claw.openClaw();
-    		climber.move(0.5);
+    		arm.move(0.1);
     	}
     	else if(AutoTimer.get() < 2) {
     		driveTrain.driveCartesian(0, 0, -0.5);
     		elevator.move(-0.5);
     		claw.closeClaw();
-    		climber.move(-0.5);
+    		arm.move(-0.1);
     	}
     	else if(AutoTimer.get() < 3) {
     		AutoTimer.reset();
