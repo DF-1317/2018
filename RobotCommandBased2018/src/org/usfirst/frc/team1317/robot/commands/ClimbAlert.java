@@ -20,7 +20,6 @@ public class ClimbAlert extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("Climb Alert initialized");
     	i = 0;
     }
 
@@ -30,9 +29,7 @@ public class ClimbAlert extends Command {
     	if((i * 20) % DELAY == 0) {
 	    	displayAlert = !displayAlert;
 	    	SmartDashboard.putBoolean("Endgame", displayAlert);
-	    	System.out.println("Climb Altert toggled");
     	}
-    	System.out.println("Climb Alert; i = " + i);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +43,6 @@ public class ClimbAlert extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	SmartDashboard.putBoolean("Endgame", true);
-    	System.out.println("Climb Alert Finished");
     }
 
     // Called when another command which requires one or more of the same
