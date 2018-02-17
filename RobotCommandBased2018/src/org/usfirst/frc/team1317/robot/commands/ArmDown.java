@@ -3,6 +3,7 @@ package org.usfirst.frc.team1317.robot.commands;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,7 +14,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArmDown extends Command {
 
+	
+	final double TIME_TO_MOVE = 0.5;
 	Arm arm;
+	Timer timer = new Timer();
 
     public ArmDown() {
         super("ArmDown");
@@ -27,21 +31,22 @@ public class ArmDown extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-
+    	timer.reset();
+    	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
     	//move motor backwards at full speed
-    	arm.move(-1);
+    	arm.move(-0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
     	//We are done if the bottom switch is pressed.
-        return arm.bottomSwitchPressed();
+        return (timer.get() >= TIME_TO_MOVE);
     }
 
     // Called once after isFinished returns true
