@@ -279,10 +279,10 @@ public class Robot extends TimedRobot {
 		
 		// Climb up and down
 		if(OI.OtherJoystick.getPOV() == 0) {
-			climb.move(1);
+			climb.move(-1);
 			climberMoving = true;
 		} else if(OI.OtherJoystick.getPOV() == 180) {
-			climb.move(-1);
+			climb.move(1);
 			climberMoving = true;
 		} else if(climberMoving) {
 			climb.move(0);
