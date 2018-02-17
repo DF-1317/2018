@@ -301,7 +301,7 @@ public class Robot extends TimedRobot {
 			armMoving = false;
 		}*/
 		
-		if(OI.TurnJoystick.getPOV() != -1) {
+		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
 		
