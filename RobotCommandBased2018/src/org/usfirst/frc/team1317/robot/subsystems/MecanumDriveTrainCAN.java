@@ -25,7 +25,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	//constants representing encoder and wheel properties.
 	public static final int TICKS_PER_REVOLUTION = 4096;
-	public static final double WHEEL_CIRCUMFERENCE = 6*Math.PI;
+	public static final double WHEEL_CIRCUMFERENCE = 6.0*Math.PI;
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
 	//PID Constants
@@ -54,8 +54,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	public WPI_TalonSRX BRMotor;
 	
 	//encoders
-	//Encoder FLEncoder;
-	//Encoder FREncoder;
 	public Encoder BLEncoder;
 	public Encoder BREncoder;
 	
@@ -94,12 +92,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		// set up base class
 		initialize(FLMotor,FRMotor,BLMotor,BRMotor);
 		//set up the encoders attached to the RoboRIO
-		//FLEncoder = new Encoder(RobotMap.FLMotorEncoderPort1,RobotMap.FLMotorEncoderPort2);
-		//FREncoder = new Encoder(RobotMap.FRMotorEncoderPort1,RobotMap.FRMotorEncoderPort2);
 		BLEncoder = new Encoder(RobotMap.BLMotorEncoderPortA,RobotMap.BLMotorEncoderPortB, false, EncodingType.k4X);
-		BREncoder = new Encoder(RobotMap.BRMotorEncoderPortA,RobotMap.BRMotorEncoderPortB);
-		//FLEncoder.setDistancePerPulse(distancePerPulse);
-		//FREncoder.setDistancePerPulse(distancePerPulse);
+		BREncoder = new Encoder(RobotMap.BRMotorEncoderPortA,RobotMap.BRMotorEncoderPortB, false, EncodingType.k4X);
 		BLEncoder.setDistancePerPulse(distancePerPulse);
 		BREncoder.setDistancePerPulse(distancePerPulse);
 		BLEncoder.setMaxPeriod(.1);
@@ -146,11 +140,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	 */
 	public void printEncoderPulses()
 	{
-		//SmartDashboard.putNumber("BL Sensor Position", FLMotor.getSensorCollection().getQuadraturePosition());
-		//SmartDashboard.putNumber("FR Sensor Position", FRMotor.getSensorCollection().getQuadraturePosition());
-		//SmartDashboard.putNumber("BL Motor Inches", FLMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
-		//SmartDashboard.putNumber("FR Motor Inches", FRMotor.getSelectedSensorPosition(0)/TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
-		//SmartDashboard.putNumber("BL Sensor Velocity", FLMotor.getSensorCollection().getQuadratureVelocity());
 		SmartDashboard.putNumber("BL Encoder Position", BLEncoder.getDistance());
 		SmartDashboard.putNumber("BL Raw Encoder Position", BLEncoder.getRaw());
 		SmartDashboard.putNumber("BL Encoder Speed", BLEncoder.getRate());
