@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ClimbAlertWait extends CommandGroup {
 
     public ClimbAlertWait() {
-    	System.out.println("ClimbAlertWait initializing");
     	addSequential(new Wait(105.0));
     	addSequential(new ClimbAlert());
-    	System.out.println("ClimbAlertWait done initializing");
+    	addSequential(new Wait(15.0));
+    	addSequential(new ClimbAlert());
     }
 }
