@@ -24,3 +24,10 @@
 * Button 11 toggles advanced control mode. In advanced control mode, the throttle can vary the robot's speed and twisting the Move Joystick will cause the robot to turn
 * Button 12 resets distances calculated by sensors.
 
+## Smart Dashboard
+
+*Autonomous Mode chooser: Switch, Scale, DriveForward, Exhange. Modes for testing: TestTurn, Dance, DanceSine.
+*Starting Postion Chooser: Far Left, Left, Center, Right, Far Right
+*Crossing Chooser: Front, Behind. Whether to cross in front of the switch or behind the switch when the target is on the opposite side then the robot.
+*Indicaters indicating if certain drive modes are on.
+*The EndGame Indicator will flash when there are about 30 seconds left in the match, then turn green.
