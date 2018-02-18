@@ -26,13 +26,13 @@
 
 ## Smart Dashboard
 
-1. **Autonomous Mode chooser:**
+1. **Autonomous Mode chooser:**  
 Switch, Scale, DriveForward, Exhange. Modes for testing: TestTurn, Dance, DanceSine.
-1. **Starting Postion Chooser:**
+1. **Starting Postion Chooser:**  
 Far Left, Left, Center, Right, Far Right
-1. **Crossing Chooser:**
+1. **Crossing Chooser:**  
 Front, Behind. Whether to cross in front of the switch or behind the switch when the target is on the opposite side then the robot.
-1. **Indicaters:**
+1. **Indicaters:**  
 indicating if certain drive modes are on.
-1. **EndGame Indicator:**
+1. **EndGame Indicator:**  
 will flash when there are about 30 seconds left in the match, then turn green. It will flash again when there are fifteen seconds remaining.
