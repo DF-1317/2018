@@ -17,6 +17,7 @@ import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
 import org.usfirst.frc.team1317.robot.commands.Dance;
 import org.usfirst.frc.team1317.robot.commands.DanceSine;
+import org.usfirst.frc.team1317.robot.commands.DriveInchesAccelerate;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesPID;
 import org.usfirst.frc.team1317.robot.commands.PositionElevatorTime;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
@@ -248,6 +249,7 @@ public class Robot extends TimedRobot {
 		//runs commands during autonomous
 		Scheduler.getInstance().run();
 		mecanumDriveTrain.printNavXYawOutput();
+		SmartDashboard.putBoolean("Limit Switch", input.get());
 	}
 
 	@Override
@@ -328,6 +330,9 @@ public class Robot extends TimedRobot {
 		}
 		if(OI.MoveJoystick.getRawButtonPressed(2)) {
 			driveTwoFeet.start();
+		}
+		if(OI.TurnJoystick.getRawButtonPressed(2)) {
+			(new DriveInchesAccelerate(0.5, 72.0, 0.5)).start();
 		}
 		
 		//print stuff to smart dashboard or console
