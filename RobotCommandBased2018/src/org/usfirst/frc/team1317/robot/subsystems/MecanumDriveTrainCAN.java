@@ -310,5 +310,8 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	public void pidWrite(double output) {
 		driveCartesian(0.0,output,0.0);
 	}
-
+	
+	public AutonomousDrivingController getDrivingController() {
+		return driveNavigator;
+	}
 }
