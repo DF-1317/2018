@@ -349,6 +349,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
 		SmartDashboard.putBoolean("Limit Switch", input.get());
+		if(switchValue != input.get()) {
+			switchValue = input.get();
+			log("Switch: " + switchValue);
+		}
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
