@@ -15,7 +15,7 @@ public class UltrasonicDriveToDistance extends Command {
 	
 	/**
 	 * constructs the command 
-	 * @param millimetersFromObject - the target inches from an object that the robot should be at
+	 * @param inchesFromObject - the target inches from an object that the robot should be at
 	 */
     public UltrasonicDriveToDistance(double inchesFromObject) {
     	super("UltrasonicDriveToDistance");

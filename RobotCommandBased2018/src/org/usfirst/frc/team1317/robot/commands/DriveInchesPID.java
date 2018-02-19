@@ -24,8 +24,8 @@ public class DriveInchesPID extends Command {
 	double drivingSpeed;
 	double turningSpeed;
 	
-	final static double TURNING_DEFAULT = 0.5;
-	final static double DRIVING_DEFAULT = 0.7;
+	final static double TURNING_DEFAULT = 0.3;
+	final static double DRIVING_DEFAULT = 0.5;
 	
 	/**
 	 * constructs this command

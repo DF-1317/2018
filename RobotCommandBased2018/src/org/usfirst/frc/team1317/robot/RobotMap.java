@@ -38,16 +38,14 @@ public class RobotMap {
 	public final static int OtherJoystickPort = 0;
 	
 	//DIO ports
-	public final static int FLMotorEncoderPortA = 4;
-	public final static int FLMotorEncoderPortB = 5;
-	public final static int FRMotorEncoderPortA = 2;
-	public final static int FRMotorEncoderPortB = 3;
 	public final static int BLMotorEncoderPortA = 0;
 	public final static int BLMotorEncoderPortB = 1;
 	public final static int BRMotorEncoderPortA = 8;
 	public final static int BRMotorEncoderPortB = 9;
 	public final static int ElevatorMotorEncoderPortA = 6;
 	public final static int ElevatorMotorEncoderPortB = 7;
+	public final static int ArmLimitSwitchPort = 2;
+	
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;
@@ -57,6 +55,8 @@ public class RobotMap {
 	//Analog Ports
 	public final static int UltrasonicPort = 0;
 	public final static int AnalogGyroPort = 1;
+	
+	
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

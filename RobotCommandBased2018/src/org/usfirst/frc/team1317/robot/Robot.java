@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team1317.robot;
 
+import org.usfirst.frc.team1317.robot.commands.ArmDown;
+import org.usfirst.frc.team1317.robot.commands.ArmUp;
 import org.usfirst.frc.team1317.robot.commands.AutonomousExchange;
 import org.usfirst.frc.team1317.robot.commands.AutonomousForward;
 import org.usfirst.frc.team1317.robot.commands.AutonomousScale;
@@ -15,6 +17,8 @@ import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
 import org.usfirst.frc.team1317.robot.commands.Dance;
 import org.usfirst.frc.team1317.robot.commands.DanceSine;
+import org.usfirst.frc.team1317.robot.commands.DriveInchesPID;
+import org.usfirst.frc.team1317.robot.commands.PositionElevatorTime;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
 import org.usfirst.frc.team1317.robot.subsystems.Claw;
@@ -24,11 +28,13 @@ import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -80,10 +86,17 @@ public class Robot extends TimedRobot {
 	
 	Command TurnCommand = new TurnToAngle(90.0);
 	Command endgameAlert = new ClimbAlertWait();
+	Command elevatorUp = new PositionElevatorTime(1.0, 0.7);
+	Command elevatorDown = new PositionElevatorTime(1.0, -0.7);
+	Command armUp = new ArmUp();
+	Command armDown = new ArmDown();
+	Command driveTwoFeet;
 	
 	// Booleans for controlling robot with POVs
 	boolean armMoving = false;
 	boolean climberMoving = false;
+	
+	public static DigitalInput input = new DigitalInput(RobotMap.ArmLimitSwitchPort);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -130,6 +143,14 @@ public class Robot extends TimedRobot {
 		//puts a box to input the delay before starting autonomous
 		SmartDashboard.getNumber("Delay", 0);
 		
+		LiveWindow.add(armDown);
+		LiveWindow.add(armUp);
+		LiveWindow.add(elevatorDown);
+		LiveWindow.add(elevatorUp);
+		compressor.setClosedLoopControl(false);
+		
+		driveTwoFeet = new DriveInchesPID(24.0, 0.0);
+		
 		log("Init Complete");
 	}
 
@@ -152,6 +173,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		//periodically tries to get the GameData
 		GameData = DriverStation.getInstance().getGameSpecificMessage();
+		SmartDashboard.putBoolean("Limit Switch", input.get());
 	}
 
 	/**
@@ -169,7 +191,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		log("Entering autonomousInit");
 		//if the game data has not been found, try to get it again
-		if(GameData == null||GameData == "")
+		if(GameData == null||GameData.length()<3)
 			GameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		//get options from dashboard
@@ -304,6 +326,9 @@ public class Robot extends TimedRobot {
 		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
+		if(OI.MoveJoystick.getRawButtonPressed(2)) {
+			driveTwoFeet.start();
+		}
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
@@ -316,6 +341,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
+		SmartDashboard.putBoolean("Limit Switch", input.get());
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
@@ -375,6 +401,9 @@ public class Robot extends TimedRobot {
 		// Test claw (toggle)
 		if(OI.OtherJoystick.getRawButtonPressed(6)) {
 			claw.toggleClaw();
+		}
+		if(OI.MoveJoystick.getRawButtonPressed(12)) {
+			mecanumDriveTrain.resetEncoderDistance();
 		}
 		OI.testTurnButton.whenPressed(TurnCommand);
 	}

@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput {
 	
 	//constants representing encoder and wheel properties.
-	public static final int TICKS_PER_REVOLUTION = 4096;
+	public static final int TICKS_PER_REVOLUTION = 1024; //was 4096
 	public static final double WHEEL_CIRCUMFERENCE = 6.0*Math.PI;
 	final double distancePerPulse = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
 	
@@ -128,6 +128,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		distanceController.setContinuous(false);
 	    distanceController.setOutputRange(-1.0, 1.0);
 	    distanceController.setAbsoluteTolerance(driveToleranceInches);
+	    distanceController.setName("Drive System", "Distance Controller");
 	    UltrasonicDrivingController = new PIDController(UltrasonicP, UltrasonicI, UltrasonicD, UltrasonicF, Robot.Ultrasonic, this);
 	    UltrasonicDrivingController.setContinuous(false);
 	    UltrasonicDrivingController.setOutputRange(-1.0, 1.0);
@@ -180,8 +181,6 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	{
 		BLEncoder.reset();
 		BREncoder.reset();
-		FLMotor.setSelectedSensorPosition(0,0,0);
-    	FRMotor.setSelectedSensorPosition(0,0,0);
 	}
 
 	/**

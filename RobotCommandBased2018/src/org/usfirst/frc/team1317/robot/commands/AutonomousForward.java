@@ -18,6 +18,6 @@ public class AutonomousForward extends CommandGroup {
     	//wait the determined number of seconds
     	addSequential(new Wait(delay));
     	//drive forward to 
-    	addSequential(new DriveInchesPID(100.0, 0.0));	
+    	addSequential(new DriveInchesPID(120.0, 0.0));	//Remember to change back to 100, unless we want to drive farther
     }
 }
