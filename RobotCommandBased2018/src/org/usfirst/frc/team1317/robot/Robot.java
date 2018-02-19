@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
 	// Booleans for controlling robot with POVs
 	boolean armMoving = false;
 	boolean climberMoving = false;
+	boolean switchValue;
 	
 	public static DigitalInput input = new DigitalInput(RobotMap.ArmLimitSwitchPort);
 
@@ -151,6 +152,8 @@ public class Robot extends TimedRobot {
 		compressor.setClosedLoopControl(false);
 		
 		driveTwoFeet = new DriveInchesPID(24.0, 0.0);
+		switchValue = input.get();
+		log("Switch: " + switchValue);
 		
 		log("Init Complete");
 	}
@@ -175,6 +178,10 @@ public class Robot extends TimedRobot {
 		//periodically tries to get the GameData
 		GameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putBoolean("Limit Switch", input.get());
+		if(switchValue != input.get()) {
+			switchValue = input.get();
+			log("Switch: " + switchValue);
+		}
 	}
 
 	/**
@@ -347,6 +354,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
 		SmartDashboard.putBoolean("Limit Switch", input.get());
+		if(switchValue != input.get()) {
+			switchValue = input.get();
+			log("Switch: " + switchValue);
+		}
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
