@@ -45,11 +45,11 @@ public class DriveInchesAccelerate extends Command {
 	    		phase = 2;
 	    		accelDistance = driveTrain.getDrivingController().pidGet() - startingDistance;
 	    	}
-	    	if(driveTrain.getDrivingController().pidGet() * 2 >= distance) {
+	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 2 >= distance) {
 	    		phase = 3;
 	    	}
     	} else if(phase == 2) {
-    		if(driveTrain.getDrivingController().pidGet() + accelDistance >= distance) {
+    		if((driveTrain.getDrivingController().pidGet() - startingDistance) + accelDistance >= distance) {
     			phase = 3;
     		}
     	} else if(phase == 3) {
@@ -63,6 +63,8 @@ public class DriveInchesAccelerate extends Command {
     		finished = true;
     	}
     	driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
+    	System.out.println("currentSpeed " + currentSpeed);
+    	System.out.println("remaining distance " + (distance - (driveTrain.getDrivingController().pidGet() - startingDistance)));
     }
 
     // Make this return true when this Command no longer needs to run execute()
