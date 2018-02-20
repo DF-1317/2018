@@ -46,6 +46,7 @@ public class RobotMapTest {
 	public final static int ElevatorMotorEncoderPortA = 8;
 	public final static int ElevatorMotorEncoderPortB = 9;
 	public final static int ArmLimitSwitchPort = 0;
+	public final static int GearCounterPort = 3;
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;

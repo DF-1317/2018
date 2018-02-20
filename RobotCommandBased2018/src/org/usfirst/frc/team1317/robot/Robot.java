@@ -31,6 +31,7 @@ import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GearTooth;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.Command;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
 	
 	public static final Compressor compressor = new Compressor();
 	public static final AnalogUltrasonic Ultrasonic = new AnalogUltrasonic(RobotMap.UltrasonicPort);
+	public static final GearTooth gt = new GearTooth(RobotMap.GearCounterPort);
 	
 	//Class representing joysticks and driver station controls
 	public static OI m_oi;
@@ -343,6 +345,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
+		SmartDashboard.putNumber("Gear Tooth Counter", gt.getDistance());
 		arm.logSwitch();
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
 		joyMsg += ", Move Joystick Y " + OI.MoveJoystick.getY();
