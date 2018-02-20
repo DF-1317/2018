@@ -99,10 +99,10 @@ public class AutonomousDrivingController implements PIDSource, PIDOutput {
 	@Override
 	public double pidGet() {
 		if(m_pidSource == PIDSourceType.kDisplacement) {
-			return (LeftEncoder.getDistance() - RightEncoder.getDistance())/2.0;
+			return (LeftEncoder.getDistance() + RightEncoder.getDistance())/2.0;
 		}
 		else {
-			return (LeftEncoder.getRate() - RightEncoder.getRate())/2.0;
+			return (LeftEncoder.getRate() + RightEncoder.getRate())/2.0;
 		}
 	}
 

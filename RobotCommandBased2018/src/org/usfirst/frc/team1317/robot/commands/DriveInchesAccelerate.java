@@ -43,7 +43,7 @@ public class DriveInchesAccelerate extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void executeOld() {
+    protected void execute() {
     	if(phase == 1) {
 	    	if(currentSpeed + acceleration <= maxSpeed) {
 	    		currentSpeed += acceleration;
@@ -54,7 +54,7 @@ public class DriveInchesAccelerate extends Command {
 	    		syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
 	    		
 	    	}
-	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 2 >= distance) {
+	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 2.0 >= distance) {
 	    		phase = 3;
 	    		syslog.log("Entering Phase 3 early; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance)); 
 	    	}
@@ -64,7 +64,7 @@ public class DriveInchesAccelerate extends Command {
     			syslog.log("Entering Phase 3; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
     		}
     	} else if(phase == 3) {
-    		if(currentSpeed - acceleration >= 0) {
+    		if(currentSpeed - acceleration >= 0.0) {
     			currentSpeed -= acceleration;
     		} else {
     			currentSpeed = 0;
@@ -74,13 +74,14 @@ public class DriveInchesAccelerate extends Command {
     	} else {
     		finished = true;
     	}
+		System.out.println("Distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
     	driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
     	//System.out.println("currentSpeed " + currentSpeed);
     	//System.out.println("remaining distance " + (distance - (driveTrain.getDrivingController().pidGet() - startingDistance)));
     }
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+	protected void execute2() {
     	double distanceNow = driveTrain.getDrivingController().pidGet();
 		if(phase == 1) {
 			currentSpeed += acceleration;

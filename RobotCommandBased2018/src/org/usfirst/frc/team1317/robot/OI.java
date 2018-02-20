@@ -24,7 +24,7 @@ public class OI {
 	//the third joystick from the left is the other joystick
 	public static final Joystick OtherJoystick = new Joystick(RobotMap.OtherJoystickPort);
 	// The button that toggles the arm
-	public static final Button toggleArmButton = new JoystickButton(OtherJoystick, 2);
+	public static final Button toggleArmButton = new JoystickButton(OtherJoystick, 6);
 	public static final Button testTurnButton = new JoystickButton(MoveJoystick, 10);
 	
 	/* ######################################################################

@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1317.robot;
 
 import org.usfirst.frc.team1317.robot.commands.ArmDown;
+import org.usfirst.frc.team1317.robot.commands.ArmToggle;
 import org.usfirst.frc.team1317.robot.commands.ArmUp;
 import org.usfirst.frc.team1317.robot.commands.AutonomousExchange;
 import org.usfirst.frc.team1317.robot.commands.AutonomousForward;
@@ -29,7 +30,6 @@ import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 import org.usfirst.frc.team1317.sensors.AnalogUltrasonic;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GearTooth;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -148,7 +148,7 @@ public class Robot extends TimedRobot {
 		LiveWindow.add(armUp);
 		LiveWindow.add(elevatorDown);
 		LiveWindow.add(elevatorUp);
-		compressor.setClosedLoopControl(false);
+		//compressor.setClosedLoopControl(false);
 		
 		driveTwoFeet = new DriveInchesPID(24.0, 0.0);
 		log("Init Complete");
@@ -293,7 +293,7 @@ public class Robot extends TimedRobot {
 			claw.toggleClaw();
 		}
 		//toggle the arm when the arm button is pressed
-		//OI.toggleArmButton.whenPressed(new ArmToggle());
+		OI.toggleArmButton.whenPressed(new ArmToggle());
 		
 		if(OI.MoveJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.resetNavXDistance();
@@ -352,7 +352,7 @@ public class Robot extends TimedRobot {
 		joyMsg += ", Move Joystick X " + OI.MoveJoystick.getX();
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
 		joyMsg += ", Turn Joytcick POV " + OI.TurnJoystick.getPOV();
-		periodicLog.log(joyMsg);
+		//periodicLog.log(joyMsg);
 	}
 
 	/**
