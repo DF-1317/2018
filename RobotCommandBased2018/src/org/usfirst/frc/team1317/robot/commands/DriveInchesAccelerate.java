@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1317.robot.commands;
 
+import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
@@ -13,6 +14,7 @@ public class DriveInchesAccelerate extends Command {
 	double acceleration;
 	double distance;
 	double maxSpeed;
+	double halfway;
 	
 	double startingDistance;
 	
@@ -22,11 +24,14 @@ public class DriveInchesAccelerate extends Command {
 	int phase = 1;
 	boolean finished = false;
 	
+	Logger syslog = new Logger("1317", "DriveInchesAccelerate");
+	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed) {
         this.acceleration = acceleration / 50;
         this.distance = distance;
+        this.halfway = distance / 2;
         this.maxSpeed = maxSpeed;
     }
 
@@ -36,7 +41,7 @@ public class DriveInchesAccelerate extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    protected void executeOld() {
     	if(phase == 1) {
 	    	if(currentSpeed + acceleration <= maxSpeed) {
 	    		currentSpeed += acceleration;
@@ -44,13 +49,17 @@ public class DriveInchesAccelerate extends Command {
 	    		currentSpeed = maxSpeed;
 	    		phase = 2;
 	    		accelDistance = driveTrain.getDrivingController().pidGet() - startingDistance;
+	    		syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+	    		
 	    	}
-	    	if(driveTrain.getDrivingController().pidGet() * 2 >= distance) {
+	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 2 >= distance) {
 	    		phase = 3;
+	    		syslog.log("Entering Phase 3 early; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance)); 
 	    	}
     	} else if(phase == 2) {
-    		if(driveTrain.getDrivingController().pidGet() + accelDistance >= distance) {
+    		if((driveTrain.getDrivingController().pidGet() - startingDistance) + accelDistance >= distance) {
     			phase = 3;
+    			syslog.log("Entering Phase 3; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
     		}
     	} else if(phase == 3) {
     		if(currentSpeed - acceleration >= 0) {
@@ -58,13 +67,50 @@ public class DriveInchesAccelerate extends Command {
     		} else {
     			currentSpeed = 0;
     			phase = 4;
+    			syslog.log("Entering Phase 4; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
     		}
     	} else {
     		finished = true;
     	}
     	driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
+    	//System.out.println("currentSpeed " + currentSpeed);
+    	//System.out.println("remaining distance " + (distance - (driveTrain.getDrivingController().pidGet() - startingDistance)));
     }
 
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+    	double distanceNow = driveTrain.getDrivingController().pidGet();
+		if(phase == 1) {
+			currentSpeed += acceleration;
+			if(currentSpeed >= maxSpeed) {
+				currentSpeed = maxSpeed;
+				phase = 2;
+				accelDistance = distanceNow - startingDistance;
+				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+			}
+			if((distanceNow - startingDistance) >= halfway) {
+				phase = 3;
+				syslog.log("Entering Phase 3 early; current distance: " + (distanceNow - startingDistance)); 
+			}
+		} else if(phase == 2) {
+			if((distanceNow - startingDistance) + accelDistance >= distance) {
+				phase = 3;
+				syslog.log("Entering Phase 3; current distance: " + (distanceNow - startingDistance));
+			}
+		} else if(phase == 3) {
+			currentSpeed -= acceleration;
+			if(currentSpeed < 0) {
+				currentSpeed = 0;
+				phase = 4;
+				syslog.log("Entering Phase 4; current distance: " + (distanceNow - startingDistance));
+			}
+		} else {
+			finished = true;
+		}
+		driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
+		System.out.println("currentSpeed " + currentSpeed);
+		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
+	}
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return finished;
