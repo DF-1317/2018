@@ -339,7 +339,7 @@ public class Robot extends TimedRobot {
 			driveTwoFeet.start();
 		}
 		if(OI.TurnJoystick.getRawButtonPressed(2)) {
-			(new DriveInchesAccelerate(0.5, 72.0, 0.5)).start();
+			(new DriveInchesAccelerate(0.1, 60.0, 0.25)).start();
 		}
 		
 		//print stuff to smart dashboard or console
