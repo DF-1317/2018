@@ -13,6 +13,7 @@ public class DriveInchesAccelerate extends Command {
 	double acceleration;
 	double distance;
 	double maxSpeed;
+	double halfway;
 	
 	double startingDistance;
 	
@@ -27,6 +28,7 @@ public class DriveInchesAccelerate extends Command {
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed) {
         this.acceleration = acceleration / 50;
         this.distance = distance;
+        this.halfway = distance / 2;
         this.maxSpeed = maxSpeed;
     }
 
@@ -67,6 +69,36 @@ public class DriveInchesAccelerate extends Command {
     	System.out.println("remaining distance " + (distance - (driveTrain.getDrivingController().pidGet() - startingDistance)));
     }
 
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute2() {
+    	double distanceNow = driveTrain.getDrivingController().pidGet();
+		if(phase == 1) {
+			currentSpeed += acceleration;
+			if(currentSpeed >= maxSpeed) {
+				currentSpeed = maxSpeed;
+				phase = 2;
+				accelDistance = distanceNow - startingDistance;
+			}
+			if((distanceNow - startingDistance) >= halfway) {
+				phase = 3;
+			}
+		} else if(phase == 2) {
+			if((distanceNow - startingDistance) + accelDistance >= distance) {
+				phase = 3;
+			}
+		} else if(phase == 3) {
+			currentSpeed -= acceleration;
+			if(currentSpeed < 0) {
+				currentSpeed = 0;
+				phase = 4;
+			}
+		} else {
+			finished = true;
+		}
+		driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
+		System.out.println("currentSpeed " + currentSpeed);
+		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
+	}
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return finished;
