@@ -4,6 +4,7 @@ import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -37,6 +38,7 @@ public class DriveInchesAccelerate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
     }
 
