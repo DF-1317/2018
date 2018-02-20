@@ -41,35 +41,34 @@ public class AutonomousScale extends CommandGroup {
     	addSequential(new Wait(delay));
     	//if the robot is in the center position
     	if (startingPosition == Robot.Center_Position) {
-    		addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0));
+    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED));
     		addSequential(ScaleLeft ? TurnLeft:TurnRight);
-    		addSequential(new DriveInchesPID(DistanceMap.HORIZONTAL_PAST_SWITCH, heading));
+    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.HORIZONTAL_PAST_SWITCH, Robot.DEFAULT_MAX_SPEED));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SCALE, 0.0));
+    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_TO_SCALE, Robot.DEFAULT_MAX_SPEED));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInchesPID(DistanceMap.APPROACH_SCALE, -heading));
+    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.APPROACH_SCALE, Robot.DEFAULT_MAX_SPEED));
     	}
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
-    			addSequential(new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE+DistanceMap.MIDWAY_AUTO_TO_SCALE, 0.0));
+    			addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE+DistanceMap.MIDWAY_AUTO_TO_SCALE, Robot.DEFAULT_MAX_SPEED));
     			addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    			addSequential(new DriveInchesPID(DistanceMap.APPROACH_SCALE, -heading));
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
-    				addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
+    				addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, -heading) );
+	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH, 0.0) );
+	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_TO_SWITCH, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
     			} else { //if we're crossing behind the switch
-    				addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
+    				addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, heading) );
+	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInchesPID(DistanceMap.SWITCH_TO_SCALE - DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
+	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.SWITCH_TO_SCALE - DistanceMap.SWITCH_TO_MIDWAY_SCALE, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
     			}
 
@@ -78,7 +77,7 @@ public class AutonomousScale extends CommandGroup {
     	//elevator starts moving up
     	addParallel(new PositionElevator(PositionElevator.TOP_POS));
     	//approach the scale, regardless of path taken
-    	addSequential(new DriveInches(DistanceMap.APPROACH_SCALE, ScaleLeft ? 90.0 : -90.0));
+    	addSequential(Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SCALE));
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
     }

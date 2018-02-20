@@ -18,6 +18,7 @@ public class DriveInchesAccelerate extends Command {
 	double halfway;
 	
 	double startingDistance;
+	double multiplier;
 	
 	double accelDistance;
 	double currentSpeed = 0;
@@ -29,11 +30,20 @@ public class DriveInchesAccelerate extends Command {
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
-    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed) {
+    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, boolean inReverse) {
         this.acceleration = acceleration / 50;
         this.distance = distance;
         this.halfway = distance / 2;
         this.maxSpeed = maxSpeed;
+        if(inReverse) {
+        	multiplier = -1;
+        } else {
+        	multiplier = 1;
+        }
+    }
+    
+    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed) {
+    	this(acceleration, distance, maxSpeed, false);
     }
 
     // Called just before this Command runs the first time
@@ -82,7 +92,7 @@ public class DriveInchesAccelerate extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	double distanceNow = driveTrain.getDrivingController().pidGet();
+    	double distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
 		if(phase == 1) {
 			currentSpeed += acceleration;
 			if(currentSpeed >= maxSpeed) {
@@ -112,7 +122,7 @@ public class DriveInchesAccelerate extends Command {
 			finished = true;
 			syslog.log("Finished); current distance: " + (distanceNow - startingDistance));
 		}
-		driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
+		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, 0.0);
 		System.out.println("currentSpeed " + currentSpeed);
 		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
 	}

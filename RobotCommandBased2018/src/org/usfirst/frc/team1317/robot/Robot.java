@@ -75,6 +75,10 @@ public class Robot extends TimedRobot {
 	public static final int Center_Position = 2;
 	public static final int Right_Position = 3;
 	public static final int Far_Right_Position = 4;
+	
+	//default values for autonomous commands
+	public static final double DEFAULT_ACCELERATION = 0.1;
+	public static final double DEFAULT_MAX_SPEED = 0.5;
     
     //Data telling where our plates for the switches and scale
 	String GameData = "";
@@ -327,11 +331,8 @@ public class Robot extends TimedRobot {
 		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
-		if(OI.MoveJoystick.getRawButtonPressed(2)) {
-			driveTwoFeet.start();
-		}
 		if(OI.TurnJoystick.getRawButtonPressed(2)) {
-			(new DriveInchesAccelerate(0.1, 60.0, 0.25)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 60.0, DEFAULT_MAX_SPEED)).start();
 		}
 		
 		//print stuff to smart dashboard or console
@@ -419,5 +420,19 @@ public class Robot extends TimedRobot {
 	 */
 	public static void log(String msg) {
 		syslog.log(msg);
+	}
+	
+	public static Command ultrasonicDriveToDistance(double targetPosition) {
+		double startPosition = Ultrasonic.getRangeInches();
+		double targetDistance = targetPosition - startPosition;
+		Command driveCommand;
+		
+		if(targetDistance < 0) {
+			driveCommand = new DriveInchesAccelerate(DEFAULT_ACCELERATION, -targetDistance, DEFAULT_MAX_SPEED, true);
+		} else {
+			driveCommand = new DriveInchesAccelerate(DEFAULT_ACCELERATION, targetDistance, DEFAULT_MAX_SPEED);
+		}
+		
+		return driveCommand;
 	}
 }
