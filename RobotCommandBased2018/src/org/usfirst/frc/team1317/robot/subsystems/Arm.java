@@ -19,7 +19,7 @@ public class Arm extends Subsystem {
 	DigitalInput ArmSwitch;
 	byte direction = 0;
 	boolean upSwitch = false;
-	boolean downSwicth = false;
+	boolean downSwitch = false;
 	boolean switchValue;
 	Logger syslog = new Logger("1317", "Arm");
 	
@@ -35,9 +35,10 @@ public class Arm extends Subsystem {
 	}
 	
 	public void move(double speed) {
+		
+		
 		if(speed > 0.0) {
-			if(ArmSwitch.get()) {
-				upSwitch = true;
+			if(upSwitch) {
 				ArmMotor.set(0.0);
 			}
 			else {
@@ -45,17 +46,19 @@ public class Arm extends Subsystem {
 			}
 		}
 		else if(speed < 0.0) {
-			
+			if(downSwitch) {
+				ArmMotor.set(0.0);
+			}
 		}
 		ArmMotor.set(speed);
 	}
 	
 	public boolean topSwitchPressed() {
-		return false;
+		return upSwitch;
 	}
 	
 	public boolean bottomSwitchPressed() {
-		return false;
+		return downSwitch;
 	}
 	
 	public double getArmSpeed() {
@@ -67,11 +70,29 @@ public class Arm extends Subsystem {
     }
     
     public void logSwitch() {
-    	if(switchValue != ArmSwitch.get()) {
-			switchValue = ArmSwitch.get();
-			syslog.log("Switch: " + switchValue);
-		}
+    	updateSwitchValues();
     	SmartDashboard.putBoolean("Arm Switch", switchValue);
+    	SmartDashboard.putBoolean("Top Arm Switch", upSwitch);
+    	SmartDashboard.putBoolean("Bottom Arm Switch", downSwitch);
+    }
+    private void updateSwitchValues() {
+    	boolean oldSwitchValue = switchValue;
+		switchValue = ArmSwitch.get();
+		if(switchValue != oldSwitchValue) {
+			syslog.log("Switch: " + switchValue);
+			if(switchValue == true){
+				upSwitch = false;
+				downSwitch = false;
+			}
+			else {
+				if(ArmMotor.get()>0.0&&downSwitch == false) {
+					upSwitch = true;
+				}
+				else if(ArmMotor.get()<0.0&&upSwitch == false) {
+					downSwitch = true;
+				}
+			}
+		}
     }
 }
 

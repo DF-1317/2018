@@ -44,7 +44,7 @@ public class RobotMap {
 	public final static int BRMotorEncoderPortB = 9;
 	public final static int ElevatorMotorEncoderPortA = 6;
 	public final static int ElevatorMotorEncoderPortB = 7;
-	public final static int ArmLimitSwitchPort = 4;
+	public final static int ArmLimitSwitchPort = 2;
 	
 	
 	//Solenoid ports

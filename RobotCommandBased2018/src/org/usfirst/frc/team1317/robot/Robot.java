@@ -246,7 +246,7 @@ public class Robot extends TimedRobot {
 		//runs commands during autonomous
 		Scheduler.getInstance().run();
 		mecanumDriveTrain.printNavXYawOutput();
-		SmartDashboard.putBoolean("Limit Switch", input.get());
+		arm.logSwitch();
 	}
 
 	@Override
