@@ -35,8 +35,7 @@ public class AutonomousSwitch extends CommandGroup {
     	else if (plateLocations.charAt(0) == 'R')
     		SwitchLeft = false;
     	
-    	// This command will always raise the elevator and wait (possibly 0 seconds) to start with
-    	addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
+    	//will wait the delay before starting
     	addSequential( new Wait(delay) );
     	
     	//if the robot is in the center position
@@ -60,7 +59,6 @@ public class AutonomousSwitch extends CommandGroup {
     			} else {
     				addSequential(FaceLeft);
     			}
-    			addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0: -90.0) );
     		}
     		//if the switch and robot are on opposite sides
     		else {
@@ -80,10 +78,13 @@ public class AutonomousSwitch extends CommandGroup {
 	    			addSequential( new DriveInchesPID(DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
 	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
     			}
-    			// The robot will always approach the switch
-    			addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0 : -90.0) );
+    			
     		}
     	}
+    	// This command will always raise the elevator \\
+    	addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
+    	// The robot will always approach the switch
+		addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0 : -90.0) );
     	// Always place the cube
 		addSequential( new PlaceCube() );
     }

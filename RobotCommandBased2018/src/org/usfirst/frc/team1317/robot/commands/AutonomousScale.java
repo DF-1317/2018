@@ -36,8 +36,7 @@ public class AutonomousScale extends CommandGroup {
     	}
     	else if (plateLocations.charAt(1) == 'R')
     		ScaleLeft = false;
-    	//elevator starts moving up
-    	addParallel(new PositionElevator(PositionElevator.TOP_POS));
+    	
     	//waits the specified amount of time
     	addSequential(new Wait(delay));
     	//if the robot is in the center position
@@ -76,6 +75,8 @@ public class AutonomousScale extends CommandGroup {
 
     		}
     	}
+    	//elevator starts moving up
+    	addParallel(new PositionElevator(PositionElevator.TOP_POS));
     	//approach the scale, regardless of path taken
     	addSequential(new DriveInches(DistanceMap.APPROACH_SCALE, ScaleLeft ? 90.0 : -90.0));
     	//always place cube at the end of autonomous
