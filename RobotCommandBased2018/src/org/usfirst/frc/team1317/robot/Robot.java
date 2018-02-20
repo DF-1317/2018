@@ -142,7 +142,7 @@ public class Robot extends TimedRobot {
 		log("Cross: " + crossChooser);
 		
 		//puts a box to input the delay before starting autonomous
-		SmartDashboard.getNumber("Delay", 0);
+		SmartDashboard.putNumber("Delay", 0.0);
 		
 		LiveWindow.add(armDown);
 		LiveWindow.add(armUp);
