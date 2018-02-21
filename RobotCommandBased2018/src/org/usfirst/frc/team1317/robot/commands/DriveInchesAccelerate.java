@@ -15,10 +15,11 @@ public class DriveInchesAccelerate extends Command {
 	double acceleration;
 	double distance;
 	double maxSpeed;
-	double halfway;
+	double thirdway;
 	
 	double startingDistance;
 	double multiplier;
+	double distanceNow;
 	
 	double accelDistance;
 	double currentSpeed = 0;
@@ -30,10 +31,12 @@ public class DriveInchesAccelerate extends Command {
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
+	public static final double SLOW_SPEED = 0.2;
+	
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, boolean inReverse) {
         this.acceleration = acceleration / 50;
         this.distance = distance;
-        this.halfway = distance / 2;
+        this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
         if(inReverse) {
         	multiplier = -1;
@@ -48,6 +51,7 @@ public class DriveInchesAccelerate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	driveTrain.resetEncoderDistance();
     	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
     }
@@ -62,9 +66,10 @@ public class DriveInchesAccelerate extends Command {
 	    		phase = 2;
 	    		accelDistance = driveTrain.getDrivingController().pidGet() - startingDistance;
 	    		syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+	    		accelDistance *= 2;
 	    		
 	    	}
-	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 2.0 >= distance) {
+	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 3.0 >= distance) {
 	    		phase = 3;
 	    		syslog.log("Entering Phase 3 early; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance)); 
 	    	}
@@ -92,7 +97,7 @@ public class DriveInchesAccelerate extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	double distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
+    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
 		if(phase == 1) {
 			currentSpeed += acceleration;
 			if(currentSpeed >= maxSpeed) {
@@ -100,8 +105,9 @@ public class DriveInchesAccelerate extends Command {
 				phase = 2;
 				accelDistance = distanceNow - startingDistance;
 				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+				accelDistance *= 2;
 			}
-			if((distanceNow - startingDistance) >= halfway) {
+			if((distanceNow - startingDistance) >= thirdway) {
 				phase = 3;
 				syslog.log("Entering Phase 3 early; current distance: " + (distanceNow - startingDistance)); 
 			}
@@ -112,15 +118,23 @@ public class DriveInchesAccelerate extends Command {
 			}
 		} else if(phase == 3) {
 			currentSpeed = 0.2;
-			if(distanceNow <= distance) {
-				currentSpeed = 0;
+			if(currentSpeed >= SLOW_SPEED) {
+				currentSpeed -= acceleration;
+			} else {
+				currentSpeed = SLOW_SPEED;
 				phase = 4;
-				syslog.log("Entering Phase 4; current distance: " + (distanceNow - startingDistance));
+				syslog.log("Entering Phase 4); current distance: " + (distanceNow - startingDistance));
+			}
+		} else if(phase == 4) {
+			if(distanceNow >= distance) {
+				currentSpeed = 0;
+				phase = 5;
+				syslog.log("Entering Phase 5; current distance: " + (distanceNow - startingDistance));
 			}
 		} else {
 			driveTrain.stop();
 			finished = true;
-			syslog.log("Finished); current distance: " + (distanceNow - startingDistance));
+			syslog.log("Finished; current distance: " + (distanceNow - startingDistance));
 		}
 		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, 0.0);
 		System.out.println("currentSpeed " + currentSpeed);
@@ -128,12 +142,13 @@ public class DriveInchesAccelerate extends Command {
 	}
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return finished;
+        return (distanceNow >= distance);
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	driveTrain.stop();
+    	syslog.log("Finished");
     }
 
     // Called when another command which requires one or more of the same

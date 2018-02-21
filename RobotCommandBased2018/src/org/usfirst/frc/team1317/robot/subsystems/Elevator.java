@@ -35,7 +35,7 @@ public class Elevator extends PIDSubsystem {
 		// Just in case
 		ElevatorMotor.setInverted(false);
 		ElevatorMotor.configPeakCurrentLimit(50, 10);
-		ElevatorMotor.enableCurrentLimit(true);
+		ElevatorMotor.enableCurrentLimit(false);
 		setAbsoluteTolerance(kTolerance);
 		setOutputRange(-1.0,1.0);
 	}
