@@ -331,8 +331,10 @@ public class Robot extends TimedRobot {
 		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
-		if(OI.TurnJoystick.getRawButtonPressed(2)) {
+		if(OI.TurnJoystick.getRawButtonPressed(3)) {
 			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 60.0, DEFAULT_MAX_SPEED)).start();
+		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 60.0, DEFAULT_MAX_SPEED, true)).start();
 		}
 		
 		//print stuff to smart dashboard or console

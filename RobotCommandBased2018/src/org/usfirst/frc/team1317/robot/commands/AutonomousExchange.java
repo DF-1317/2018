@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1317.robot.commands;
 
+import org.usfirst.frc.team1317.robot.DistanceMap;
+import org.usfirst.frc.team1317.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonomousExchange extends CommandGroup {
@@ -17,22 +20,22 @@ public class AutonomousExchange extends CommandGroup {
     	//wait before starting
     	addSequential(new Wait(delay));
     	//drive forward to cross auto line
-    	addSequential(new DriveInchesPID(100.0, 0.0));
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.AUTO_LINE + 10.0, Robot.DEFAULT_MAX_SPEED));
     	//back up
-    	addSequential(new DriveInchesPID(-100.0, 0.0));
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.AUTO_LINE - 10.0, Robot.DEFAULT_MAX_SPEED, true));
     	//turn right
     	addSequential(new TurnToAngle(90.0));
     	//drive to the exchange
-    	addSequential(new DriveInchesPID(EXCHANGE_DIST_FROM_LEFT - distanceFromLeftEdge, 90.0));
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, EXCHANGE_DIST_FROM_LEFT - distanceFromLeftEdge, Robot.DEFAULT_MAX_SPEED));
     	//turn right
     	addSequential(new TurnToAngle(180.0));
     	//lower arm
     	addSequential(new ArmDown());
     	//drive forward to exchange
-    	addSequential(new DriveInchesPID(16.0, 180.0));
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 16.0, Robot.DEFAULT_MAX_SPEED));
     	//open claw
     	addSequential(new ClawOpen());
     	//back up
-    	addSequential(new DriveInchesPID(-16.0, 180));
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 16.0, Robot.DEFAULT_MAX_SPEED, true));
     }
 }
