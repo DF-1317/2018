@@ -3,6 +3,7 @@ package org.usfirst.frc.team1317.robot.commands;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.subsystems.Elevator;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,6 +16,7 @@ public class PositionElevatorTime extends Command {
 	Elevator el;
 	double speed;
 	double time;
+	double batteryVoltage;
 	
     public PositionElevatorTime(double time, double speed) {
 		super("PositionElevatorTime");
@@ -28,6 +30,8 @@ public class PositionElevatorTime extends Command {
     protected void initialize() {
     	timer.reset();
     	timer.start();
+    	batteryVoltage = RobotController.getBatteryVoltage();
+    	speed *= (12.0/batteryVoltage);
     }
 
     // Called repeatedly when this Command is scheduled to run
