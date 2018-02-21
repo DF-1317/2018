@@ -43,17 +43,16 @@ public class AutonomousSwitch extends CommandGroup {
     	{	
     		// Drive midway to the auto line, turn based on the side of the switch is ours, 
     		// drive level to the side of the switch, turn towards the switch, and approach it.
-    		addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
-    		addSequential( SwitchLeft ? FaceLeft : FaceRight);
-    		addSequential( new DriveInchesPID(DistanceMap.HORIZONTAL_PAST_SWITCH, SwitchLeft ? -90.0 : 90.0));
+			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE));
+			addSequential( SwitchLeft ? FaceLeft : FaceRight);
+    		addSequential( _driveTo(DistanceMap.HORIZONTAL_PAST_SWITCH));
     		addSequential( FaceForward );
-    		addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH_SIDE, 0.0) );
     	}
     	else
     	{
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
-    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE, 0.0) );
+    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE) );
     			if(SwitchLeft) {
     				addSequential(FaceRight);
     			} else {
@@ -64,18 +63,18 @@ public class AutonomousSwitch extends CommandGroup {
     		else {
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
     			if(crossFront) {
-	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_LINE,0.0) );
+	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
 	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
-	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, SwitchLeft ? -90.0 : 90.0) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( FaceForward );
-	    			addSequential( new DriveInchesPID(DistanceMap.MIDWAY_AUTO_TO_SWITCH,0.0) );
+	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
 	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
     			} else {
-	    			addSequential( new DriveInches(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE), 0.0 );
+	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
-	    			addSequential( new DriveInchesPID(DistanceMap.CROSS_COURT, SwitchLeft ? -90.0 : 90.0) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( FaceForward );
-	    			addSequential( new DriveInchesPID(DistanceMap.SWITCH_TO_MIDWAY_SCALE, 0.0) );
+	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
     			}
     			
@@ -84,8 +83,12 @@ public class AutonomousSwitch extends CommandGroup {
     	// This command will always raise the elevator \\
     	addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
     	// The robot will always approach the switch
-		addSequential( new DriveInchesPID(DistanceMap.APPROACH_SWITCH, SwitchLeft ? 90.0 : -90.0) );
+		addSequential( Robot.ultrasonicDriveToDistance(DistanceMap.approachSwitch) );
     	// Always place the cube
 		addSequential( new PlaceCube() );
     }
+
+    private Command _driveTo(double target) {
+    	return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
+	}
 }
