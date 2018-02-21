@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1317.robot.commands;
 
+import org.usfirst.frc.team1317.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -18,6 +20,6 @@ public class AutonomousForward extends CommandGroup {
     	//wait the determined number of seconds
     	addSequential(new Wait(delay));
     	//drive forward to 
-    	addSequential(new DriveInchesPID(120.0, 0.0));	//Remember to change back to 100, unless we want to drive farther
+    	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 100.0, Robot.DEFAULT_MAX_SPEED));
     }
 }
