@@ -34,6 +34,8 @@ public class Elevator extends PIDSubsystem {
 		ElevatorEncoder = new Encoder(RobotMap.ElevatorMotorEncoderPortA, RobotMap.ElevatorMotorEncoderPortB);
 		// Just in case
 		ElevatorMotor.setInverted(false);
+		ElevatorMotor.configPeakCurrentLimit(50, 10);
+		ElevatorMotor.enableCurrentLimit(true);
 		setAbsoluteTolerance(kTolerance);
 		setOutputRange(-1.0,1.0);
 	}
