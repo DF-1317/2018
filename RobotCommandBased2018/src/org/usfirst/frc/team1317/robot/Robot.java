@@ -93,8 +93,8 @@ public class Robot extends TimedRobot {
 	
 	Command TurnCommand = new TurnToAngle(90.0);
 	Command endgameAlert = new ClimbAlertWait();
-	Command elevatorUp = new PositionElevatorTime(1.0, 0.7);
-	Command elevatorDown = new PositionElevatorTime(1.0, -0.7);
+	Command elevatorUp = new PositionElevatorTime(0.5, 0.7);
+	Command elevatorDown = new PositionElevatorTime(0.5, -0.7);
 	Command armUp = new ArmUp();
 	Command armDown = new ArmDown();
 	Command driveTwoFeet;
@@ -338,6 +338,11 @@ public class Robot extends TimedRobot {
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
 			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 240.0, DEFAULT_MAX_SPEED, true)).start();
 		}
+		if(OI.OtherJoystick.getRawButtonPressed(9)) {
+			elevatorUp.start();
+		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
+			elevatorDown.start();
+		}
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
@@ -415,6 +420,8 @@ public class Robot extends TimedRobot {
 		if(OI.MoveJoystick.getRawButtonPressed(12)) {
 			mecanumDriveTrain.resetEncoderDistance();
 		}
+		if(OI.OtherJoystick.getRawButtonPressed(11))
+			
 		OI.testTurnButton.whenPressed(TurnCommand);
 	}
 	
