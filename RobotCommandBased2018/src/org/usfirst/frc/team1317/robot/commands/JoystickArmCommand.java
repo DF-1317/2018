@@ -34,7 +34,7 @@ public class JoystickArmCommand extends Command {
     	else if(OI.OtherJoystick.getRawButton(3)) {
     		arm.move(-0.3);
     	}
-    	else if(!OI.OtherJoystick.getRawButton(2)) {
+    	else if(!OI.OtherJoystick.getRawButton(2) && OI.OtherJoystick.getPOV() == -1) {
     		arm.move(0.5*OI.OtherJoystick.getY());
     	}
     	else {
