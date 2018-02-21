@@ -71,5 +71,18 @@ public class Claw extends Subsystem {
     public void initDefaultCommand() {
        
     }
+	
+	public boolean isClawOpen() {
+		
+		boolean isOpen;
+		
+		if(ClawPiston.get() == Value.kForward) {
+			isOpen = true;
+		} else {
+			isOpen = false;
+		}
+		
+		return isOpen;
+	}
 }
 
