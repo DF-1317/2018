@@ -93,8 +93,8 @@ public class Robot extends TimedRobot {
 	
 	Command TurnCommand = new TurnToAngle(90.0);
 	Command endgameAlert = new ClimbAlertWait();
-	Command elevatorUp = new PositionElevatorTime(0.5, 0.7);
-	Command elevatorDown = new PositionElevatorTime(0.5, -0.7);
+	Command elevatorUp = new PositionElevatorTime(1.0, 0.7);
+	Command elevatorFurtherUp = new PositionElevatorTime(2.0, -0.7);
 	Command armUp = new ArmUp();
 	Command armDown = new ArmDown();
 	Command driveTwoFeet;
@@ -150,7 +150,7 @@ public class Robot extends TimedRobot {
 		
 		LiveWindow.add(armDown);
 		LiveWindow.add(armUp);
-		LiveWindow.add(elevatorDown);
+		LiveWindow.add(elevatorFurtherUp);
 		LiveWindow.add(elevatorUp);
 		//compressor.setClosedLoopControl(false);
 		
@@ -341,7 +341,7 @@ public class Robot extends TimedRobot {
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
 			elevatorUp.start();
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
-			elevatorDown.start();
+			elevatorFurtherUp.start();
 		}
 		
 		//print stuff to smart dashboard or console
