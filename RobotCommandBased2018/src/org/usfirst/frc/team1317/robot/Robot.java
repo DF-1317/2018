@@ -265,7 +265,9 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 			log("Canceled Autonomous command");
+			m_autonomousCommand.free();
 		}
+		m_autonomousCommand = null;
 		
 		endgameAlert.start();
 		
