@@ -11,6 +11,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousScale extends CommandGroup {
 
+	public static final		Logger syslog	= new Logger("1317", AutonomousScale.class.getSimpleName());
+	Boolean					ScaleLeft		= false;
+	double					heading			= 90.0;
+	Command					TurnLeft 		= new TurnDegrees(-90.0, 1.0);
+	Command					TurnRight		= new TurnDegrees(90.0, 1.0);
+	int						startingPosition;
+	boolean					crossFront;
+	double					delay;
+
 	/**
 	 * creates a new command to deposit cube in autonomous
 	 * 
@@ -22,53 +31,57 @@ public class AutonomousScale extends CommandGroup {
 	 * @see AutonomousSwitch
 	 */
     public AutonomousScale(String plateLocations, int startingPosition, boolean crossFront, double delay) {
-       
-    	//a variable representing where the scale is
-    	Boolean ScaleLeft = null;
-    	double heading = 90.0;
-    	//commands for turning right or left
-    	Command TurnLeft = new TurnDegrees(-90.0, 1.0);
-        Command TurnRight = new TurnDegrees(90.0, 1.0);
-        //stores plate locations in variable
-    	if (plateLocations.charAt(1) == 'L') {
-    		ScaleLeft = true;
-    		heading = -heading;
-    	}
-    	else if (plateLocations.charAt(1) == 'R')
-    		ScaleLeft = false;
-    	
+		this.startingPosition = startingPosition;
+		this.crossFront = crossFront;
+		this.delay = delay;
+		if (plateLocations.charAt(1) == 'L') {
+			ScaleLeft = true;
+			heading = -heading;
+		}
+
+		if (RobotMap.isCompetitionRobot) {
+			_autoCompetition();
+		} else {
+			_autoTest();
+		}
+	} // AutonomousScale
+
+	private void _autoCompetition() {
     	//waits the specified amount of time
     	addSequential(new Wait(delay));
     	//if the robot is in the center position
     	if (startingPosition == Robot.Center_Position) {
-    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED));
+    		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE));
     		addSequential(ScaleLeft ? TurnLeft:TurnRight);
-    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.HORIZONTAL_PAST_SWITCH, Robot.DEFAULT_MAX_SPEED));
+    		addSequential(_driveTo(DistanceMap.HORIZONTAL_PAST_SWITCH));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_TO_SCALE, Robot.DEFAULT_MAX_SPEED));
+    		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_TO_SCALE));
     		addSequential(ScaleLeft ? TurnRight:TurnLeft);
-    		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.APPROACH_SCALE, Robot.DEFAULT_MAX_SPEED));
     	}
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
-    			addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE+DistanceMap.MIDWAY_AUTO_TO_SCALE, Robot.DEFAULT_MAX_SPEED));
+    			addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE
+						+ DistanceMap.MIDWAY_AUTO_TO_SCALE));
     			addSequential(ScaleLeft ? TurnRight:TurnLeft);
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
-    				addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED) );
+    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_TO_SWITCH, Robot.DEFAULT_MAX_SPEED) );
+	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
     			} else { //if we're crossing behind the switch
-    				addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE, Robot.DEFAULT_MAX_SPEED) );
+    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE
+							+ DistanceMap.MIDWAY_AUTO_TO_SWITCH
+							+ DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
-	    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.SWITCH_TO_SCALE - DistanceMap.SWITCH_TO_MIDWAY_SCALE, Robot.DEFAULT_MAX_SPEED) );
+	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_SCALE
+							- DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
     			}
 
@@ -80,5 +93,56 @@ public class AutonomousScale extends CommandGroup {
     	addSequential(Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SCALE));
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
-    }
+    } // _autoCompetition
+
+	private void _autoTest() {
+		//waits the specified amount of time
+		addSequential(new Wait(delay));
+		//if the robot is in the center position
+		if (startingPosition == Robot.Center_Position) {
+			addSequential(_driveTo(12.0));
+			addSequential(ScaleLeft ? TurnLeft:TurnRight);
+			addSequential(_driveTo(24.0));
+			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+			addSequential(_driveTo(12.0));
+			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+		}
+		else {
+			//if the scale is on the same position as the robot
+			if((startingPosition == Robot.Left_Position && ScaleLeft)
+					|| (startingPosition == Robot.Right_Position && !ScaleLeft)) {
+				addSequential(_driveTo(48.0));
+				addSequential(ScaleLeft ? TurnRight:TurnLeft);
+			} else { //if we have to cross the court to get to the scale
+				//if we're crossing in front of the switch
+				if(crossFront) {
+					addSequential( _driveTo(24.0, Robot.DEFAULT_MAX_SPEED) );
+					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+					addSequential( _driveTo(60.0) );
+					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+					addSequential( _driveTo(24.0) );
+					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+				} else { //if we're crossing behind the switch
+					addSequential( _driveTo(36.0) );
+					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+					addSequential( _driveTo(60.0, Robot.DEFAULT_MAX_SPEED) );
+					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+					addSequential( _driveTo(12.0) );
+					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+				}
+
+			}
+		}
+		//elevator starts moving up
+		// addParallel(new PositionElevatorTime(1.0, 0.5));
+		//approach the scale, regardless of path taken
+		addSequential(Robot.ultrasonicDriveToDistance(12.0));
+		//always place cube at the end of autonomous
+		// addSequential(new PlaceCube());
+	} // _autoTest
+
+	private Command _driveTo(double target) {
+		return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
+	} // _driveTo
+}
 }

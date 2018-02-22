@@ -11,6 +11,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousSwitch extends CommandGroup {
 
+	public static final		Logger syslog	= new Logger("1317", AutonomousSwitch.class.getSimpleName());
+	Boolean					ScaleLeft		= false;
+	double					heading			= 90.0;
+	Command					TurnLeft 		= new TurnDegrees(-90.0, 1.0);
+	Command					TurnRight		= new TurnDegrees(90.0, 1.0);
+	Command					FaceForward		= new TurnToAngle(0.0);
+	Command					FaceLeft		= new TurnToAngle(-90.0);
+	Command					FaceRight		= new TurnToAngle(90.0);
+	int						startingPosition;
+	boolean					crossFront;
+	double					delay;
 	/** 
 	 * 
 	 * @param plateLocations String containing the game data for the match
@@ -19,22 +30,22 @@ public class AutonomousSwitch extends CommandGroup {
 	 * @param delay Delay in seconds the robot waits after the match starts before running this command (The elevator will still go up immediately.)
 	 */
     public AutonomousSwitch(String plateLocations, int startingPosition, boolean crossFront, double delay) {
-    	super("AutonomousSwitch");
-    	// Commands for turning
-    	Command TurnLeft = new TurnDegrees(-90.0, 1.0);
-        Command TurnRight = new TurnDegrees(90.0, 1.0);
-        Command FaceForward = new TurnToAngle(0.0);
-        Command FaceLeft = new TurnToAngle(-90.0);
-        Command FaceRight = new TurnToAngle(90.0);
-        // Variable to determine if switch is on the left
-    	Boolean SwitchLeft = null; 
+		super("AutonomousSwitch");
+		this.startingPosition	= startingPosition;
+		this.crossFront			= crossFront;
+		this.delay				= delay;
     	
     	// Assign a value to SwitchLeft variable based on the game data
-    	if (plateLocations.charAt(0) == 'L')
-    		SwitchLeft = true;
-    	else if (plateLocations.charAt(0) == 'R')
-    		SwitchLeft = false;
-    	
+    	if (plateLocations.charAt(0) == 'L') SwitchLeft = true;
+
+		if (RobotMap.isCompetitionRobot) {
+			_autoCompetition();
+		} else {
+			_autoTest();
+		}
+	} // AutonomousSwitch
+
+	private void _autoCompetition() {
     	//will wait the delay before starting
     	addSequential( new Wait(delay) );
     	
@@ -86,7 +97,59 @@ public class AutonomousSwitch extends CommandGroup {
 		addSequential( Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SWITCH) );
     	// Always place the cube
 		addSequential( new PlaceCube() );
-    }
+    } // _autoCompetition
+
+
+	private void _autoTest() {
+		//will wait the delay before starting
+		addSequential( new Wait(delay) );
+
+		//if the robot is in the center position
+		if(startingPosition == Robot.Center_Position)
+		{
+			// Drive midway to the auto line, turn based on the side of the switch is ours,
+			// drive level to the side of the switch, turn towards the switch, and approach it.
+			addSequential( _driveTo(12.0));
+			addSequential( SwitchLeft ? FaceLeft : FaceRight);
+			addSequential( _driveTo(12.0));
+			addSequential( FaceForward );
+		}
+		else
+		{
+			//if the switch and robot are on the same side
+			if((startingPosition == Robot.Left_Position && SwitchLeft)
+					|| (startingPosition == Robot.Right_Position && !SwitchLeft)) {
+				addSequential( _driveTo(24.0) );
+				addSequential( SwitchLeft ? FaceRight : FaceLeft );
+			}
+			//if the switch and robot are on opposite sides
+			else {
+				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
+				if(crossFront) {
+					addSequential( _driveTo(6.0) );
+					addSequential( SwitchLeft ? FaceLeft : FaceRight );
+					addSequential( _driveTo(60.0) );
+					addSequential( FaceForward );
+					addSequential( _driveTo(6.0) );
+					addSequential( SwitchLeft ? FaceRight : FaceLeft );
+				} else {
+					addSequential( _driveTo(24.0) );
+					addSequential( SwitchLeft ? FaceLeft : FaceRight );
+					addSequential( _driveTo(60.0) );
+					addSequential( FaceForward );
+					addSequential( _driveTo(12.0) );
+					addSequential( SwitchLeft ? FaceRight : FaceLeft );
+				}
+
+			}
+		}
+		// This command will always raise the elevator \\
+		//addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
+		// The robot will always approach the switch
+		addSequential( Robot.ultrasonicDriveToDistance(24.0) );
+		// Always place the cube
+		//addSequential( new PlaceCube() );
+	} // _autoTest
 
     private Command _driveTo(double target) {
     	return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
