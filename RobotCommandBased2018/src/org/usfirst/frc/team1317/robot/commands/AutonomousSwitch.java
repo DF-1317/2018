@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1317.robot.commands;
 
 import org.usfirst.frc.team1317.robot.DistanceMap;
+import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -12,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousSwitch extends CommandGroup {
 
 	public static final		Logger syslog	= new Logger("1317", AutonomousSwitch.class.getSimpleName());
-	Boolean					ScaleLeft		= false;
+	Boolean					SwitchLeft		= false;
 	double					heading			= 90.0;
 	Command					TurnLeft 		= new TurnDegrees(-90.0, 1.0);
 	Command					TurnRight		= new TurnDegrees(90.0, 1.0);

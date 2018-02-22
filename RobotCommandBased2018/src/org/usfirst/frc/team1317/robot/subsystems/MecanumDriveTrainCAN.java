@@ -35,7 +35,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	final double driveF = 0.0;
 	final double driveToleranceInches = 1.0;
 	
-	final double turnP = 0.02;
+	final double turnP = 0.015;
 	final double turnI = 0.0;
 	final double turnD = 0.0;
 	final double turnF = 0.0;

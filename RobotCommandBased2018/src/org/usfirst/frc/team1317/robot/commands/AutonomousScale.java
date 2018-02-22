@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1317.robot.commands;
 
 import org.usfirst.frc.team1317.robot.DistanceMap;
+import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -67,7 +69,7 @@ public class AutonomousScale extends CommandGroup {
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
-    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE, Robot.DEFAULT_MAX_SPEED) );
+    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
@@ -78,7 +80,7 @@ public class AutonomousScale extends CommandGroup {
 							+ DistanceMap.MIDWAY_AUTO_TO_SWITCH
 							+ DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
-	    			addSequential( _driveTo(DistanceMap.CROSS_COURT, Robot.DEFAULT_MAX_SPEED) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
 	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_SCALE
 							- DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
@@ -116,7 +118,7 @@ public class AutonomousScale extends CommandGroup {
 			} else { //if we have to cross the court to get to the scale
 				//if we're crossing in front of the switch
 				if(crossFront) {
-					addSequential( _driveTo(24.0, Robot.DEFAULT_MAX_SPEED) );
+					addSequential( _driveTo(24.0) );
 					addSequential( ScaleLeft ? TurnRight : TurnLeft );
 					addSequential( _driveTo(60.0) );
 					addSequential( ScaleLeft ? TurnLeft : TurnRight );
@@ -125,7 +127,7 @@ public class AutonomousScale extends CommandGroup {
 				} else { //if we're crossing behind the switch
 					addSequential( _driveTo(36.0) );
 					addSequential( ScaleLeft ? TurnLeft : TurnRight );
-					addSequential( _driveTo(60.0, Robot.DEFAULT_MAX_SPEED) );
+					addSequential( _driveTo(60.0) );
 					addSequential( ScaleLeft ? TurnRight : TurnLeft );
 					addSequential( _driveTo(12.0) );
 					addSequential( ScaleLeft ? TurnRight : TurnLeft );
@@ -144,5 +146,4 @@ public class AutonomousScale extends CommandGroup {
 	private Command _driveTo(double target) {
 		return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
 	} // _driveTo
-}
 }

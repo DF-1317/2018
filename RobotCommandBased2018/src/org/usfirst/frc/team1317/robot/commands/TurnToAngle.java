@@ -1,15 +1,12 @@
 package org.usfirst.frc.team1317.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team1317.robot.*;
+import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController.TurnMode;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
-import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command turns the robot a certain number of degrees and specific speed
@@ -30,6 +27,8 @@ public class TurnToAngle extends Command implements PIDOutput {
 	double TargetAngle = 0.0;
 	double speed = 1.0;
 	
+	Timer AutoTimer = new Timer();
+	static final double MAX_TIME = 2.0;
 	
 	/**
 	 * The constructor for the command
@@ -68,7 +67,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	
 	@Override
 	protected boolean isFinished() {
-		return DriveTrain.turnControllerOnTarget();
+		return DriveTrain.turnControllerOnTarget() || AutoTimer.get() >= MAX_TIME;
 	}
 	
 	@Override

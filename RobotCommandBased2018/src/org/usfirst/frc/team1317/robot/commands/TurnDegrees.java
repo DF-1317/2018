@@ -1,15 +1,15 @@
 package org.usfirst.frc.team1317.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team1317.robot.*;
+import org.usfirst.frc.team1317.robot.PIDTurning;
+import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.navigation.AutonomousTurningController.TurnMode;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command turns the robot a certain number of degrees and specific speed
@@ -28,6 +28,10 @@ public class TurnDegrees extends Command implements PIDOutput {
 	double OriginalAngle;
 	//a variable representing the angle the robot should come to
 	double TargetAngle;
+	
+	Timer AutoTimer = new Timer();
+	
+	public static final double WAIT_TIME = 2.0;
 	
 	/**
 	 * The constructor for the command
@@ -62,6 +66,8 @@ public class TurnDegrees extends Command implements PIDOutput {
 		TargetAngle = PIDTurning.equivalentAngle(TargetAngle);
 		Robot.log("Target Angle: " + TargetAngle);
 		DriveTrain.setTurnControllerMode(TurnMode.withoutDriving);
+		AutoTimer.reset();
+		AutoTimer.start();
 	}
 	
 	@Override
@@ -72,7 +78,7 @@ public class TurnDegrees extends Command implements PIDOutput {
 	
 	@Override
 	protected boolean isFinished() {
-		return DriveTrain.turnControllerOnTarget();
+		return DriveTrain.turnControllerOnTarget() || AutoTimer.get() > WAIT_TIME;
 	}
 	
 	@Override
