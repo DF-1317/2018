@@ -152,7 +152,8 @@ public class Robot extends TimedRobot {
 		LiveWindow.add(armUp);
 		LiveWindow.add(elevatorFurtherUp);
 		LiveWindow.add(elevatorUp);
-		//compressor.setClosedLoopControl(false);
+		//turns the compressor on if the robot is the competition robot
+		compressor.setClosedLoopControl(RobotMap.isCompetitionRobot);
 		
 		driveTwoFeet = new DriveInchesPID(24.0, 0.0);
 		log("Init Complete");
