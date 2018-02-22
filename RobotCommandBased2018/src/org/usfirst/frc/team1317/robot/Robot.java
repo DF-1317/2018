@@ -351,7 +351,7 @@ public class Robot extends TimedRobot {
 		el.PrintEncoderPulses();
 		mecanumDriveTrain.printEncoderPulses();
 		mecanumDriveTrain.resetNavXDistance();
-		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getRangeMM());
+		SmartDashboard.putNumber("Ultrasonic (in)", Ultrasonic.getRangeInches());
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
