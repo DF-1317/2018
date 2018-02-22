@@ -58,7 +58,7 @@ public class AnalogUltrasonic extends AnalogInput implements PIDSource {
 	
 	/**
 	 * 
-	 * @return the range the detected in millimeters
+	 * @return the range detected in millimeters
 	 */
 	public double getRangeMM() {
 		return getVoltage()*1000*scaleFactor;
@@ -66,7 +66,7 @@ public class AnalogUltrasonic extends AnalogInput implements PIDSource {
 	
 	/**
 	 * 
-	 * @return the range detected in millimeters
+	 * @return the range detected in inches
 	 */
 	public double getRangeInches() {
 		return getRangeMM()/25.4;

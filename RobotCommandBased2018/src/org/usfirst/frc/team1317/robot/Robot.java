@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 	public static final int Far_Right_Position = 4;
 	
 	//default values for autonomous commands
-	public static final double DEFAULT_ACCELERATION = 0.5;
+	public static final double DEFAULT_ACCELERATION = 1;
 	public static final double DEFAULT_MAX_SPEED = 0.7;
     
     //Data telling where our plates for the switches and scale
@@ -335,9 +335,9 @@ public class Robot extends TimedRobot {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
 		if(OI.TurnJoystick.getRawButtonPressed(3)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 240.0, DEFAULT_MAX_SPEED)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED)).start();
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 240.0, DEFAULT_MAX_SPEED, true)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED, true)).start();
 		}
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
 			elevatorUp.start();
@@ -351,7 +351,7 @@ public class Robot extends TimedRobot {
 		el.PrintEncoderPulses();
 		mecanumDriveTrain.printEncoderPulses();
 		mecanumDriveTrain.resetNavXDistance();
-		SmartDashboard.putNumber("Ultrasonic (mm)", Ultrasonic.getRangeMM());
+		SmartDashboard.putNumber("Ultrasonic (in)", Ultrasonic.getRangeInches());
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
