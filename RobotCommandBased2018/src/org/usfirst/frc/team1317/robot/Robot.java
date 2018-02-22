@@ -335,9 +335,9 @@ public class Robot extends TimedRobot {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
 		if(OI.TurnJoystick.getRawButtonPressed(3)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 240.0, DEFAULT_MAX_SPEED)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED)).start();
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 240.0, DEFAULT_MAX_SPEED, true)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED, true)).start();
 		}
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
 			elevatorUp.start();

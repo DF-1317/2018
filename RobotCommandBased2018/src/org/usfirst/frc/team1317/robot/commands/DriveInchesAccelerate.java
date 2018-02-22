@@ -117,7 +117,6 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 3; current distance: " + (distanceNow - startingDistance));
 			}
 		} else if(phase == 3) {
-			currentSpeed = 0.2;
 			if(currentSpeed >= SLOW_SPEED) {
 				currentSpeed -= acceleration;
 			} else {
@@ -125,8 +124,11 @@ public class DriveInchesAccelerate extends Command {
 				phase = 4;
 				syslog.log("Entering Phase 4); current distance: " + (distanceNow - startingDistance));
 			}
+			if(distanceNow - startingDistance >= distance) {
+				phase = 4;
+			}
 		} else if(phase == 4) {
-			if(distanceNow >= distance) {
+			if(distanceNow - startingDistance >= distance) {
 				currentSpeed = 0;
 				phase = 5;
 				syslog.log("Entering Phase 5; current distance: " + (distanceNow - startingDistance));
