@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveInchesAccelerate extends Command {
 
+	final double turnProportion = 0.02;
+	
 	double acceleration;
 	double distance;
 	double maxSpeed;
@@ -23,6 +25,8 @@ public class DriveInchesAccelerate extends Command {
 	
 	double accelDistance;
 	double currentSpeed = 0;
+	
+	double targetAngle;
 	
 	int phase = 1;
 	boolean finished = false;
@@ -54,6 +58,7 @@ public class DriveInchesAccelerate extends Command {
     	driveTrain.resetEncoderDistance();
     	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
+    	targetAngle = driveTrain.navX.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -98,6 +103,7 @@ public class DriveInchesAccelerate extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
     	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
+    	double angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
 			currentSpeed += acceleration;
 			if(currentSpeed >= maxSpeed) {
@@ -136,7 +142,9 @@ public class DriveInchesAccelerate extends Command {
 			finished = true;
 			syslog.log("Finished; current distance: " + (distanceNow - startingDistance));
 		}
-		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, 0.0);
+		double angleError = angleNow - targetAngle;
+		syslog.log("Angle Error: " + angleError);
+		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, angleError*turnProportion);
 		System.out.println("currentSpeed " + currentSpeed);
 		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
 	}
