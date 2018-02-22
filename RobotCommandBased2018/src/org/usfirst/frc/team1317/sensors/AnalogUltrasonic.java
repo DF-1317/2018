@@ -73,6 +73,22 @@ public class AnalogUltrasonic extends AnalogInput implements PIDSource {
 	}
 	
 	/**
+	 * uses <code>AnalogInput</code>'s oversampling and averaging engine to provide an average distance
+	 * 
+	 * @return the average range in millimeters
+	 */
+	public double getAverageRangeMM() {
+		return getAverageVoltage()*1000*scaleFactor;
+	}
+	/**
+	 * @see getRangeInches
+	 * @return the average range in inches 
+	 */
+	public double getAverageRangeInches() {
+		return getAverageRangeMM()/25.4;
+	}
+	
+	/**
 	 * 
 	 * @return the range in the default units
 	 */
