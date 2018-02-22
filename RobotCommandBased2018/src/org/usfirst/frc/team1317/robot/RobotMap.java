@@ -25,10 +25,10 @@ public class RobotMap {
 	public static final boolean isCompetitionRobot = false;
 	
 	//The ports for the drive train motors
-	public final static int FLMotorPort = 2;
-	public final static int FRMotorPort = 1;
-	public final static int BLMotorPort = 4;
-	public final static int BRMotorPort = 3;
+	public final static int FLMotorPort = 3;
+	public final static int FRMotorPort = 4;
+	public final static int BLMotorPort = 1;
+	public final static int BRMotorPort = 2;
 	
 	public final static int ElevatorPort = 5;
 	public final static int ArmMotor = 6;

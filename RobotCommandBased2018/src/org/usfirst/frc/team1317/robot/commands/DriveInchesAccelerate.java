@@ -2,6 +2,7 @@ package org.usfirst.frc.team1317.robot.commands;
 
 import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.RobotMap;
 import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveInchesAccelerate extends Command {
 
 	final double turnProportion = 0.02;
+	final double testMultiplier;
 	
 	double acceleration;
 	double distance;
@@ -37,20 +39,35 @@ public class DriveInchesAccelerate extends Command {
 	
 	public static final double SLOW_SPEED = 0.2;
 	
-    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, boolean inReverse) {
+    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
         this.acceleration = acceleration / 50;
         this.distance = distance;
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
+        this.targetAngle = targetAngle;
         if(inReverse) {
         	multiplier = -1;
         } else {
         	multiplier = 1;
         }
+        
+        if(RobotMap.isCompetitionRobot) {
+        	testMultiplier = 1;
+        } else {
+        	testMultiplier = -1;
+        }
     }
     
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed) {
-    	this(acceleration, distance, maxSpeed, false);
+    	this(acceleration, distance, maxSpeed, 1000.0, false);
+    }
+    
+    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle) {
+    	this(acceleration, distance, maxSpeed, targetAngle, false);
+    }
+    
+    public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, boolean inReverse) {
+    	this(acceleration, distance, maxSpeed, 1000.0, inReverse);
     }
 
     // Called just before this Command runs the first time
@@ -58,7 +75,9 @@ public class DriveInchesAccelerate extends Command {
     	driveTrain.resetEncoderDistance();
     	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
-    	targetAngle = driveTrain.navX.getAngle();
+    	if(targetAngle == 1000.0) {
+    		targetAngle = driveTrain.navX.getAngle();
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -102,7 +121,7 @@ public class DriveInchesAccelerate extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
+    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier * testMultiplier;
     	double angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
 			currentSpeed += acceleration;
@@ -146,7 +165,7 @@ public class DriveInchesAccelerate extends Command {
 		}
 		double angleError = angleNow - targetAngle;
 		syslog.log("Angle Error: " + angleError);
-		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, angleError*turnProportion);
+		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
 		System.out.println("currentSpeed " + currentSpeed);
 		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
 	}

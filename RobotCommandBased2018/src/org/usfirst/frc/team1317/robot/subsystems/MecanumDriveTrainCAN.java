@@ -85,10 +85,10 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 		BLMotor = new WPI_TalonSRX(RobotMap.BLMotorPort);
 		BRMotor = new WPI_TalonSRX(RobotMap.BRMotorPort);
 		// The test robot is going the opposite way of the competition robot
-		BRMotor.setInverted(!RobotMap.isCompetitionRobot);
-		FLMotor.setInverted(!RobotMap.isCompetitionRobot);
-		BLMotor.setInverted(!RobotMap.isCompetitionRobot);
-		FRMotor.setInverted(!RobotMap.isCompetitionRobot);
+		//BRMotor.setInverted(!RobotMap.isCompetitionRobot);
+		//FLMotor.setInverted(!RobotMap.isCompetitionRobot);
+		//BLMotor.setInverted(!RobotMap.isCompetitionRobot);
+		//FRMotor.setInverted(!RobotMap.isCompetitionRobot);
 		// set up base class
 		initialize(FLMotor,FRMotor,BLMotor,BRMotor);
 		//set up the encoders attached to the RoboRIO

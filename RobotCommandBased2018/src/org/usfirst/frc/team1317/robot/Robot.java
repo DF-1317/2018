@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 	public static final int Far_Right_Position = 4;
 	
 	//default values for autonomous commands
-	public static final double DEFAULT_ACCELERATION = 0.5;
+	public static final double DEFAULT_ACCELERATION = 1;
 	public static final double DEFAULT_MAX_SPEED = 0.7;
     
     //Data telling where our plates for the switches and scale
