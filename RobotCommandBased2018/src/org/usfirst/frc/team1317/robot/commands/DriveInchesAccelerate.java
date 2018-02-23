@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveInchesAccelerate extends Command {
 
 	final double turnProportion = 0.02;
-	final double testMultiplier;
 	
 	double acceleration;
 	double distance;
@@ -50,12 +49,6 @@ public class DriveInchesAccelerate extends Command {
         	multiplier = -1;
         } else {
         	multiplier = 1;
-        }
-        
-        if(RobotMap.isCompetitionRobot) {
-        	testMultiplier = 1;
-        } else {
-        	testMultiplier = -1;
         }
     }
     
@@ -122,7 +115,7 @@ public class DriveInchesAccelerate extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier * testMultiplier;
+    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
     	double angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
 			currentSpeed += acceleration;
