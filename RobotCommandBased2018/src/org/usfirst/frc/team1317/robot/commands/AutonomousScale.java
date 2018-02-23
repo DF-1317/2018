@@ -92,6 +92,7 @@ public class AutonomousScale extends CommandGroup {
     	//elevator starts moving up
     	addParallel(new PositionElevatorTime(1.0, 0.5));
     	//approach the scale, regardless of path taken
+    	addSequential(new Wait(1.0));
     	addSequential(Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SCALE));
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
@@ -138,6 +139,7 @@ public class AutonomousScale extends CommandGroup {
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
+		addSequential( new Wait(1.0));
 		addSequential(Robot.ultrasonicDriveToDistance(12.0));
 		//always place cube at the end of autonomous
 		// addSequential(new PlaceCube());
