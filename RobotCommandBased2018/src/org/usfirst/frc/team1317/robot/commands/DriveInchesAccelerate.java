@@ -34,6 +34,7 @@ public class DriveInchesAccelerate extends Command {
 	boolean finished = false;
 	
 	Logger syslog = new Logger("1317", "DriveInchesAccelerate");
+	Logger periodicLog = new Logger("1317", "DriveInchesAccelerate", 10);
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
@@ -166,7 +167,9 @@ public class DriveInchesAccelerate extends Command {
 			syslog.log("Finished; current distance: " + (distanceNow - startingDistance));
 		}
 		double angleError = angleNow - targetAngle;
-		syslog.log("Angle Error: " + angleError);
+		periodicLog.log("Current Distance: " + distanceNow);
+		periodicLog.log("Current Speed: " + currentSpeed);
+		periodicLog.log("Angle Error: " + angleError);
 		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
 		System.out.println("currentSpeed " + currentSpeed);
 		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
