@@ -363,6 +363,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
 		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
 		SmartDashboard.putNumber("Gear Tooth Counter", gt.getDistance());
+		SmartDashboard.putNumber("PID Get Driving Controller", mecanumDriveTrain.getDrivingController().pidGet());
 		SmartDashboard.putBoolean("Claw Open", claw.isClawOpen());
 		arm.logSwitch();
 		String joyMsg = "Ultrasonic (mm) " + Ultrasonic.getRangeMM();
