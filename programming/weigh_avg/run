@@ -1,0 +1,5 @@
+#!/bin/bash
+
+CP="target/weight-0.1.jar"
+
+java -cp $CP Weight $@
