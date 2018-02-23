@@ -95,6 +95,7 @@ public class AutonomousSwitch extends CommandGroup {
     	}
     	// This command will always raise the elevator \\
     	addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
+    	addSequential ( new Wait(1.0));
     	// The robot will always approach the switch
 		addSequential( Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SWITCH) );
     	// Always place the cube
@@ -148,6 +149,7 @@ public class AutonomousSwitch extends CommandGroup {
 		// This command will always raise the elevator \\
 		//addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
 		// The robot will always approach the switch
+		addSequential( new Wait(1.0));
 		addSequential( Robot.ultrasonicDriveToDistance(24.0) );
 		// Always place the cube
 		//addSequential( new PlaceCube() );

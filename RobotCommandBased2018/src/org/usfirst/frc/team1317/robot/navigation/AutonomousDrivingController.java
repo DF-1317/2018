@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1317.robot.navigation;
 
 import org.usfirst.frc.team1317.robot.Robot;
+import org.usfirst.frc.team1317.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -99,10 +100,16 @@ public class AutonomousDrivingController implements PIDSource, PIDOutput {
 	@Override
 	public double pidGet() {
 		if(m_pidSource == PIDSourceType.kDisplacement) {
-			return (LeftEncoder.getDistance() + RightEncoder.getDistance())/2.0;
+			if(RobotMap.isCompetitionRobot)
+				return (LeftEncoder.getDistance() + RightEncoder.getDistance())/2.0;
+			else
+				return (-LeftEncoder.getDistance() + RightEncoder.getDistance())/2.0;
 		}
 		else {
-			return (LeftEncoder.getRate() + RightEncoder.getRate())/2.0;
+			if(RobotMap.isCompetitionRobot)
+				return (LeftEncoder.getRate() + RightEncoder.getRate())/2.0;
+			else
+				return (-LeftEncoder.getDistance() + RightEncoder.getDistance())/2.0;
 		}
 	}
 
