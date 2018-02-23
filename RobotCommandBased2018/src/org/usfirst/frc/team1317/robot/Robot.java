@@ -80,6 +80,8 @@ public class Robot extends TimedRobot {
 	public static final double DEFAULT_ACCELERATION = 1;
 	public static final double DEFAULT_MAX_SPEED = 0.7;
     
+	static double ultrasonicAverageDistance = 0.0;
+	
     //Data telling where our plates for the switches and scale
 	String GameData = "";
 	
@@ -174,6 +176,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		collectUltrasonicData();
 		//Automatically runs the scheduler (which runs the commands)
 		Scheduler.getInstance().run();
 		//periodically tries to get the GameData
@@ -251,6 +254,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		//runs commands during autonomous
+		collectUltrasonicData();
 		Scheduler.getInstance().run();
 		mecanumDriveTrain.printNavXYawOutput();
 		arm.logSwitch();
@@ -282,6 +286,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		//runs commands during teleop
 		Scheduler.getInstance().run();
+		collectUltrasonicData();
 		//toggle the traction wheels if the trigger is pressed on the move joystick
 		if(OI.MoveJoystick.getRawButtonPressed(1))
 		{
@@ -352,7 +357,7 @@ public class Robot extends TimedRobot {
 		mecanumDriveTrain.printEncoderPulses();
 		mecanumDriveTrain.resetNavXDistance();
 		SmartDashboard.putNumber("Ultrasonic (in)", Ultrasonic.getRangeInches());
-		SmartDashboard.putNumber("Average ultrasonic inches", Ultrasonic.getAverageRangeInches());
+		SmartDashboard.putNumber("Average ultrasonic inches", ultrasonicAverageDistance);
 		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
 		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
 		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
@@ -366,7 +371,7 @@ public class Robot extends TimedRobot {
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
 		joyMsg += ", Turn Joytcick POV " + OI.TurnJoystick.getPOV();
 		//periodicLog.log(joyMsg);
-		periodicLog.log("Average Ultrasonic inches " + Ultrasonic.getAverageRangeInches());
+		periodicLog.log("Average Ultrasonic inches " + ultrasonicAverageDistance);
 	}
 
 	/**
@@ -437,14 +442,15 @@ public class Robot extends TimedRobot {
 		syslog.log(msg);
 	}
 	
+	static void collectUltrasonicData () {
+		ultrasonicAverageDistance = (0.9*ultrasonicAverageDistance) + (0.1 * Ultrasonic.getAverageRangeInches());
+	}
+	
+	
 	public static Command ultrasonicDriveToDistance(double targetPosition) {
-		double startPosition = Ultrasonic.getAverageRangeInches();
-		while(startPosition < 12.0) {
-			Ultrasonic.getAverageRangeInches();
-		}
+		double startPosition = ultrasonicAverageDistance;
 		double targetDistance = targetPosition - startPosition;
 		Command driveCommand;
-		
 		if(targetDistance < 0) {
 			driveCommand = new DriveInchesAccelerate(DEFAULT_ACCELERATION, -targetDistance, DEFAULT_MAX_SPEED, true);
 		} else {
