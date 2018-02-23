@@ -236,6 +236,8 @@ public class Robot extends TimedRobot {
 		else if(mode == "DanceSine") {
 			m_autonomousCommand = new DanceSine();
 		}
+		
+		mecanumDriveTrain.zeroGyro();
 
 		//start the autonomous command if it exists
 		if (m_autonomousCommand != null) {
