@@ -366,6 +366,7 @@ public class Robot extends TimedRobot {
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
 		joyMsg += ", Turn Joytcick POV " + OI.TurnJoystick.getPOV();
 		//periodicLog.log(joyMsg);
+		periodicLog.log("Average Ultrasonic inches " + Ultrasonic.getAverageRangeInches());
 	}
 
 	/**
@@ -437,7 +438,10 @@ public class Robot extends TimedRobot {
 	}
 	
 	public static Command ultrasonicDriveToDistance(double targetPosition) {
-		double startPosition = Ultrasonic.getRangeInches();
+		double startPosition = Ultrasonic.getAverageRangeInches();
+		while(startPosition < 12.0) {
+			Ultrasonic.getAverageRangeInches();
+		}
 		double targetDistance = targetPosition - startPosition;
 		Command driveCommand;
 		
