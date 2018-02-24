@@ -7,6 +7,7 @@ import org.usfirst.frc.team1317.robot.subsystems.MecanumDriveTrainCAN;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -33,15 +34,17 @@ public class DriveInchesAccelerate extends Command {
 	boolean finished = false;
 	
 	Logger syslog = new Logger("1317", "DriveInchesAccelerate");
-	Logger periodicLog = new Logger("1317", "DriveInchesAccelerate", 10);
+	Logger periodicLog = new Logger("1317", "DriveInchesAccelerate", 5);
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
-	public static final double SLOW_SPEED = 0.2;
+	public static final double SLOW_SPEED = 0.15;
+	public static double offset;
 	
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
+        offset = SmartDashboard.getNumber("Offset", 10.0);
         this.acceleration = acceleration / 50;
-        this.distance = distance;
+        this.distance = distance - offset;
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
@@ -72,100 +75,62 @@ public class DriveInchesAccelerate extends Command {
     	if(targetAngle == 1000.0) {
     		targetAngle = driveTrain.navX.getAngle();
     	}
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void executeOld() {
-    	if(phase == 1) {
-	    	if(currentSpeed + acceleration <= maxSpeed) {
-	    		currentSpeed += acceleration;
-	    	} else {
-	    		currentSpeed = maxSpeed;
-	    		phase = 2;
-	    		accelDistance = driveTrain.getDrivingController().pidGet() - startingDistance;
-	    		syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
-	    		accelDistance *= 2;
-	    		
-	    	}
-	    	if((driveTrain.getDrivingController().pidGet() - startingDistance) * 3.0 >= distance) {
-	    		phase = 3;
-	    		syslog.log("Entering Phase 3 early; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance)); 
-	    	}
-    	} else if(phase == 2) {
-    		if((driveTrain.getDrivingController().pidGet() - startingDistance) + accelDistance >= distance) {
-    			phase = 3;
-    			syslog.log("Entering Phase 3; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
-    		}
-    	} else if(phase == 3) {
-    		if(currentSpeed - acceleration >= 0.0) {
-    			currentSpeed -= acceleration;
-    		} else {
-    			currentSpeed = 0;
-    			phase = 4;
-    			syslog.log("Entering Phase 4; current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
-    		}
-    	} else {
-    		finished = true;
-    	}
-		System.out.println("Distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
-    	driveTrain.driveCartesian(0.0, currentSpeed, 0.0);
-    	//System.out.println("currentSpeed " + currentSpeed);
-    	//System.out.println("remaining distance " + (distance - (driveTrain.getDrivingController().pidGet() - startingDistance)));
+    	syslog.log("Target Distance: " + distance);
     }
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	distanceNow = driveTrain.getDrivingController().pidGet() * multiplier;
+    	distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
     	double angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
 			currentSpeed += acceleration;
 			if(currentSpeed >= maxSpeed) {
 				currentSpeed = maxSpeed;
 				phase = 2;
-				accelDistance = distanceNow - startingDistance;
+				accelDistance = distanceNow;
 				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
-				accelDistance *= 2;
+				accelDistance *= 4;
 			}
-			if((distanceNow - startingDistance) >= thirdway) {
+			if((distanceNow) >= thirdway) {
 				phase = 3;
-				syslog.log("Entering Phase 3 early; current distance: " + (distanceNow - startingDistance)); 
+				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
 		} else if(phase == 2) {
-			if((distanceNow - startingDistance) + accelDistance >= distance) {
+			if((distanceNow + accelDistance) >= distance) {
 				phase = 3;
-				syslog.log("Entering Phase 3; current distance: " + (distanceNow - startingDistance));
+				syslog.log("Entering Phase 3; current distance: " + distanceNow);
 			}
 		} else if(phase == 3) {
 			if(currentSpeed >= SLOW_SPEED) {
-				currentSpeed -= acceleration;
+				currentSpeed -= acceleration * 2;
 			} else {
 				currentSpeed = SLOW_SPEED;
 				phase = 4;
-				syslog.log("Entering Phase 4); current distance: " + (distanceNow - startingDistance));
+				syslog.log("Entering Phase 4; current distance: " + distanceNow);
 			}
-			if((distanceNow - startingDistance) >= distance) {
+			if(distanceNow >= distance) {
 				currentSpeed = 0;
 				phase = 5;
-				syslog.log("Entering Phase 5 from Phase 3; current distance: " + (distanceNow - startingDistance));
+				syslog.log("Entering Phase 5 from Phase 3; current distance: " + distanceNow);
 			}
 		} else if(phase == 4) {
-			if((distanceNow - startingDistance) >= distance) {
-				currentSpeed = 0;
+			if(distanceNow >= distance) {
+				currentSpeed = -1;
 				phase = 5;
-				syslog.log("Entering Phase 5; current distance: " + (distanceNow - startingDistance));
+				syslog.log("Entering Phase 5; current distance: " + distanceNow);
 			}
 		} else {
-			driveTrain.stop();
+			currentSpeed = -1;
 			finished = true;
-			syslog.log("Finished; current distance: " + (distanceNow - startingDistance));
+			syslog.log("Finished; current distance: " + distanceNow);
 		}
 		double angleError = angleNow - targetAngle;
-		periodicLog.log("Current Distance: " + distanceNow);
-		periodicLog.log("Current Speed: " + currentSpeed);
-		periodicLog.log("Angle Error: " + angleError);
+		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError);
+		//periodicLog.log("Current Speed: " + currentSpeed);
+		//periodicLog.log("Angle Error: " + angleError);
 		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
 		System.out.println("currentSpeed " + currentSpeed);
-		System.out.println("remaining distance " + (distance - (distanceNow - startingDistance)));
+		System.out.println("remaining distance " + (distance - distanceNow));
 	}
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
@@ -175,7 +140,7 @@ public class DriveInchesAccelerate extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	driveTrain.stop();
-    	syslog.log("Finished");
+    	syslog.log("Finished; Current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
     }
 
     // Called when another command which requires one or more of the same

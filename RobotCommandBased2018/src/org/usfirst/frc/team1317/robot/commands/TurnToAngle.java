@@ -18,7 +18,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	MecanumDriveTrainCAN DriveTrain;
 	
 	// Some things that do things
-	static final double kP = 0.02;
+	static final double kP = 0.0;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kToleranceDegrees = 1.0;
@@ -50,7 +50,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	 * @param degrees number of degrees to turn. Positive is clockwise
 	 */
 	public TurnToAngle(double degrees) {
-		this(degrees, 0.5);
+		this(degrees, 0.3);
 	}
 	
 	@Override

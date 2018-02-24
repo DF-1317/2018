@@ -149,6 +149,8 @@ public class Robot extends TimedRobot {
 		
 		//puts a box to input the delay before starting autonomous
 		SmartDashboard.putNumber("Delay", 0.0);
+		SmartDashboard.putNumber("Offset", 10.0);
+		SmartDashboard.putNumber("GoToUltrasonic", 40.0);
 		
 		LiveWindow.add(armDown);
 		LiveWindow.add(armUp);
@@ -260,6 +262,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		mecanumDriveTrain.printNavXYawOutput();
 		arm.logSwitch();
+		SmartDashboard.putNumber("Average ultrasonic inches", ultrasonicAverageDistance);
 	}
 
 	@Override
@@ -346,6 +349,11 @@ public class Robot extends TimedRobot {
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
 			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED, true)).start();
 		}
+		
+		if(OI.TurnJoystick.getRawButtonPressed(1)) {
+			ultrasonicDriveToDistance(SmartDashboard.getNumber("GoToUltrasonic", 40.0)).start();
+		}
+		
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
 			elevatorUp.start();
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
@@ -374,7 +382,7 @@ public class Robot extends TimedRobot {
 		joyMsg += ", Turn Joystick X " + OI.TurnJoystick.getX();
 		joyMsg += ", Turn Joytcick POV " + OI.TurnJoystick.getPOV();
 		//periodicLog.log(joyMsg);
-		periodicLog.log("Average Ultrasonic inches " + ultrasonicAverageDistance);
+		//periodicLog.log("Average Ultrasonic inches " + ultrasonicAverageDistance);
 	}
 
 	/**

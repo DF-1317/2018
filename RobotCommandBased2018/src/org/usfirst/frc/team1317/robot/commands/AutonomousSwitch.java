@@ -16,11 +16,11 @@ public class AutonomousSwitch extends CommandGroup {
 	public static final		Logger syslog	= new Logger("1317", AutonomousSwitch.class.getSimpleName());
 	Boolean					SwitchLeft		= false;
 	double					heading			= 90.0;
-	Command					TurnLeft 		= new TurnDegrees(-90.0, 1.0);
-	Command					TurnRight		= new TurnDegrees(90.0, 1.0);
+	Command					TurnLeft 		= new TurnDegrees(-65.0, 0.1);
+	Command					TurnRight		= new TurnDegrees(65.0, 0.1);
 	Command					FaceForward		= new TurnToAngle(0.0);
-	Command					FaceLeft		= new TurnToAngle(-90.0);
-	Command					FaceRight		= new TurnToAngle(90.0);
+	Command					FaceLeft		= TurnLeft; // new TurnToAngle(-90.0);
+	Command					FaceRight		= TurnRight; // new TurnToAngle(90.0);
 	int						startingPosition;
 	boolean					crossFront;
 	double					delay;
@@ -97,7 +97,7 @@ public class AutonomousSwitch extends CommandGroup {
     	addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
     	addSequential ( new Wait(1.0));
     	// The robot will always approach the switch
-		addSequential( Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SWITCH) );
+		addSequential( new DriveInchesUltrasonic(DistanceMap.APPROACH_SWITCH) );
     	// Always place the cube
 		addSequential( new PlaceCube() );
     } // _autoCompetition
@@ -123,17 +123,17 @@ public class AutonomousSwitch extends CommandGroup {
 			if((startingPosition == Robot.Left_Position && SwitchLeft)
 					|| (startingPosition == Robot.Right_Position && !SwitchLeft)) {
 				addSequential( _driveTo(24.0) );
-				addSequential( SwitchLeft ? FaceRight : FaceLeft );
+				addSequential( SwitchLeft ? TurnRight : TurnLeft );
 			}
 			//if the switch and robot are on opposite sides
 			else {
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
 				if(crossFront) {
-					addSequential( _driveTo(6.0) );
+					addSequential( _driveTo(12.0) );
 					addSequential( SwitchLeft ? FaceLeft : FaceRight );
 					addSequential( _driveTo(60.0) );
 					addSequential( FaceForward );
-					addSequential( _driveTo(6.0) );
+					addSequential( _driveTo(12.0) );
 					addSequential( SwitchLeft ? FaceRight : FaceLeft );
 				} else {
 					addSequential( _driveTo(24.0) );
@@ -150,7 +150,7 @@ public class AutonomousSwitch extends CommandGroup {
 		//addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
 		// The robot will always approach the switch
 		addSequential( new Wait(1.0));
-		addSequential( Robot.ultrasonicDriveToDistance(24.0) );
+		addSequential( new DriveInchesUltrasonic(24.0) );
 		// Always place the cube
 		//addSequential( new PlaceCube() );
 	} // _autoTest

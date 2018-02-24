@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
  */
 public class AutonomousTurningController implements PIDOutput {
 
-	public static final double kP = 0.2;
+	public static final double kP = 0.015;
 	public static final double kI = 0.0;
 	public static final double kD = 0.0;
 	public static final double kF = 0.0;
@@ -28,7 +28,7 @@ public class AutonomousTurningController implements PIDOutput {
 	
 	TurnMode mode;
 	
-	double steeringError;
+	double steeringError = 0;
 
 	/**
 	 * 
