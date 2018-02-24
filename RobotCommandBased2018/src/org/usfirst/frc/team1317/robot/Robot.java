@@ -470,4 +470,8 @@ public class Robot extends TimedRobot {
 		
 		return driveCommand;
 	}
+	
+	public static double getUltrasonicAverageDistance() {
+		return ultrasonicAverageDistance;
+	}
 }

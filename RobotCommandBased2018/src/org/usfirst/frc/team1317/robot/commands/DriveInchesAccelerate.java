@@ -44,7 +44,9 @@ public class DriveInchesAccelerate extends Command {
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
         offset = SmartDashboard.getNumber("Offset", 10.0);
         this.acceleration = acceleration / 50;
-        this.distance = distance - offset;
+        if(distance > 12.0) 
+        	this.distance = distance - offset;
+        else this.distance = distance;
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
@@ -140,7 +142,7 @@ public class DriveInchesAccelerate extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	driveTrain.stop();
-    	syslog.log("Finished; Current distance: " + (driveTrain.getDrivingController().pidGet() - startingDistance));
+    	syslog.log("Finished; Current distance: " + multiplier*(driveTrain.getDrivingController().pidGet() - startingDistance));
     }
 
     // Called when another command which requires one or more of the same

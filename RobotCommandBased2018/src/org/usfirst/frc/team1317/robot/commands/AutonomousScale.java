@@ -136,6 +136,7 @@ public class AutonomousScale extends CommandGroup {
 
 			}
 		}
+		addSequential( new TurnToAngle( ScaleLeft ? 90.0 : -90.0));
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
