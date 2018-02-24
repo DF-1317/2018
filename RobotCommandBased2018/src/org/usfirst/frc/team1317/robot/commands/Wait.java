@@ -11,6 +11,7 @@ public class Wait extends Command {
 	
 	// Declare wait time and timer object
 	double TimeToWait;
+	double tNow;
 	Timer AutoTimer = new Timer();
 	
 	/**
@@ -20,6 +21,7 @@ public class Wait extends Command {
 	{
 		super("Wait");
 		TimeToWait = time;
+		tNow = 0.0;
 	}
 	
 	/**
@@ -32,13 +34,16 @@ public class Wait extends Command {
 		AutoTimer.start();
 	}
 	
+	@Override
+	protected void execute() {
+		tNow = AutoTimer.get();
+	}
+	
 	/**
 	 * Method to check if wait is done.
 	 */
 	@Override
 	protected boolean isFinished() {
-		if(AutoTimer.get()>TimeToWait)
-			return true;
-		return false;
+		return tNow >= TimeToWait;
 	}
 }
