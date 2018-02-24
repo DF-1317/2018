@@ -46,6 +46,14 @@ public class AutonomousSwitch extends CommandGroup {
 			_autoTest();
 		}
 	} // AutonomousSwitch
+    
+    private Command _turnLeft() {
+    	return new TurnDegrees(-90.0, 0.1);
+    }
+    
+    private Command _turnRight() {
+    	return new TurnDegrees(90.0, 0.1);
+    }
 
 	private void _autoCompetition() {
     	//will wait the delay before starting
@@ -113,9 +121,9 @@ public class AutonomousSwitch extends CommandGroup {
 			// Drive midway to the auto line, turn based on the side of the switch is ours,
 			// drive level to the side of the switch, turn towards the switch, and approach it.
 			addSequential( _driveTo(12.0));
-			addSequential( SwitchLeft ? FaceLeft : FaceRight);
+			addSequential( SwitchLeft ? _turnLeft() : _turnRight());
 			addSequential( _driveTo(12.0));
-			addSequential( FaceForward );
+			addSequential( SwitchLeft ? _turnRight() : _turnLeft() );
 		}
 		else
 		{
@@ -123,25 +131,25 @@ public class AutonomousSwitch extends CommandGroup {
 			if((startingPosition == Robot.Left_Position && SwitchLeft)
 					|| (startingPosition == Robot.Right_Position && !SwitchLeft)) {
 				addSequential( _driveTo(24.0) );
-				addSequential( SwitchLeft ? TurnRight : TurnLeft );
+				addSequential( SwitchLeft ? _turnRight() : _turnLeft() );
 			}
 			//if the switch and robot are on opposite sides
 			else {
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
 				if(crossFront) {
 					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? FaceLeft : FaceRight );
+					addSequential( SwitchLeft ? _turnLeft() : _turnRight() );
 					addSequential( _driveTo(60.0) );
-					addSequential( FaceForward );
+					addSequential( SwitchLeft ? _turnRight() : _turnLeft()  );
 					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? FaceRight : FaceLeft );
+					addSequential( SwitchLeft ? _turnRight() : _turnLeft() );
 				} else {
 					addSequential( _driveTo(24.0) );
-					addSequential( SwitchLeft ? FaceLeft : FaceRight );
+					addSequential( SwitchLeft ? _turnLeft() : _turnRight() );
 					addSequential( _driveTo(60.0) );
-					addSequential( FaceForward );
+					addSequential( SwitchLeft ? _turnLeft() : _turnRight() );
 					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? FaceRight : FaceLeft );
+					addSequential( SwitchLeft ? _turnLeft() : _turnRight() );
 				}
 
 			}
@@ -149,8 +157,9 @@ public class AutonomousSwitch extends CommandGroup {
 		// This command will always raise the elevator \\
 		//addParallel( new PositionElevator(PositionElevator.SWITCH_POS));
 		// The robot will always approach the switch
+		addSequential( _driveTo(2.0));
 		addSequential( new Wait(1.0));
-		addSequential( new DriveInchesUltrasonic(24.0) );
+		addSequential( new DriveInchesUltrasonic(36.0) );
 		// Always place the cube
 		//addSequential( new PlaceCube() );
 	} // _autoTest

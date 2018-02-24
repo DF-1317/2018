@@ -104,34 +104,34 @@ public class AutonomousScale extends CommandGroup {
 		//if the robot is in the center position
 		if (startingPosition == Robot.Center_Position) {
 			addSequential(_driveTo(12.0));
-			addSequential(ScaleLeft ? TurnLeft:TurnRight);
+			addSequential(ScaleLeft ? _turnLeft():_turnRight());
 			addSequential(_driveTo(24.0));
-			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+			addSequential(ScaleLeft ? _turnRight():_turnLeft());
 			addSequential(_driveTo(12.0));
-			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+			addSequential(ScaleLeft ? _turnRight():_turnLeft());
 		}
 		else {
 			//if the scale is on the same position as the robot
 			if((startingPosition == Robot.Left_Position && ScaleLeft)
 					|| (startingPosition == Robot.Right_Position && !ScaleLeft)) {
 				addSequential(_driveTo(48.0));
-				addSequential(ScaleLeft ? TurnRight:TurnLeft);
+				addSequential(ScaleLeft ? _turnRight():_turnLeft());
 			} else { //if we have to cross the court to get to the scale
 				//if we're crossing in front of the switch
 				if(crossFront) {
 					addSequential( _driveTo(24.0) );
-					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+					addSequential( ScaleLeft ? _turnLeft() : _turnRight() );
 					addSequential( _driveTo(60.0) );
-					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+					addSequential( ScaleLeft ? _turnRight() : _turnLeft() );
 					addSequential( _driveTo(24.0) );
-					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+					addSequential( ScaleLeft ? _turnRight() : _turnLeft() );
 				} else { //if we're crossing behind the switch
 					addSequential( _driveTo(36.0) );
-					addSequential( ScaleLeft ? TurnLeft : TurnRight );
+					addSequential( ScaleLeft ? _turnLeft() : _turnRight() );
 					addSequential( _driveTo(60.0) );
-					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+					addSequential( ScaleLeft ? _turnRight() : _turnLeft() );
 					addSequential( _driveTo(12.0) );
-					addSequential( ScaleLeft ? TurnRight : TurnLeft );
+					addSequential( ScaleLeft ? _turnRight() : _turnLeft() );
 				}
 
 			}
@@ -139,12 +139,22 @@ public class AutonomousScale extends CommandGroup {
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
+		addSequential(_driveTo(2.0));
+		addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 2.0, Robot.DEFAULT_MAX_SPEED, true));
 		addSequential( new Wait(1.0));
-		addSequential(Robot.ultrasonicDriveToDistance(12.0));
+		addSequential(new DriveInchesUltrasonic(36.0));
 		//always place cube at the end of autonomous
 		// addSequential(new PlaceCube());
 	} // _autoTest
 
+    private Command _turnLeft() {
+    	return new TurnDegrees(-90.0, 0.1);
+    }
+    
+    private Command _turnRight() {
+    	return new TurnDegrees(90.0, 0.1);
+    }
+	
 	private Command _driveTo(double target) {
 		return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
 	} // _driveTo
