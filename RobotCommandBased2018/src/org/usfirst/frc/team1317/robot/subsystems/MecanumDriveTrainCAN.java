@@ -37,7 +37,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	final double turnP = 0.015;
 	final double turnI = 0.0;
-	final double turnD = 0.0;
+	final double turnD = 0.02;
 	final double turnF = 0.0;
 	final double toleranceDegrees = 3.0;
 	
@@ -118,7 +118,7 @@ public class MecanumDriveTrainCAN extends MecanumDriveTrain implements PIDOutput
 	
 	public void initPIDControllers() {
 		turnController = new PIDController(turnP, turnI, turnD, turnF, navX, turnNavigator);
-		turnController.setInputRange(-180.0F, 180.0F);
+		turnController.setInputRange(-180.0, 180.0);
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(toleranceDegrees);
 		turnController.setContinuous(true);

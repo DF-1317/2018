@@ -46,11 +46,11 @@ public class TurnToAngle extends Command implements PIDOutput {
 	}
 	
 	/**
-	 * Overloaded constructor with a default speed of 0.7
+	 * Overloaded constructor with a default speed of 1.0
 	 * @param degrees number of degrees to turn. Positive is clockwise
 	 */
 	public TurnToAngle(double degrees) {
-		this(degrees, 0.3);
+		this(degrees, 1.0);
 	}
 	
 	@Override
