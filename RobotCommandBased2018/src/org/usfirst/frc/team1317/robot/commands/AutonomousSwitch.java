@@ -185,16 +185,14 @@ public class AutonomousSwitch extends CommandGroup {
 					addSequential( SwitchLeft ? Face.left() : Face.right() );
 					addSequential( _driveTo(60.0) );
 					addSequential( Face.forward()  );
-					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? Face.right() : Face.left() );
 				} else {
 					addSequential( _driveTo(36.0) );
 					addSequential( SwitchLeft ? Face.left() : Face.right() );
 					addSequential( _driveTo(60.0) );
 					addSequential( Face.backward() );
-					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? Face.right() : Face.left() );
 				}
+				addSequential( _driveTo(12.0) );
+				addSequential( SwitchLeft ? Face.right() : Face.left() );
 
 			}
 		}
