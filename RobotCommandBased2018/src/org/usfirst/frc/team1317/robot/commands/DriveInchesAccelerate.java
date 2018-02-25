@@ -72,7 +72,6 @@ public class DriveInchesAccelerate extends Command {
 
         this.acceleration = acceleration / 50;
 		this.distance = distance - getOffset(distance);
-        else this.distance = distance;
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
