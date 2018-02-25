@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1317.robot.commands;
 
+import org.usfirst.frc.team1317.robot.Console;
 import org.usfirst.frc.team1317.robot.Logger;
 import org.usfirst.frc.team1317.robot.Robot;
 import org.usfirst.frc.team1317.robot.RobotMap;
@@ -131,8 +132,8 @@ public class DriveInchesAccelerate extends Command {
 		//periodicLog.log("Current Speed: " + currentSpeed);
 		//periodicLog.log("Angle Error: " + angleError);
 		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
-		System.out.println("currentSpeed " + currentSpeed);
-		System.out.println("remaining distance " + (distance - distanceNow));
+		Console.show(4, "currentSpeed " + currentSpeed
+				+ ", remaining distance " + (distance - distanceNow));
 	}
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

@@ -9,8 +9,6 @@ import java.util.Map;
 //It has been slightly modified as to work with the new code
 public class Targeting {
 	
-	private int Details = 5;
-	
 	//This variable is from last year's vision tracking.
 	final double TargetX = 18+207/2; //x +w/2 at target 
 	 
@@ -41,11 +39,6 @@ public class Targeting {
 	
 	MecanumDriveTrain driveTrain;
 	Map<String,Object> currentBoundingBox;
-	
-	private void _showDetails(int level, String msg) {
-		if (Details < level) return;
-		System.out.println(msg);
-	}
 
 	public Targeting()
 	{
@@ -76,7 +69,7 @@ public class Targeting {
 		Boolean DoneMovingForward=false;
 		if (currentBoundingBox == null)
 		{
-			System.out.println("Searching for Target...");
+			Console.show(5, "Searching for Target...");
 			if(liftNumber == LeftLift)
 			{
 				driveTrain.driveCartesian(-0.3, -0.2, 0.0);
@@ -114,7 +107,7 @@ public class Targeting {
 			double xNow = (double)currentBoundingBox.get("x") + (double)currentBoundingBox.get("w")/2.0;
 			double distance = estimateDistancetoTarget();
 			double xDifference = xNow-TargetX;
-			_showDetails(3, "xnow: "+xNow + ", distance: " + distance);
+			Console.show(3, "xnow: "+xNow + ", distance: " + distance);
 			if (distance>DistanceError)
 			{
 				if(distance<6.0)
@@ -177,9 +170,9 @@ public class Targeting {
 				turnTimer.reset();
 				turnTimer.start();
 			}
-			_showDetails(3, "sliding: " + sliding + ", forward: " + forward + "turning: " + turning);
+			Console.show(3, "sliding: " + sliding + ", forward: " + forward + "turning: " + turning);
 			driveTrain.driveCartesian(sliding, forward, turning);
-			_showDetails(4, "Aligned: " + DoneAligningX + ", Forward: " + DoneMovingForward);
+			Console.show(4, "Aligned: " + DoneAligningX + ", Forward: " + DoneMovingForward);
 			if(DoneAligningX&&DoneMovingForward)
 			{
 				driveTrain.driveCartesian(0.0, 0.0, 0.0);

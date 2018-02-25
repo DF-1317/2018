@@ -43,11 +43,11 @@ class PacketReader {
 				DatagramPacket rPacket = new DatagramPacket(rData,rData.length);
 				serverSocket.receive(rPacket);
 				String msg = new String( rPacket.getData() );
-				// System.out.println("Got: " + msg);
+				Console.show(5, "Got: " + msg);
 				c = JSON.std.mapFrom(msg);
-				System.out.println(c);
+				Console.show(4, c);
 			}
-			catch (SocketTimeoutException e){System.out.println("Did not receive packet within time period");}
+			catch (SocketTimeoutException e){Console.show(0,"Did not receive packet within time period");}
 			catch (JSONObjectException e)
 			{
 				e.printStackTrace();
