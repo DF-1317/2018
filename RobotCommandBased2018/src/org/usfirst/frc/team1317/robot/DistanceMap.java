@@ -27,21 +27,33 @@ public class DistanceMap {
 	
 	
 	// These are constants for field distances to be used in autonomous paths
-	public static final double MIDWAY_OFFSET = 30.0;
+	public static final double MIDWAY_OFFSET = 65.0; //this should take into account the robot width and the stack of powercubes
 	public static final double COURT_WIDTH = PORTAL_WIDTH * 2 + PLAYER_STATION_WIDTH;
 	public static final double SWITCH_WIDTH = COURT_WIDTH - SIDE_WALL_TO_SWITCH * 2;
 	
 	public static final double AUTO_LINE = WALL_TO_AUTO_LINE - ROBOT_LENGTH + 2.0;
 	public static final double MIDWAY_AUTO_LINE = AUTO_LINE - MIDWAY_OFFSET;
-	public static final double HORIZONTAL_PAST_SWITCH = (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
-	public static final double CROSS_COURT = HORIZONTAL_PAST_SWITCH * 2;
-	public static final double MIDWAY_AUTO_TO_SCALE = WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE;
-	public static final double MIDWAY_AUTO_TO_SWITCH = WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
+	public static final double HORIZONTAL_PAST_SWITCH = 177.285; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
+	public static final double CROSS_COURT = 234.57; //=HORIZONTAL_PAST_SWITCH * 2;
+	public static final double MIDWAY_AUTO_TO_SCALE = 249.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
+	public static final double MIDWAY_AUTO_TO_SWITCH = 93.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
 	public static final double APPROACH_SWITCH = (CROSS_COURT - SWITCH_WIDTH)/2;
-	public static final double APPROACH_SWITCH_SIDE = WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
+	public static final double APPROACH_SWITCH_SIDE = 45.5;//old value: WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
 	public static final double APPROACH_SCALE = 50.0;
-	public static final double SWITCH_TO_SCALE = WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
-	public static final double SWITCH_TO_MIDWAY_SCALE = SWITCH_TO_SCALE / 2;
-	public static final double CENTER_TO_SWITCH = SWITCH_WIDTH / 2 - 10.0;
+	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
+	public static final double SWITCH_TO_MIDWAY_SCALE = 67.24; //old value: SWITCH_TO_SCALE / 2;
+	public static final double CENTER_TO_SWITCH = 50.5;// old value: SWITCH_WIDTH / 2 - 10.0;
+	
+	//the following values are used when aligning the robot by ultrasonic sensor
+	
+	//the distance from back of the robot to the wall when the front of the robot is aligned with the front of the scale minus the distance we want to be from the scale
+	//We will also need to add the distance the ultrasonic sensor is from the back of the robot to this value
+	public static final double DISTANCE_FROM_WALL_SCALE = 32.07 - 4.0; 
+	
+	//see comments on DISTANCE_FROM_WALL_SCALE
+	public static final double DISTANCE_FROM_WALL_SWITCH = 47.75;
+	
+	//Distance used to line up when approaching the switch from the front. See also comments on DISTANCE_FROM_WALL_SCALE
+	public static final double DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH = 100.5 - 4.0;
 	
 }
