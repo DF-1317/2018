@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  *
  */
@@ -40,13 +44,34 @@ public class DriveInchesAccelerate extends Command {
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
 	public static final double SLOW_SPEED = 0.15;
-	public static double offset;
+
+	private static final Map<Double,Double> Offsets;
+	static {
+		Map<Double,Double> tmp = new TreeMap<Double,Double>();
+		tmp.put(2.0, 0.0);
+		tmp.put(4.0, 1.0);
+		tmp.put(6.0, 2.0);
+		tmp.put(8.0, 3.0);
+		tmp.put(10.0, 4.0);
+		tmp.put(12.0, 6.0);
+		tmp.put(14.0, 8.0);
+		tmp.put(16.0, 10.0);
+		Offsets = Collections.unmodifiableMap(tmp);
+	}
+
+	static double getOffset( double val ) {
+		double offset = 0;
+		for (Map.Entry<Double,Double> e : Offsets.entrySet()) {
+			if (e.getKey() > val) break;
+			offset = e.getValue();
+		}
+		return offset;
+	}
 	
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
-        offset = SmartDashboard.getNumber("Offset", 10.0);
+
         this.acceleration = acceleration / 50;
-        if(distance > 12.0) 
-        	this.distance = distance - offset;
+		this.distance = distance - getOffset(distance);
         else this.distance = distance;
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
