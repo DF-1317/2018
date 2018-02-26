@@ -45,6 +45,12 @@ public class DriveInchesAccelerate extends Command {
 	
 	public static final double SLOW_SPEED = 0.15;
 
+	/**
+	 * Table of offsets to apply for the listed distances
+	 *
+	 * The key of the table represents the distance the caller wants to move, the value for the key is the offset
+	 * to apply which will correct for any overrun the drivetrain will have in it.
+	 */
 	private static final Map<Double,Double> Offsets;
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
@@ -59,10 +65,21 @@ public class DriveInchesAccelerate extends Command {
 		Offsets = Collections.unmodifiableMap(tmp);
 	}
 
-	static double getOffset( double val ) {
-		double offset = 0;
+	/**
+	 * Use the configured offset table to figure out what correction is needed
+	 *
+	 * The target distance is used to find the right distance offset we need to apply. We look through the table
+	 * to see in what range the target is, and return the value in the table that occurs at the base of
+	 * that range. If the target is < the minimum in the table, we return 0. If > the largest key,
+	 * we return the value for the largest key in the table.
+	 *
+	 * @param target		the intended distance the caller wants to drive
+	 * @return the offset to apply to the distance to adjust for the drive train
+	 */
+	static double getOffset( double target ) {
+		double offset = 0.0;
 		for (Map.Entry<Double,Double> e : Offsets.entrySet()) {
-			if (e.getKey() > val) break;
+			if (e.getKey() > target) break;
 			offset = e.getValue();
 		}
 		return offset;
