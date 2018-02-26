@@ -17,6 +17,7 @@ import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
 import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
 import org.usfirst.frc.team1317.robot.commands.Dance;
+import org.usfirst.frc.team1317.robot.commands.DanceFull;
 import org.usfirst.frc.team1317.robot.commands.DanceSine;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesAccelerate;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesPID;
@@ -126,6 +127,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Turn Testing", "TestTurn");
 		m_chooser.addObject("Dance Mode", "Dance");
 		m_chooser.addObject("Dance Sine", "DanceSine");
+		m_chooser.addObject("Dance Full", "DanceFull");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -236,7 +238,10 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new Dance();
 		}
 		else if(mode == "DanceSine") {
-			m_autonomousCommand = new DanceSine();
+			m_autonomousCommand = new DanceSine(2.0);
+		}
+		else if(mode == "DanceFull") {
+			m_autonomousCommand = new DanceFull();
 		}
 		
 		mecanumDriveTrain.zeroGyro();
