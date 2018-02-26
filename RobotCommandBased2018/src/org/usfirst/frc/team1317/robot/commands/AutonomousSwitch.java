@@ -128,16 +128,16 @@ public class AutonomousSwitch extends CommandGroup {
 				if(crossFront) {
 					addSequential( _driveTo(12.0) );
 					addSequential( SwitchLeft ? Turn.left() : Turn.right() );
-					addSequential( _driveTo(60.0) );
+					addSequential( _driveTo(48.0) );
 					addSequential( SwitchLeft ? Turn.right() : Turn.left()  );
 					addSequential( _driveTo(12.0) );
-					addSequential( SwitchLeft ? Turn.right() : Turn.left() );
+					distance2wall = 24;
 				} else {
-					addSequential( _driveTo(36.0) );
+					addSequential( _driveTo(48.0) );
 					addSequential( SwitchLeft ? Turn.left() : Turn.right() );
 					addSequential( _driveTo(60.0) );
 					addSequential( SwitchLeft ? Turn.left() : Turn.right() );
-					addSequential( _driveTo(12.0) );
+					addSequential( _driveTo(24.0) );
 					addSequential( SwitchLeft ? Turn.left() : Turn.right() );
 				}
 
@@ -183,16 +183,18 @@ public class AutonomousSwitch extends CommandGroup {
 				if(crossFront) {
 					addSequential( _driveTo(12.0) );
 					addSequential( SwitchLeft ? Face.left() : Face.right() );
-					addSequential( _driveTo(60.0) );
+					addSequential( _driveTo(48.0) );
 					addSequential( Face.forward()  );
+					distance2wall = 24;
 				} else {
-					addSequential( _driveTo(36.0) );
+					addSequential( _driveTo(48.0) );
 					addSequential( SwitchLeft ? Face.left() : Face.right() );
 					addSequential( _driveTo(60.0) );
 					addSequential( Face.backward() );
+					addSequential( _driveTo(24.0) );
+					addSequential( SwitchLeft ? Face.right() : Face.left() );
+					distance2wall = 48;
 				}
-				addSequential( _driveTo(12.0) );
-				addSequential( SwitchLeft ? Face.right() : Face.left() );
 
 			}
 		}
