@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
 	Command armUp = new ArmUp();
 	Command armDown = new ArmDown();
 	Command driveTwoFeet;
+	Command tempCommand;
 	
 	// Booleans for controlling robot with POVs
 	boolean armMoving = false;
@@ -347,24 +348,29 @@ public class Robot extends TimedRobot {
 		}*/
 		
 		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
-			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
+			tempCommand = new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5);
 		}
 		if(OI.TurnJoystick.getRawButtonPressed(3)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED)).start();
+			tempCommand = new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED);
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED, true)).start();
+			tempCommand = new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED, true);
 		}
 		
 		if(OI.TurnJoystick.getRawButtonPressed(1)) {
-			ultrasonicDriveToDistance(SmartDashboard.getNumber("GoToUltrasonic", 40.0)).start();
+			tempCommand = ultrasonicDriveToDistance(SmartDashboard.getNumber("GoToUltrasonic", 40.0));
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
-			(new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 0.7)).start();
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 0.7);
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
-			(new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -0.7)).start();
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -0.7);
 		}
 		
+		
+		//if the temporary command is not null, running, or cancelled (i.e. exists and hasn't started yet), start it.
+		if(tempCommand != null && !tempCommand.isRunning() && !tempCommand.isCompleted() && !tempCommand.isCanceled()) {
+			tempCommand.start();
+		}
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
