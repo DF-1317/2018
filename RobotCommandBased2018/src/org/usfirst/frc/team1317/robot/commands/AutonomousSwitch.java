@@ -33,6 +33,8 @@ public class AutonomousSwitch extends CommandGroup {
     	
     	// Assign a value to SwitchLeft variable based on the game data
     	if (plateLocations.charAt(0) == 'L') SwitchLeft = true;
+    	else if(plateLocations.charAt(0) == 'R') SwitchLeft = false;
+    	else return;
 
 		if (RobotMap.isCompetitionRobot) {
 			_autoCompetition();

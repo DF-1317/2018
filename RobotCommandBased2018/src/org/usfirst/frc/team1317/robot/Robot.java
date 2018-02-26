@@ -17,9 +17,11 @@ import org.usfirst.frc.team1317.robot.commands.AutonomousSwitch;
 import org.usfirst.frc.team1317.robot.commands.ClawClose;
 import org.usfirst.frc.team1317.robot.commands.ClimbAlertWait;
 import org.usfirst.frc.team1317.robot.commands.Dance;
+import org.usfirst.frc.team1317.robot.commands.DanceFull;
 import org.usfirst.frc.team1317.robot.commands.DanceSine;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesAccelerate;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesPID;
+import org.usfirst.frc.team1317.robot.commands.PositionElevator;
 import org.usfirst.frc.team1317.robot.commands.PositionElevatorTime;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1317.robot.subsystems.Arm;
@@ -95,8 +97,6 @@ public class Robot extends TimedRobot {
 	
 	Command TurnCommand = new TurnToAngle(90.0);
 	Command endgameAlert = new ClimbAlertWait();
-	Command elevatorUp = new PositionElevatorTime(1.0, 0.7);
-	Command elevatorFurtherUp = new PositionElevatorTime(2.0, -0.7);
 	Command armUp = new ArmUp();
 	Command armDown = new ArmDown();
 	Command driveTwoFeet;
@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Turn Testing", "TestTurn");
 		m_chooser.addObject("Dance Mode", "Dance");
 		m_chooser.addObject("Dance Sine", "DanceSine");
+		m_chooser.addObject("Dance Full", "DanceFull");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -151,11 +152,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Delay", 0.0);
 		SmartDashboard.putNumber("Offset", 10.0);
 		SmartDashboard.putNumber("GoToUltrasonic", 40.0);
+		SmartDashboard.putNumber("Drive Inches", 60.0);
+		SmartDashboard.putNumber("Elevator Seconds", 1.0);
+		SmartDashboard.putNumber("Arm Seconds", 1.0);
 		
 		LiveWindow.add(armDown);
 		LiveWindow.add(armUp);
-		LiveWindow.add(elevatorFurtherUp);
-		LiveWindow.add(elevatorUp);
 		//turns the compressor on if the robot is the competition robot
 		compressor.setClosedLoopControl(RobotMap.isCompetitionRobot);
 		
@@ -236,7 +238,10 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new Dance();
 		}
 		else if(mode == "DanceSine") {
-			m_autonomousCommand = new DanceSine();
+			m_autonomousCommand = new DanceSine(2.0);
+		}
+		else if(mode == "DanceFull") {
+			m_autonomousCommand = new DanceFull();
 		}
 		
 		mecanumDriveTrain.zeroGyro();
@@ -345,9 +350,9 @@ public class Robot extends TimedRobot {
 			new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5).start();
 		}
 		if(OI.TurnJoystick.getRawButtonPressed(3)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED)).start();
 		} else if(OI.TurnJoystick.getRawButtonPressed(4)) {
-			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, 120.0, DEFAULT_MAX_SPEED, true)).start();
+			(new DriveInchesAccelerate(DEFAULT_ACCELERATION, SmartDashboard.getNumber("Drive Inches", 60.0), DEFAULT_MAX_SPEED, true)).start();
 		}
 		
 		if(OI.TurnJoystick.getRawButtonPressed(1)) {
@@ -355,10 +360,11 @@ public class Robot extends TimedRobot {
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
-			elevatorUp.start();
+			(new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 0.7)).start();
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
-			elevatorFurtherUp.start();
+			(new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -0.7)).start();
 		}
+		
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();

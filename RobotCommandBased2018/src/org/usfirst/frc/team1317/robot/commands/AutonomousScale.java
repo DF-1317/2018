@@ -34,7 +34,8 @@ public class AutonomousScale extends CommandGroup {
 		this.crossFront = crossFront;
 		this.delay = delay;
 		if (plateLocations.charAt(1) == 'L') ScaleLeft = true;
-
+		else if(plateLocations.charAt(1) == 'R') ScaleLeft = false;
+		else return;
 		if (RobotMap.isCompetitionRobot) {
 			_autoCompetition();
 		} else {
@@ -130,7 +131,7 @@ public class AutonomousScale extends CommandGroup {
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
-		//addSequential(_driveTo(2.0));
+		addSequential(_driveTo(2.0));
 		//addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 2.0, Robot.DEFAULT_MAX_SPEED, true));
 		addSequential( new Wait(1.0));
 		addSequential(new DriveInchesUltrasonic(48.0));
@@ -176,7 +177,7 @@ public class AutonomousScale extends CommandGroup {
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
-		//addSequential(_driveTo(2.0));
+		addSequential(_driveTo(2.0));
 		//addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, 2.0, Robot.DEFAULT_MAX_SPEED, true));
 		addSequential( new Wait(1.0));
 		addSequential(new DriveInchesUltrasonic(48.0));
