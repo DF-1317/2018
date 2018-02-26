@@ -52,9 +52,9 @@ public class AutonomousSwitch extends CommandGroup {
     		// Drive midway to the auto line, turn based on the side of the switch is ours, 
     		// drive level to the side of the switch, turn towards the switch, and approach it.
 			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE));
-			addSequential( SwitchLeft ? FaceLeft : FaceRight);
+			addSequential( SwitchLeft ? Face.left() : Face.right());
     		addSequential( _driveTo(DistanceMap.HORIZONTAL_PAST_SWITCH));
-    		addSequential( FaceForward );
+    		addSequential( Face.forward() );
     	}
     	else
     	{
@@ -62,9 +62,9 @@ public class AutonomousSwitch extends CommandGroup {
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
     			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE) );
     			if(SwitchLeft) {
-    				addSequential(FaceRight);
+    				addSequential(Face.right());
     			} else {
-    				addSequential(FaceLeft);
+    				addSequential(Face.left());
     			}
     		}
     		//if the switch and robot are on opposite sides
@@ -72,18 +72,18 @@ public class AutonomousSwitch extends CommandGroup {
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
     			if(crossFront) {
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
+	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( FaceForward );
+	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
-	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
+	    			addSequential( SwitchLeft ? Face.right() : Face.left() );
     			} else {
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? FaceLeft : FaceRight );
+	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( FaceForward );
+	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? FaceRight : FaceLeft );
+	    			addSequential( SwitchLeft ? Face.right() : Face.left() );
     			}
     			
     		}

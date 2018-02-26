@@ -48,37 +48,37 @@ public class AutonomousScale extends CommandGroup {
     	//if the robot is in the center position
     	if (startingPosition == Robot.Center_Position) {
     		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE));
-    		addSequential(ScaleLeft ? TurnLeft:TurnRight);
+    		addSequential(ScaleLeft ? Turn.left():Turn.right());
     		addSequential(_driveTo(DistanceMap.HORIZONTAL_PAST_SWITCH));
-    		addSequential(ScaleLeft ? TurnRight:TurnLeft);
+    		addSequential(ScaleLeft ? Turn.right():Turn.left());
     		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_TO_SCALE));
-    		addSequential(ScaleLeft ? TurnRight:TurnLeft);
+    		addSequential(ScaleLeft ? Turn.right():Turn.left());
     	}
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
     			addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE
 						+ DistanceMap.MIDWAY_AUTO_TO_SCALE));
-    			addSequential(ScaleLeft ? TurnRight:TurnLeft);
+    			addSequential(ScaleLeft ? Turn.right():Turn.left());
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
-	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
     			} else { //if we're crossing behind the switch
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE
 							+ DistanceMap.MIDWAY_AUTO_TO_SWITCH
 							+ DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( ScaleLeft ? TurnLeft : TurnRight );
+	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
 	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_SCALE
 							- DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( ScaleLeft ? TurnRight : TurnLeft );
+	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
     			}
 
     		}
@@ -126,7 +126,7 @@ public class AutonomousScale extends CommandGroup {
 
 			}
 		}
-		addSequential( ScaleLeft ? Turn.right() : Turn.left() ));
+		addSequential( ScaleLeft ? Turn.right() : Turn.left() );
 		//elevator starts moving up
 		// addParallel(new PositionElevatorTime(1.0, 0.5));
 		//approach the scale, regardless of path taken
