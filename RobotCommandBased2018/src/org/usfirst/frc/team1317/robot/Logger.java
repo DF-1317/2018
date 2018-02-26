@@ -22,6 +22,12 @@ public class Logger {
     int     interval;
     int     count;
 
+    /**
+     * Creates a logger object to be used for logging to a server at 10.13.17.6
+     * @param app - The main program using the logger. Probably just use team number.
+     * @param proc - Whatever is specifically logging. Probably just use the class name.
+     * @param interval - The interval between actually logging something.
+     */
     public Logger(String app, String proc, int interval) {
         this.app        = app;
         this.proc       = proc;
@@ -29,6 +35,11 @@ public class Logger {
         this.count      = 0;
     } // Logger
     
+    /**
+     * Creates a logger object to be used for logging to a server at 10.13.17.6
+     * @param app - The main program using the logger. Probably just use team number.
+     * @param proc - Whatever is specifically logging. Probably just use the class name.
+     */
     public Logger(String app, String proc) {
     	this(app, proc, 1);
     }
