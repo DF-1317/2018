@@ -72,12 +72,12 @@ public class JoystickMecanumDrive extends Command {
 		Robot.mecanumDriveTrain.driveCartesian(OI.MoveJoystick.getX() * speedModifier, -(OI.MoveJoystick.getY()*speedModifier), (OI.TurnJoystick.getX()+ turnModifier)*speedModifier,gyroPosition);
 		
 		// Toggle extra control options
-		if(OI.MoveJoystick.getRawButtonPressed(11)) {
+		if(OI.MoveJoystick.getRawButtonPressed(9)) {
 			isAdvancedEnabled = !isAdvancedEnabled;
 			syslog.log("Control mode toggled. Advanced controls: " + isAdvancedEnabled);
 		}
 		
-		if(OI.MoveJoystick.getRawButtonPressed(10)) {
+		if(OI.MoveJoystick.getRawButtonPressed(8)) {
 			isAlignedEnabled = !isAlignedEnabled;
 			Robot.log("Control mode toggled. Movement aligned to field: " + isAlignedEnabled);
 		}
