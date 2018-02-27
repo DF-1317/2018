@@ -43,7 +43,7 @@ public class DriveInchesAccelerate extends Command {
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
-	public static final double SLOW_SPEED = 0.15;
+	public static final double SLOW_SPEED = 0.2;
 
 	/**
 	 * Table of offsets to apply for the listed distances
@@ -153,7 +153,7 @@ public class DriveInchesAccelerate extends Command {
 			}
 		} else if(phase == 3) {
 			if(currentSpeed >= SLOW_SPEED) {
-				currentSpeed -= acceleration * 2;
+				currentSpeed -= acceleration * 1;
 			} else {
 				currentSpeed = SLOW_SPEED;
 				phase = 4;
@@ -176,7 +176,7 @@ public class DriveInchesAccelerate extends Command {
 			syslog.log("Finished; current distance: " + distanceNow);
 		}
 		double angleError = angleNow - targetAngle;
-		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError);
+		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError + "; Ultrasonic Distance: " + Robot.Ultrasonic.getRangeInches());
 		//periodicLog.log("Current Speed: " + currentSpeed);
 		//periodicLog.log("Angle Error: " + angleError);
 		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
