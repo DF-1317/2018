@@ -5,7 +5,7 @@ package org.usfirst.frc.team1317.robot;
  */
 
 public class DistanceMap {
-	//all values are in inches.
+	//all values are in inches, except where otherwise noted.
 	
 	//These are constants that reflect actual field dimensions that can be used for calculating the paths if we want to be more flexible
 	//These are from https://firstfrc.blob.core.windows.net/frc2018/Drawings/LayoutandMarkingDiagram.pdf
@@ -55,5 +55,10 @@ public class DistanceMap {
 	
 	//Distance used to line up when approaching the switch from the front. See also comments on DISTANCE_FROM_WALL_SCALE
 	public static final double DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH = 100.5 - 4.0;
+	
+	//times for moving arm and elevator
+	public static final double ARM_MOVE_TIME = 1.0;
+	public static final double ELEVATOR_TO_SWITCH_TIME = 1.0;
+	public static final double ELEVATOR_TO_SCALE_TIME = 2.0;
 	
 }
