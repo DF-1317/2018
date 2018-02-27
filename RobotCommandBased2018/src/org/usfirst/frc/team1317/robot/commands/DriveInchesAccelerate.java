@@ -152,7 +152,7 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 3; current distance: " + distanceNow);
 			}
 		} else if(phase == 3) {
-			if(currentSpeed >= SLOW_SPEED) {
+			if(currentSpeed > SLOW_SPEED) {
 				currentSpeed -= acceleration * 1;
 			} else {
 				currentSpeed = SLOW_SPEED;
@@ -198,5 +198,6 @@ public class DriveInchesAccelerate extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	driveTrain.stop();
+    	syslog.log("Interrupted");
     }
 }
