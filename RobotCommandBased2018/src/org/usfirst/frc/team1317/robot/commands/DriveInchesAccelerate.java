@@ -65,8 +65,10 @@ public class DriveInchesAccelerate extends Command {
 		tmp.put(18.0, 9.0);
 		tmp.put(24.0, 10.0);
 		tmp.put(30.0, 12.0);
-		tmp.put(80.0, 7.0);
-		tmp.put(100.0, 5.0);
+		tmp.put(60.0, 10.0);
+		tmp.put(80.0, 5.0);
+		tmp.put(100.0, 2.0);
+		tmp.put(120.0, 0.0);
 		Offsets = Collections.unmodifiableMap(tmp);
 	}
 
