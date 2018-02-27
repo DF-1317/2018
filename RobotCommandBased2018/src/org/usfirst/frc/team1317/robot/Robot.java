@@ -335,18 +335,6 @@ public class Robot extends TimedRobot {
 			climberMoving = false;
 		}
 		
-		// Move arm up and down
-		/*if(OI.OtherJoystick.getPOV() == 0) {
-			arm.move(1);
-			armMoving = true;
-		} else if(OI.MoveJoystick.getPOV() == 180) {
-			arm.move(-1);
-			armMoving = true;
-		} else if(armMoving) {
-			arm.move(0);
-			armMoving = false;
-		}*/
-		
 		if(OI.TurnJoystick.getPOV() != -1&&mecanumDriveTrain.navX.isConnected()) {
 			tempCommand = new TurnToAngle(PIDTurning.equivalentAngle(OI.TurnJoystick.getPOV()), 0.5);
 		}
@@ -375,15 +363,9 @@ public class Robot extends TimedRobot {
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
 		mecanumDriveTrain.printNavXDistance();
-		el.PrintEncoderPulses();
 		mecanumDriveTrain.printEncoderPulses();
-		mecanumDriveTrain.resetNavXDistance();
 		SmartDashboard.putNumber("Ultrasonic (in)", Ultrasonic.getRangeInches());
 		SmartDashboard.putNumber("Average ultrasonic inches", ultrasonicAverageDistance);
-		SmartDashboard.putNumber("Move Joystick Y", OI.MoveJoystick.getY());
-		SmartDashboard.putNumber("Move Joystick X", OI.MoveJoystick.getX());
-		SmartDashboard.putNumber("Turn Joystick X", OI.TurnJoystick.getX());
-		SmartDashboard.putNumber("TurnJoystick POV", OI.TurnJoystick.getPOV());
 		SmartDashboard.putNumber("Gear Tooth Counter", gt.getDistance());
 		SmartDashboard.putNumber("PID Get Driving Controller", mecanumDriveTrain.getDrivingController().pidGet());
 		SmartDashboard.putBoolean("Claw Open", claw.isClawOpen());
