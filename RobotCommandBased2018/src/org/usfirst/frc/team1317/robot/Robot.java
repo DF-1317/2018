@@ -123,20 +123,20 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Switch Auto", "Switch");
 		m_chooser.addObject("Scale Auto", "Scale");
 		m_chooser.addObject("DriveForward Auto", "Forward");
-		m_chooser.addObject("Exchange Auto", "Exchange");
-		m_chooser.addObject("Turn Testing", "TestTurn");
-		m_chooser.addObject("Dance Mode", "Dance");
-		m_chooser.addObject("Dance Sine", "DanceSine");
+		//m_chooser.addObject("Exchange Auto", "Exchange");
+		//m_chooser.addObject("Turn Testing", "TestTurn");
+		//m_chooser.addObject("Dance Mode", "Dance");
+		//m_chooser.addObject("Dance Sine", "DanceSine");
 		m_chooser.addObject("Dance Full", "DanceFull");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		//adds options to the starting position chooser
-		positionChooser.addObject("Far Left", Far_Left_Position);
+		//positionChooser.addObject("Far Left", Far_Left_Position);
 		positionChooser.addObject("Left", Left_Position);
 		positionChooser.addDefault("Center", Center_Position);
 		positionChooser.addObject("Right", Right_Position);
-		positionChooser.addObject("Far Right", Far_Right_Position);
+		//positionChooser.addObject("Far Right", Far_Right_Position);
 		//puts chooser on dashboard
 		SmartDashboard.putData("Position", positionChooser);
 		

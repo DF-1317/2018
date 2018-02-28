@@ -49,48 +49,52 @@ public class AutonomousScale extends CommandGroup {
     	//if the robot is in the center position
     	if (startingPosition == Robot.Center_Position) {
     		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE));
-    		addSequential(ScaleLeft ? Turn.left():Turn.right());
+    		addSequential(ScaleLeft ? Face.left():Face.right());
     		addSequential(_driveTo(DistanceMap.HORIZONTAL_PAST_SWITCH));
-    		addSequential(ScaleLeft ? Turn.right():Turn.left());
+    		addSequential(Face.forward());
     		addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_TO_SCALE));
-    		addSequential(ScaleLeft ? Turn.right():Turn.left());
     	}
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
     			addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE
 						+ DistanceMap.MIDWAY_AUTO_TO_SCALE));
-    			addSequential(ScaleLeft ? Turn.right():Turn.left());
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
+	    			addSequential( ScaleLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
+	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
-	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
     			} else { //if we're crossing behind the switch
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE
 							+ DistanceMap.MIDWAY_AUTO_TO_SWITCH
 							+ DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( ScaleLeft ? Turn.left() : Turn.right() );
+	    			addSequential( ScaleLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
+	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_SCALE
 							- DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( ScaleLeft ? Turn.right() : Turn.left() );
     			}
-
     		}
     	}
+    	//always face the scale
+    	addSequential(ScaleLeft? Face.right() : Face.left());
+    	//drive forward to correct turning error
+    	addSequential(_driveTo(2.0));
     	//elevator starts moving up
-    	addParallel(new PositionElevatorTime(1.0, 0.5));
     	//approach the scale, regardless of path taken
     	addSequential(new Wait(1.0));
-    	addSequential(Robot.ultrasonicDriveToDistance(DistanceMap.APPROACH_SCALE));
+    	addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
+    	
+    	//reset things
+    	addSequential(new ArmDown());
+    	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
+    	//addSequential(new DanceFull());
+    	
     } // _autoCompetition
 
 	private void _autoTest() {
