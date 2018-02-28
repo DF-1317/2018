@@ -354,6 +354,13 @@ public class Robot extends TimedRobot {
 			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -0.7);
 		}
 		
+		if(OI.OtherJoystick.getRawButtonPressed(7)) {
+			tempCommand = new ArmUp(SmartDashboard.getNumber("Arm Seconds", 1.0));
+		} else if(OI.OtherJoystick.getRawButtonPressed(8)) {
+			tempCommand = new ArmDown(SmartDashboard.getNumber("Arm Seconds", 1.0));
+		}
+		
+		
 		
 		//if the temporary command is not null, running, or cancelled (i.e. exists and hasn't started yet), start it.
 		if(tempCommand != null && !tempCommand.isRunning() && !tempCommand.isCompleted() && !tempCommand.isCanceled()) {

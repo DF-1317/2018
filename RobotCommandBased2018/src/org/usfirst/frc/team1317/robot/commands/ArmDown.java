@@ -15,17 +15,27 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ArmDown extends Command {
 
 	
-	final double TIME_TO_MOVE = 0.5;
+	double timeToMove = 0.5;
 	Arm arm;
 	Timer timer = new Timer();
 
-    public ArmDown() {
+    public ArmDown(double time) {
         super("ArmDown");
         //We are using the arm subsystem
         requires(Robot.arm);
         arm = Robot.arm;
         //this command can be interrupted
-        setInterruptible(true);   
+        setInterruptible(true);
+        timeToMove = time;
+    }
+    
+    public ArmDown() {
+    	super("ArmDown");
+        //We are using the arm subsystem
+        requires(Robot.arm);
+        arm = Robot.arm;
+        //this command can be interrupted
+        setInterruptible(true);
     }
 
     // Called just before this Command runs the first time
@@ -46,7 +56,7 @@ public class ArmDown extends Command {
     @Override
     protected boolean isFinished() {
     	//We are done if the bottom switch is pressed.
-        return (timer.get() >= TIME_TO_MOVE);
+        return (timer.get() >= timeToMove);
     }
 
     // Called once after isFinished returns true

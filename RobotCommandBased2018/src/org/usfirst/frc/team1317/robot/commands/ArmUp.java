@@ -11,13 +11,23 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArmUp extends Command {
 	
-	final double TIME_TO_MOVE = 0.5;
+	double timeToMove = 0.5;
 	Timer timer = new Timer();
 	
 	Arm arm;
 
-    public ArmUp() {
+    public ArmUp(double time) {
         super("ArmUp");
+        //requires the arm
+        requires(Robot.arm);
+        arm = Robot.arm;
+        timeToMove = time;
+        //this command can be interrupted
+        setInterruptible(true);
+    }
+    
+    public ArmUp() {
+    	super("ArmUp");
         //requires the arm
         requires(Robot.arm);
         arm = Robot.arm;
@@ -43,7 +53,7 @@ public class ArmUp extends Command {
     @Override
     protected boolean isFinished() {
     	//this is finished when the top switch is pressed
-        return (timer.get()>=TIME_TO_MOVE);
+        return (timer.get()>=timeToMove);
     }
 
     // Called once after isFinished returns true
