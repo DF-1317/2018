@@ -30,11 +30,19 @@ public class AutonomousSwitch extends CommandGroup {
 		this.startingPosition	= startingPosition;
 		this.crossFront			= crossFront;
 		this.delay				= delay;
-    	
+		requires(Robot.mecanumDriveTrain);
+    	requires(Robot.claw);
+    	requires(Robot.el);
+    	requires(Robot.arm);
+		addSequential(new ClawClose());
+		
     	// Assign a value to SwitchLeft variable based on the game data
     	if (plateLocations.charAt(0) == 'L') SwitchLeft = true;
     	else if(plateLocations.charAt(0) == 'R') SwitchLeft = false;
-    	else return;
+    	else{
+    		System.out.println("Invalid Data");
+    		return;
+    	}
 
 		if (RobotMap.isCompetitionRobot) {
 			_autoCompetition();
@@ -65,7 +73,9 @@ public class AutonomousSwitch extends CommandGroup {
     	{
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
+    			System.out.println("Robot is on the same side as the swicth.");
     			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE) );
+    			System.out.println("Finished Driving");
     			
     		}
     		//if the switch and robot are on opposite sides
@@ -74,7 +84,7 @@ public class AutonomousSwitch extends CommandGroup {
     			if(crossFront) {
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
 	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
-	    			addSequential( _driveTo(DistanceMap.CENTER_TO_SWITCH *2.0) );
+	    			addSequential( _driveTo(DistanceMap.CROSS_COURT/2.0 - DistanceMap.CENTER_TO_SWITCH) );
 	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(2.0));
 	        		addSequential( new Wait(1.0));

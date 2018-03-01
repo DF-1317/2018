@@ -21,6 +21,7 @@ import org.usfirst.frc.team1317.robot.commands.DanceFull;
 import org.usfirst.frc.team1317.robot.commands.DanceSine;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesAccelerate;
 import org.usfirst.frc.team1317.robot.commands.DriveInchesPID;
+import org.usfirst.frc.team1317.robot.commands.DropIfSide;
 import org.usfirst.frc.team1317.robot.commands.PositionElevator;
 import org.usfirst.frc.team1317.robot.commands.PositionElevatorTime;
 import org.usfirst.frc.team1317.robot.commands.TurnToAngle;
@@ -127,6 +128,7 @@ public class Robot extends TimedRobot {
 		//m_chooser.addObject("Turn Testing", "TestTurn");
 		//m_chooser.addObject("Dance Mode", "Dance");
 		//m_chooser.addObject("Dance Sine", "DanceSine");
+		m_chooser.addObject("Drive Forward and Drop", "DriveDrop");
 		m_chooser.addObject("Dance Full", "DanceFull");
 		//puts the chooser on the dashboard
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -244,6 +246,9 @@ public class Robot extends TimedRobot {
 		else if(mode == "DanceFull") {
 			m_autonomousCommand = new DanceFull();
 		}
+		else if(mode == "DriveDrop") {
+			m_autonomousCommand = new DropIfSide(GameData, position, crossFront, delay);
+		}
 		
 		mecanumDriveTrain.zeroGyro();
 
@@ -253,7 +258,7 @@ public class Robot extends TimedRobot {
 			log("Starting Auto Command");
 		}
 		
-		(new ClawClose()).start();
+		//(new ClawClose()).start();
 		
 		log("Autonomous Init Complete");
 	}
@@ -349,9 +354,9 @@ public class Robot extends TimedRobot {
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
-			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 0.7);
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 1.0);
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
-			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -0.7);
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -1.0);
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(7)) {

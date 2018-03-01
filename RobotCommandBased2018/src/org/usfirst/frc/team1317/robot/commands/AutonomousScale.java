@@ -33,6 +33,11 @@ public class AutonomousScale extends CommandGroup {
 		this.startingPosition = startingPosition;
 		this.crossFront = crossFront;
 		this.delay = delay;
+		requires(Robot.mecanumDriveTrain);
+    	requires(Robot.claw);
+    	requires(Robot.el);
+    	requires(Robot.arm);
+		addSequential(new ClawClose());
 		if (plateLocations.charAt(1) == 'L') ScaleLeft = true;
 		else if(plateLocations.charAt(1) == 'R') ScaleLeft = false;
 		else return;

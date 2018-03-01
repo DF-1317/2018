@@ -18,7 +18,7 @@ public class Arm extends Subsystem {
 	WPI_TalonSRX ArmMotor;
 	DigitalInput ArmSwitch;
 	byte direction = 0;
-	boolean upSwitch = false;
+	boolean upSwitch = true;
 	boolean downSwitch = false;
 	boolean switchValue;
 	Logger syslog = new Logger("1317", "Arm");

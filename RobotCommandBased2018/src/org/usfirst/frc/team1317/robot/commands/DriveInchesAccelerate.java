@@ -54,6 +54,24 @@ public class DriveInchesAccelerate extends Command {
 	private static final Map<Double,Double> Offsets;
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
+		if(RobotMap.isCompetitionRobot) {
+			tmp.put(2.0, 0.0);
+			tmp.put(4.0, 1.0);
+			tmp.put(6.0, 2.0);
+			tmp.put(8.0, 3.0);
+			tmp.put(10.0, 4.0);
+			tmp.put(12.0, 6.0);
+			tmp.put(14.0, 7.0);
+			tmp.put(16.0, 8.0);
+			tmp.put(18.0, 9.0);
+			tmp.put(24.0, 10.0);
+			tmp.put(30.0, 12.0);
+			tmp.put(60.0, 17.0);
+			tmp.put(80.0, 26.0);
+			tmp.put(100.0, 15.0);
+			tmp.put(120.0, 15.0);
+		}
+		else {
 		tmp.put(2.0, 0.0);
 		tmp.put(4.0, 1.0);
 		tmp.put(6.0, 2.0);
@@ -69,6 +87,7 @@ public class DriveInchesAccelerate extends Command {
 		tmp.put(80.0, 5.0);
 		tmp.put(100.0, 2.0);
 		tmp.put(120.0, 0.0);
+		}
 		Offsets = Collections.unmodifiableMap(tmp);
 	}
 

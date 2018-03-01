@@ -31,7 +31,7 @@ public class DistanceMap {
 	public static final double COURT_WIDTH = PORTAL_WIDTH * 2 + PLAYER_STATION_WIDTH;
 	public static final double SWITCH_WIDTH = COURT_WIDTH - SIDE_WALL_TO_SWITCH * 2;
 	
-	public static final double AUTO_LINE = WALL_TO_AUTO_LINE - ROBOT_LENGTH + 2.0;
+	public static final double AUTO_LINE = WALL_TO_AUTO_LINE - ROBOT_LENGTH + 6.0;
 	public static final double MIDWAY_AUTO_LINE = AUTO_LINE - MIDWAY_OFFSET;
 	public static final double HORIZONTAL_PAST_SWITCH = 177.285; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
 	public static final double CROSS_COURT = 231.0; //=HORIZONTAL_PAST_SWITCH * 2;
@@ -48,17 +48,17 @@ public class DistanceMap {
 	
 	//the distance from back of the robot to the wall when the front of the robot is aligned with the front of the scale minus the distance we want to be from the scale
 	//We will also need to add the distance the ultrasonic sensor is from the back of the robot to this value
-	public static final double DISTANCE_FROM_WALL_SCALE = 32.07 - 4.0; 
+	public static final double DISTANCE_FROM_WALL_SCALE = 32.07 - 2.0 + 11.0; 
 	
 	//see comments on DISTANCE_FROM_WALL_SCALE
-	public static final double DISTANCE_FROM_WALL_SWITCH = 47.75;
+	public static final double DISTANCE_FROM_WALL_SWITCH = 47.75 - 2.0 + 11.0;
 	
 	//Distance used to line up when approaching the switch from the front. See also comments on DISTANCE_FROM_WALL_SCALE
-	public static final double DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH = 100.5 - 4.0;
+	public static final double DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH = 100.5 - 2.0 + 11.0;
 	
 	//times for moving arm and elevator
-	public static final double ARM_MOVE_TIME = 1.0;
-	public static final double ELEVATOR_TO_SWITCH_TIME = 1.0;
-	public static final double ELEVATOR_TO_SCALE_TIME = 2.0;
+	public static final double ARM_MOVE_TIME = 0.9;
+	public static final double ELEVATOR_TO_SWITCH_TIME = 2.0;
+	public static final double ELEVATOR_TO_SCALE_TIME = 4.0;
 	
 }

@@ -19,6 +19,7 @@ public class AutonomousForward extends CommandGroup {
     public AutonomousForward(int position, double delay) {
     	super("AutonomousForward");
     	//wait the determined number of seconds
+    	addSequential(new ClawClose());
     	addSequential(new Wait(delay));
     	//drive forward to 
     	addSequential(new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.AUTO_LINE, Robot.DEFAULT_MAX_SPEED));
