@@ -55,17 +55,17 @@ public class DriveInchesAccelerate extends Command {
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
 		if(RobotMap.isCompetitionRobot) {
-			tmp.put(2.0, 0.0);
-			tmp.put(4.0, 1.0);
-			tmp.put(6.0, 2.0);
-			tmp.put(8.0, 3.0);
-			tmp.put(10.0, 4.0);
-			tmp.put(12.0, 6.0);
-			tmp.put(14.0, 7.0);
-			tmp.put(16.0, 8.0);
-			tmp.put(18.0, 9.0);
-			tmp.put(24.0, 10.0);
-			tmp.put(30.0, 12.0);
+			tmp.put(2.0, 1.0);
+			tmp.put(4.0, 2.0);
+			tmp.put(6.0, 5.0);
+			tmp.put(8.0, 8.0);
+			tmp.put(10.0, 10.0);
+			tmp.put(12.0, 11.0);
+			tmp.put(14.0, 13.0);
+			tmp.put(16.0, 14.5);
+			tmp.put(18.0, 16.0);
+			tmp.put(24.0, 19.0);
+			tmp.put(30.0, 24.0);
 			tmp.put(60.0, 17.0);
 			tmp.put(80.0, 26.0);
 			tmp.put(100.0, 15.0);
@@ -114,7 +114,7 @@ public class DriveInchesAccelerate extends Command {
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
 
         this.acceleration = acceleration / 50;
-		this.distance = distance - getOffset(distance);
+		this.distance = distance; /* - getOffset(distance);*/
         this.thirdway = distance / 3;
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
