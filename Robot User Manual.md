@@ -19,7 +19,7 @@
 * Button 3 moves arm down.
 
 * Button 7 moves the arm up for the time specified on the SmartDashboard (for autonomous testing).
-* Button 8 moves the arm up for the time specified on the SmartDashboard (for autonomous testing).
+* Button 8 moves the arm down for the time specified on the SmartDashboard (for autonomous testing).
 * Button 9 moves the elevator up for the time specified on the SmartDashboard (for autonomous testing).
 * Button 10 moves the elevator down for the time specified on the SmartDashboard (for autonomous testing).
 
