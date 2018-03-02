@@ -18,6 +18,9 @@ public class AutonomousSwitch extends CommandGroup {
 	int						startingPosition;
 	boolean					crossFront;
 	double					delay;
+	
+	final boolean usingUltrasonic = false;
+	
 	/** 
 	 * 
 	 * @param plateLocations String containing the game data for the match
@@ -65,16 +68,30 @@ public class AutonomousSwitch extends CommandGroup {
 			addSequential( SwitchLeft ? Face.left() : Face.right());
     		addSequential( _driveTo(DistanceMap.CENTER_TO_SWITCH) );
     		addSequential( Face.forward() );
-    		addSequential( _driveTo(2.0));
-    		addSequential( new Wait(1.0));
-    		addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+    		if(usingUltrasonic) {
+				addSequential( _driveTo(2.0));
+				addSequential( new Wait(1.0));
+				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+    		} else {
+    			addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+    		}
     	}
     	else
     	{
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
     			System.out.println("Robot is on the same side as the swicth.");
-    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.MIDWAY_AUTO_LINE) );
+    			addSequential(SwitchLeft? Face.right() : Face.left());
+    			if(usingUltrasonic) {
+    				addSequential( _driveTo(2.0));
+    				addSequential( new Wait(1.0));
+    				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+    			}
+    			else {
+    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+    			}
     			System.out.println("Finished Driving");
     			
     		}
@@ -86,9 +103,14 @@ public class AutonomousSwitch extends CommandGroup {
 	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT/2.0 - DistanceMap.CENTER_TO_SWITCH) );
 	    			addSequential( Face.forward() );
-	    			addSequential( _driveTo(2.0));
-	        		addSequential( new Wait(1.0));
-	        		addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+	    			if(usingUltrasonic) {
+		    			addSequential( _driveTo(2.0));
+		        		addSequential( new Wait(1.0));
+		        		addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+	    			} else {
+	    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+	            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+	    			}
 	    			
     			} else {
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
@@ -97,9 +119,14 @@ public class AutonomousSwitch extends CommandGroup {
 	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
 	    			addSequential( SwitchLeft ? Face.right() : Face.left() );
-	    			addSequential( _driveTo(2.0));
-	    			addSequential( new Wait(1.0));
-	    			addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+	    			if(usingUltrasonic) {
+		    			addSequential( _driveTo(2.0));
+		    			addSequential( new Wait(1.0));
+		    			addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+	    			} else {
+	    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH));
+	            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+	    			}
     			}
     			
     		}

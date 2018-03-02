@@ -18,6 +18,7 @@ public class AutonomousScale extends CommandGroup {
 	int						startingPosition;
 	boolean					crossFront;
 	double					delay;
+	final boolean usingUltrasonic = false;
 
 	/**
 	 * creates a new command to deposit cube in autonomous
@@ -62,8 +63,7 @@ public class AutonomousScale extends CommandGroup {
     	else {
     		//if the scale is on the same position as the robot
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
-    			addSequential(_driveTo(DistanceMap.MIDWAY_AUTO_LINE
-						+ DistanceMap.MIDWAY_AUTO_TO_SCALE));
+    			addSequential(_driveTo(DistanceMap.ROBOT_WALL_TO_SCALE));
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
     			if(crossFront) {
@@ -73,25 +73,27 @@ public class AutonomousScale extends CommandGroup {
 	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
     			} else { //if we're crossing behind the switch
-    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE
-							+ DistanceMap.MIDWAY_AUTO_TO_SWITCH
-							+ DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+    				addSequential( _driveTo(DistanceMap.ROBOT_WALL_TO_MIDWAY_SCALE) );
 	    			addSequential( ScaleLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
 	    			addSequential( Face.forward() );
-	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_SCALE
-							- DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+	    			addSequential( _driveTo(DistanceMap.MIDWAY_SCALE_TO_SCALE) );
     			}
     		}
     	}
     	//always face the scale
     	addSequential(ScaleLeft? Face.right() : Face.left());
     	//drive forward to correct turning error
+    	if(usingUltrasonic ) {
     	addSequential(_driveTo(2.0));
-    	//elevator starts moving up
-    	//approach the scale, regardless of path taken
-    	addSequential(new Wait(1.0));
-    	addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
+	    	//elevator starts moving up
+	    	//approach the scale, regardless of path taken
+	    	addSequential(new Wait(1.0));
+	    	addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
+    	}
+    	else {
+    		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
+    	}
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
     	
