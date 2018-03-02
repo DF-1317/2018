@@ -14,6 +14,5 @@ public class PlaceCube extends CommandGroup {
     	addSequential(new ClawOpen());
     	addSequential(new Wait (1.2));
     	addParallel(new ArmUp());
-    	addSequential(new ClawClose());
     }
 }

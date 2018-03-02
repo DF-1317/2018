@@ -53,9 +53,7 @@ public class Elevator extends PIDSubsystem {
 	 * @param speed - the speed the motor on the elevator moves as a ratio of maximum motor power. Range from -1.0 to 1.0
 	 */
 	public void move(double speed) {
-		if(ElevatorMotor.getOutputCurrent()<38.0) {
 			ElevatorMotor.set(speed);
-		}
 	}
 	
 	/**

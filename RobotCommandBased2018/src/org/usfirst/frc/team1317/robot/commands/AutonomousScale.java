@@ -65,6 +65,7 @@ public class AutonomousScale extends CommandGroup {
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
     			addSequential(_driveTo(DistanceMap.ROBOT_WALL_TO_SCALE));
     		} else { //if we have to cross the court to get to the scale
+    			/* Temporarily disabled because it is untested
     			//if we're crossing in front of the switch
     			if(crossFront) {
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
@@ -79,20 +80,23 @@ public class AutonomousScale extends CommandGroup {
 	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_SCALE_TO_SCALE) );
     			}
-    		}
+    		*/}
     	}
     	//always face the scale
     	addSequential(ScaleLeft? Face.right() : Face.left());
     	//drive forward to correct turning error
     	if(usingUltrasonic ) {
-    	addSequential(_driveTo(2.0));
+    		addSequential(_driveTo(2.0));
 	    	//elevator starts moving up
 	    	//approach the scale, regardless of path taken
 	    	addSequential(new Wait(1.0));
 	    	addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
     	}
     	else {
-    		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
+    		addSequential( _driveTo(DistanceMap.APPROACH_SCALE));
+    		addSequential( new PositionElevatorTime(3.0, 1.0));
+    		addSequential( new PositionElevatorTime(3.0, 1.0));
+    		addSequential( new PositionElevatorTime(2.0, 1.0));
     	}
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
@@ -197,6 +201,12 @@ public class AutonomousScale extends CommandGroup {
 	} // _autoTest2
 	
 	private Command _driveTo(double target) {
-		return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
+		if(target<0.0) {
+			return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, -target, Robot.DEFAULT_MAX_SPEED, true);
+		}
+		else {
+			return new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, target, Robot.DEFAULT_MAX_SPEED);
+		}
+
 	} // _driveTo
 }

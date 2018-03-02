@@ -354,9 +354,9 @@ public class Robot extends TimedRobot {
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(9)) {
-			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), 1.0);
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 3.0), 1.0);
 		} else if (OI.OtherJoystick.getRawButtonPressed(10) ){
-			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 1.0), -1.0);
+			tempCommand = new PositionElevatorTime(SmartDashboard.getNumber("Elevator Time", 3.0), -1.0);
 		}
 		
 		if(OI.OtherJoystick.getRawButtonPressed(7)) {
