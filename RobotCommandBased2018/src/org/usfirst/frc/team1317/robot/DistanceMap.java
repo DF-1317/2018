@@ -31,18 +31,22 @@ public class DistanceMap {
 	public static final double COURT_WIDTH = PORTAL_WIDTH * 2 + PLAYER_STATION_WIDTH;
 	public static final double SWITCH_WIDTH = COURT_WIDTH - SIDE_WALL_TO_SWITCH * 2;
 	
-	public static final double AUTO_LINE = 80.0; //updated through testing
-	public static final double MIDWAY_AUTO_LINE = 30.0; //updated through testing
+	public static final double AUTO_LINE = 80.0; //updated through testing, actual value 100 in.
+	public static final double MIDWAY_AUTO_LINE = 30.0; //updated through testing, actual value 50 in.
 	public static final double HORIZONTAL_PAST_SWITCH = 177.285; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
 	public static final double CROSS_COURT = 231.0; //=HORIZONTAL_PAST_SWITCH * 2;
 	public static final double MIDWAY_AUTO_TO_SCALE = 249.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
 	public static final double MIDWAY_AUTO_TO_SWITCH = 93.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
-	public static final double APPROACH_SWITCH = (CROSS_COURT - SWITCH_WIDTH)/2;
-	public static final double APPROACH_SWITCH_SIDE = 30.0; //updated through testing
-	public static final double APPROACH_SCALE = 50.0;
+	public static final double APPROACH_SWITCH = 20.0;
+	public static final double APPROACH_SWITCH_SIDE = 30.0; //updated through testing, actual value 50 in.
+	public static final double APPROACH_SCALE = 0.0;
 	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
 	public static final double SWITCH_TO_MIDWAY_SCALE = 67.24; //old value: SWITCH_TO_SCALE / 2;
-	public static final double CENTER_TO_SWITCH = 35.0;//Updated through testing
+	public static final double MIDWAY_SCALE_TO_SCALE = 88.77;
+	public static final double ROBOT_WALL_TO_SCALE = 305;
+	public static final double ROBOT_WALL_TO_SWITCH = 148;
+	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 215;
+	public static final double CENTER_TO_SWITCH = 35.0;//Updated through testing; actual value 50 inches
 	
 	//the following values are used when aligning the robot by ultrasonic sensor
 	
