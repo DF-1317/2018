@@ -11,7 +11,7 @@ public class Logger {
     // Syslog sender
     static UdpSyslogMessageSender syslog;
 
-    static final String          ServerHost      = "10.13.17.6";                // address of the central log server
+    static final String          ServerHost      = "10.13.17.5";                // address of the central log server. Default 10.13.17.6
     static final int			 ServerPort		 = 5800;						// port for logging
     static final Facility        Fac             = Facility.LOCAL0;             // what facility is labeled on the msg
     static final Severity        Sev             = Severity.INFORMATIONAL;		// class of our messages
