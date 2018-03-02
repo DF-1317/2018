@@ -78,7 +78,7 @@ public class AutonomousSwitch extends CommandGroup {
         		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
         		addSequential( new PlaceCube());
         		addSequential( new ArmUp(DistanceMap.ARM_MOVE_TIME));
-        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 0.7));
+        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     		}
     	}
     	else

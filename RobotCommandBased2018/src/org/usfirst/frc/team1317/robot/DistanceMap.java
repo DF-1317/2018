@@ -39,7 +39,7 @@ public class DistanceMap {
 	public static final double MIDWAY_AUTO_TO_SWITCH = 93.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
 	public static final double APPROACH_SWITCH = 12.0;
 	public static final double APPROACH_SWITCH_SIDE = 35.0; //updated through testing, actual value 50 in.
-	public static final double APPROACH_SCALE = 5.0;
+	public static final double APPROACH_SCALE = -10.0;
 	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
 	public static final double SWITCH_TO_MIDWAY_SCALE = 40.0; //old value: SWITCH_TO_SCALE / 2;
 	public static final double MIDWAY_SCALE_TO_SCALE = 60.0;
@@ -63,6 +63,6 @@ public class DistanceMap {
 	//times for moving arm and elevator
 	public static final double ARM_MOVE_TIME = 0.9;
 	public static final double ELEVATOR_TO_SWITCH_TIME = 1.5;
-	public static final double ELEVATOR_TO_SCALE_TIME = 7.5;
+	public static final double ELEVATOR_TO_SCALE_TIME = 4.5;
 	
 }
