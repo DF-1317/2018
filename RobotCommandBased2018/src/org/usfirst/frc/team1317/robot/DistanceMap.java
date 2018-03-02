@@ -34,18 +34,18 @@ public class DistanceMap {
 	public static final double AUTO_LINE = 80.0; //updated through testing, actual value 100 in.
 	public static final double MIDWAY_AUTO_LINE = 30.0; //updated through testing, actual value 50 in.
 	public static final double HORIZONTAL_PAST_SWITCH = 177.285; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
-	public static final double CROSS_COURT = 231.0; //=HORIZONTAL_PAST_SWITCH * 2;
+	public static final double CROSS_COURT = 287.0; //=HORIZONTAL_PAST_SWITCH * 2;
 	public static final double MIDWAY_AUTO_TO_SCALE = 249.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
 	public static final double MIDWAY_AUTO_TO_SWITCH = 93.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
-	public static final double APPROACH_SWITCH = 5.0;
+	public static final double APPROACH_SWITCH = 12.0;
 	public static final double APPROACH_SWITCH_SIDE = 35.0; //updated through testing, actual value 50 in.
-	public static final double APPROACH_SCALE = -15.0;
+	public static final double APPROACH_SCALE = 5.0;
 	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
-	public static final double SWITCH_TO_MIDWAY_SCALE = 67.24; //old value: SWITCH_TO_SCALE / 2;
-	public static final double MIDWAY_SCALE_TO_SCALE = 88.77;
-	public static final double ROBOT_WALL_TO_SCALE = 305;
+	public static final double SWITCH_TO_MIDWAY_SCALE = 40.0; //old value: SWITCH_TO_SCALE / 2;
+	public static final double MIDWAY_SCALE_TO_SCALE = 60.0;
+	public static final double ROBOT_WALL_TO_SCALE = 260.0; //updated through testing
 	public static final double ROBOT_WALL_TO_SWITCH = 115.0; //updated through testing; actual value 148
-	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 215;
+	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 180.0;
 	public static final double CENTER_TO_SWITCH = 32.5;//Updated through testing; actual value 50 inches
 	
 	//the following values are used when aligning the robot by ultrasonic sensor
@@ -63,6 +63,6 @@ public class DistanceMap {
 	//times for moving arm and elevator
 	public static final double ARM_MOVE_TIME = 0.9;
 	public static final double ELEVATOR_TO_SWITCH_TIME = 1.5;
-	public static final double ELEVATOR_TO_SCALE_TIME = 3.0;
+	public static final double ELEVATOR_TO_SCALE_TIME = 7.5;
 	
 }

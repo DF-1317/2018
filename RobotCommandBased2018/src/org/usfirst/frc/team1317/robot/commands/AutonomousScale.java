@@ -65,7 +65,6 @@ public class AutonomousScale extends CommandGroup {
     		if((startingPosition==Robot.Left_Position&&ScaleLeft)||(startingPosition==Robot.Right_Position&&!ScaleLeft)) {
     			addSequential(_driveTo(DistanceMap.ROBOT_WALL_TO_SCALE));
     		} else { //if we have to cross the court to get to the scale
-    			/* Temporarily disabled because it is untested
     			//if we're crossing in front of the switch
     			if(crossFront) {
     				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
@@ -80,7 +79,7 @@ public class AutonomousScale extends CommandGroup {
 	    			addSequential( Face.forward() );
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_SCALE_TO_SCALE) );
     			}
-    		*/}
+    		}
     	}
     	//always face the scale
     	addSequential(ScaleLeft? Face.right() : Face.left());
@@ -94,15 +93,13 @@ public class AutonomousScale extends CommandGroup {
     	}
     	else {
     		addSequential( _driveTo(DistanceMap.APPROACH_SCALE));
-    		addSequential( new PositionElevatorTime(3.0, 1.0));
-    		addSequential( new PositionElevatorTime(3.0, 1.0));
-    		addSequential( new PositionElevatorTime(2.0, 1.0));
+    		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
     	}
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
     	
     	//reset things
-    	addSequential(new ArmDown());
+    	addSequential(new ArmUp());
     	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     	//addSequential(new DanceFull());
     	

@@ -82,6 +82,7 @@ public class AutonomousSwitch extends CommandGroup {
     		//if the switch and robot are on the same side
     		if((startingPosition==Robot.Left_Position&&SwitchLeft)||(startingPosition==Robot.Right_Position&&!SwitchLeft)) {
     			System.out.println("Robot is on the same side as the swicth.");
+    			addSequential(_driveTo(DistanceMap.ROBOT_WALL_TO_SWITCH));
     			addSequential(SwitchLeft? Face.right() : Face.left());
     			if(usingUltrasonic) {
     				addSequential( _driveTo(2.0));
@@ -89,7 +90,7 @@ public class AutonomousSwitch extends CommandGroup {
     				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
     			}
     			else {
-    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH));
             		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
     			}
     			System.out.println("Finished Driving");
@@ -97,11 +98,11 @@ public class AutonomousSwitch extends CommandGroup {
     		}
     		//if the switch and robot are on opposite sides
     		else {
-    			addSequential(_driveTo(DistanceMap.AUTO_LINE));
+    			//addSequential(_driveTo(DistanceMap.AUTO_LINE));
     			
     			//temporarily disabled because not tested
 				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
-    			/*if(crossFront) {
+    			if(crossFront) {
 	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
 	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
 	    			addSequential( _driveTo(DistanceMap.CROSS_COURT/2.0 - DistanceMap.CENTER_TO_SWITCH) );
@@ -131,7 +132,6 @@ public class AutonomousSwitch extends CommandGroup {
 	            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
 	    			}
     			}
-    			*/
     			
     		}
     	}
