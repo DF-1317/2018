@@ -19,6 +19,7 @@ public class AutonomousScale extends CommandGroup {
 	boolean					crossFront;
 	double					delay;
 	final boolean usingUltrasonic = false;
+	boolean crossCourt = false;
 
 	/**
 	 * creates a new command to deposit cube in autonomous
@@ -50,6 +51,7 @@ public class AutonomousScale extends CommandGroup {
 	} // AutonomousScale
 
 	private void _autoCompetition() {
+		boolean deploy = true;
     	//waits the specified amount of time
     	addSequential(new Wait(delay));
     	//if the robot is in the center position
@@ -66,18 +68,24 @@ public class AutonomousScale extends CommandGroup {
     			addSequential(_driveTo(DistanceMap.ROBOT_WALL_TO_SCALE));
     		} else { //if we have to cross the court to get to the scale
     			//if we're crossing in front of the switch
-    			if(crossFront) {
-    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( ScaleLeft ? Face.left() : Face.right() );
-	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( Face.forward() );
-	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
-    			} else { //if we're crossing behind the switch
-    				addSequential( _driveTo(DistanceMap.ROBOT_WALL_TO_MIDWAY_SCALE) );
-	    			addSequential( ScaleLeft ? Face.left() : Face.right() );
-	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( Face.forward() );
-	    			addSequential( _driveTo(DistanceMap.MIDWAY_SCALE_TO_SCALE) );
+    			if(crossCourt) {
+	    			if(crossFront) {
+	    				addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
+		    			addSequential( ScaleLeft ? Face.left() : Face.right() );
+		    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
+		    			addSequential( Face.forward() );
+		    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_TO_SWITCH) );
+	    			} else { //if we're crossing behind the switch
+	    				addSequential( _driveTo(DistanceMap.ROBOT_WALL_TO_MIDWAY_SCALE) );
+		    			addSequential( ScaleLeft ? Face.left() : Face.right() );
+		    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
+		    			addSequential( Face.forward() );
+		    			addSequential( _driveTo(DistanceMap.MIDWAY_SCALE_TO_SCALE) );
+	    			}
+    			}
+    			else {
+    				addSequential(_driveTo(DistanceMap.AUTO_LINE));
+    				deploy = false;
     			}
     		}
     	}
@@ -95,14 +103,15 @@ public class AutonomousScale extends CommandGroup {
     		addSequential( _driveTo(DistanceMap.APPROACH_SCALE));
     		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
     	}
+    	if(deploy) {
     	//always place cube at the end of autonomous
     	addSequential(new PlaceCube());
     	
     	//reset things
     	addSequential(new ArmUp());
     	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
+    	}
     	//addSequential(new DanceFull());
-    	
     } // _autoCompetition
 
 	private void _autoTest() {

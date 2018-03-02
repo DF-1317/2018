@@ -20,6 +20,7 @@ public class AutonomousSwitch extends CommandGroup {
 	double					delay;
 	
 	final boolean usingUltrasonic = false;
+	boolean crossCourt = false;
 	
 	/** 
 	 * 
@@ -94,53 +95,61 @@ public class AutonomousSwitch extends CommandGroup {
             		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
     			}
     			System.out.println("Finished Driving");
-    			
+    			//always place cube at the end of autonomous
+    	    	addSequential(new PlaceCube());
+    	    	
+    	    	//reset things
+    	    	addSequential(new ArmUp());
+    	    	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     		}
     		//if the switch and robot are on opposite sides
     		else {
-    			//addSequential(_driveTo(DistanceMap.AUTO_LINE));
-    			
-    			//temporarily disabled because not tested
-				// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
-    			if(crossFront) {
-	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
-	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
-	    			addSequential( _driveTo(DistanceMap.CROSS_COURT/2.0 - DistanceMap.CENTER_TO_SWITCH) );
-	    			addSequential( Face.forward() );
-	    			if(usingUltrasonic) {
-		    			addSequential( _driveTo(2.0));
-		        		addSequential( new Wait(1.0));
-		        		addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+	    			if(crossCourt) {
+	    			//temporarily disabled because not tested
+					// Instructions to reaching the switch based on whether the robot is crossing the court in front of or behind the switch
+	    			if(crossFront) {
+		    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE) );
+		    			addSequential( SwitchLeft ? Face.left() : Face.right() );
+		    			addSequential( _driveTo(DistanceMap.CROSS_COURT/2.0 - DistanceMap.CENTER_TO_SWITCH) );
+		    			addSequential( Face.forward() );
+		    			if(usingUltrasonic) {
+			    			addSequential( _driveTo(2.0));
+			        		addSequential( new Wait(1.0));
+			        		addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+		    			} else {
+		    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+		            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+		    			}
+		    			
 	    			} else {
-	    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
-	            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+		    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+		    			addSequential( SwitchLeft ? Face.left() : Face.right() );
+		    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
+		    			addSequential( Face.forward() );
+		    			addSequential( _driveTo(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
+		    			addSequential( SwitchLeft ? Face.right() : Face.left() );
+		    			if(usingUltrasonic) {
+			    			addSequential( _driveTo(2.0));
+			    			addSequential( new Wait(1.0));
+			    			addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
+		    			} else {
+		    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH));
+		            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+		    			}
 	    			}
-	    			
-    			} else {
-	    			addSequential( _driveTo(DistanceMap.MIDWAY_AUTO_LINE + DistanceMap.MIDWAY_AUTO_TO_SWITCH + DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? Face.left() : Face.right() );
-	    			addSequential( _driveTo(DistanceMap.CROSS_COURT) );
-	    			addSequential( Face.forward() );
-	    			addSequential( _driveTo(DistanceMap.SWITCH_TO_MIDWAY_SCALE) );
-	    			addSequential( SwitchLeft ? Face.right() : Face.left() );
-	    			if(usingUltrasonic) {
-		    			addSequential( _driveTo(2.0));
-		    			addSequential( new Wait(1.0));
-		    			addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
-	    			} else {
-	    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH));
-	            		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
-	    			}
+	    			//always place cube at the end of autonomous
+	    	    	addSequential(new PlaceCube());
+	    	    	
+	    	    	//reset things
+	    	    	addSequential(new ArmUp());
+	    	    	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     			}
-    			
+    			else {
+    				addSequential(_driveTo(DistanceMap.AUTO_LINE));
+    			}
     		}
     	}
-    	//always place cube at the end of autonomous
-    	addSequential(new PlaceCube());
     	
-    	//reset things
-    	addSequential(new ArmUp());
-    	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     	//addSequential(new DanceFull());
     } // _autoCompetition
 
