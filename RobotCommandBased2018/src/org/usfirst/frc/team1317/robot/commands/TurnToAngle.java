@@ -57,6 +57,7 @@ public class TurnToAngle extends Command implements PIDOutput {
 	protected void initialize()
 	{
 		DriveTrain.setTurnControllerMode(TurnMode.withoutDriving);
+		Robot.log("Starting to turn");
 	}
 	
 	@Override

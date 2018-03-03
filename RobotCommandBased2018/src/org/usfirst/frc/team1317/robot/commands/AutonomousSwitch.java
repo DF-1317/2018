@@ -20,7 +20,7 @@ public class AutonomousSwitch extends CommandGroup {
 	double					delay;
 	
 	final boolean usingUltrasonic = false;
-	boolean crossCourt = false;
+	boolean crossCourt = true;
 	
 	/** 
 	 * 
@@ -74,11 +74,11 @@ public class AutonomousSwitch extends CommandGroup {
 				addSequential( new Wait(1.0));
 				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
     		} else {
-    			addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE));
+    			addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE), 1.0);
         		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
         		addSequential( new PlaceCube());
         		addSequential( new ArmUp(DistanceMap.ARM_MOVE_TIME));
-        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
+        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, -0.7));
     		}
     	}
     	else

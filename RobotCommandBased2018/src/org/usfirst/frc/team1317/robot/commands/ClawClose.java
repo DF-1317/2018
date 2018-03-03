@@ -14,7 +14,7 @@ public class ClawClose extends Command {
 	//see comments for ClawOpen
 	Claw claw;
 	Timer timer;
-	final double COMPLETION_TIME = 0.5;
+	final double COMPLETION_TIME = 0.2;
 
 	/**
 	 * creates a command to close the claw

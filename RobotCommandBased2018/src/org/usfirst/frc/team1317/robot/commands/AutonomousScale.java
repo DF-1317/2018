@@ -19,7 +19,7 @@ public class AutonomousScale extends CommandGroup {
 	boolean					crossFront;
 	double					delay;
 	final boolean usingUltrasonic = false;
-	boolean crossCourt = false;
+	boolean crossCourt = true;
 
 	/**
 	 * creates a new command to deposit cube in autonomous
@@ -98,17 +98,25 @@ public class AutonomousScale extends CommandGroup {
 	    	//approach the scale, regardless of path taken
 	    	addSequential(new Wait(1.0));
 	    	addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
+
+	    	if(deploy) {
+	    	addSequential(new PlaceCube());
+	    	
+	    	//reset things
+	    	addSequential(new ArmUp());
+	    	}
     	}
     	else {
     		addSequential( _driveTo(DistanceMap.APPROACH_SCALE));
     		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
+    		addSequential( new ArmDown());
+    		addSequential( _driveTo(-DistanceMap.APPROACH_SCALE));
+    		addSequential(new ClawOpen());
+    		addSequential(new ArmUp());
+    		addSequential( _driveTo(DistanceMap.APPROACH_SCALE));
     	}
     	if(deploy) {
-    	//always place cube at the end of autonomous
-    	addSequential(new PlaceCube());
     	
-    	//reset things
-    	addSequential(new ArmUp());
     	addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, -0.7));
     	}
     	//addSequential(new DanceFull());
