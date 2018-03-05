@@ -5,6 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+ * ####################################
+ * #  THIS IS THE TEST CONFIGURATION  #
+ * ####################################
+ */
 package org.usfirst.frc.team1317.robot;
 
 /**
@@ -13,23 +18,17 @@ package org.usfirst.frc.team1317.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  * 
- * This is the competition configuration
+ * This is the test configuration
  */
 public class RobotMap {
-	/*
-	 * To withhold from competition robot:
-	 * NavX MXP (gyro)
-	 * Ultrasonic Sensor
-	 */
-
-	//This is the competition configuration
-	public final static boolean isCompetitionRobot = true;
+	//this is the test configuration
+	public static final boolean isCompetitionRobot = false;
 	
 	//The ports for the drive train motors
 	public final static int FLMotorPort = 3;
-	public final static int FRMotorPort = 2;
-	public final static int BLMotorPort = 4;
-	public final static int BRMotorPort = 1;
+	public final static int FRMotorPort = 4;
+	public final static int BLMotorPort = 1;
+	public final static int BRMotorPort = 2;
 	
 	public final static int ElevatorPort = 5;
 	public final static int ArmMotor = 6;
@@ -41,26 +40,27 @@ public class RobotMap {
 	public final static int OtherJoystickPort = 0;
 	
 	//DIO ports
-	public final static int BLMotorEncoderPortA = 0;
-	public final static int BLMotorEncoderPortB = 1;
+	public final static int BLMotorEncoderPortA = 6;
+	public final static int BLMotorEncoderPortB = 7;
 	public final static int BRMotorEncoderPortA = 8;
 	public final static int BRMotorEncoderPortB = 9;
-	public final static int ElevatorMotorEncoderPortA = 6;
-	public final static int ElevatorMotorEncoderPortB = 7;
-	public final static int ArmLimitSwitchPort = 3;
-	public final static int GearCounterPort = 2;
-	
+	public final static int ElevatorMotorEncoderPortA = 4;
+	public final static int ElevatorMotorEncoderPortB = 5;
+	public final static int ArmLimitSwitchPort = 0;
+	public final static int GearCounterPort = 3;
 	
 	//Solenoid ports
 	public final static int DriveTrainPistonPort = 0;
-	public final static int ClawPistonPort1 = 7;
-	public final static int ClawPistonPort2 = 6;
+	public final static int ClawPistonPort1 = 1;
+	public final static int ClawPistonPort2 = 2;
 	
 	//Analog Ports
 	public final static int UltrasonicPort = 0;
 	public final static int AnalogGyroPort = 1;
 	
 	
+	
+	//THIS IS THE TEST CONFIGURATION
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
