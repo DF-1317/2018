@@ -52,6 +52,8 @@ public class DriveInchesAccelerate extends Command {
 	 * to apply which will correct for any overrun the drivetrain will have in it.
 	 */
 	private static final Map<Double,Double> Offsets;
+
+	private static final double AllowableError = 2.0;
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
 		if(RobotMap.isCompetitionRobot) {
@@ -90,6 +92,8 @@ public class DriveInchesAccelerate extends Command {
 		}
 		Offsets = Collections.unmodifiableMap(tmp);
 	}
+	
+	double kP = 0.0;
 
 	/**
 	 * Use the configured offset table to figure out what correction is needed
@@ -202,9 +206,53 @@ public class DriveInchesAccelerate extends Command {
 		Console.show(4, "currentSpeed " + currentSpeed
 				+ ", remaining distance " + (distance - distanceNow));
 	}
+	
+	protected void execute2() {
+		distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
+    	double angleNow = driveTrain.navX.getAngle();
+		if(phase == 1) {
+			currentSpeed += acceleration;
+			if(currentSpeed >= maxSpeed) {
+				currentSpeed = maxSpeed;
+				phase = 2;
+				accelDistance = distanceNow;
+				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+				accelDistance *= 4;
+			}
+			if((distanceNow) >= thirdway) {
+				phase = 3;
+				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
+			}
+		} else if(phase == 2) {
+			if((distanceNow + accelDistance) >= distance) {
+				phase = 3;
+				syslog.log("Entering Phase 3; current distance: " + distanceNow);
+				kP = maxSpeed/accelDistance; 
+			}
+		} else if(phase == 3) {
+			currentSpeed = kP*(distance - distanceNow);
+			if(Math.abs(distanceNow - distance) <= AllowableError) {
+				currentSpeed = 0;
+				phase = 5;
+				syslog.log("Entering Phase 5 from Phase 3; current distance: " + distanceNow);
+			}
+		} 
+		double angleError = angleNow - targetAngle;
+		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError + "; Ultrasonic Distance: " + Robot.Ultrasonic.getRangeInches());
+		//periodicLog.log("Current Speed: " + currentSpeed);
+		//periodicLog.log("Angle Error: " + angleError);
+		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
+		Console.show(4, "currentSpeed " + currentSpeed
+				+ ", remaining distance " + (distance - distanceNow));
+	}
+	
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return (distanceNow >= distance);
+    }
+    
+    protected boolean isFinished2() {
+    	return (Math.abs(distanceNow - distance) <= AllowableError);
     }
 
     // Called once after isFinished returns true
