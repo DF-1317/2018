@@ -372,6 +372,9 @@ public class Robot extends TimedRobot {
 		if(tempCommand != null && !tempCommand.isRunning() && !tempCommand.isCompleted() && !tempCommand.isCanceled()) {
 			tempCommand.start();
 		}
+		if(OI.MoveJoystick.getRawButtonPressed(1)&&tempCommand != null) {
+			tempCommand.cancel();
+		}
 		
 		//print stuff to smart dashboard or console
 		mecanumDriveTrain.printNavXYawOutput();
