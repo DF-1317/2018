@@ -45,6 +45,7 @@ public class DriveInchesAccelerate extends Command {
 	
 	public static final double SLOW_SPEED = 0.2;
 	public static double SLOW_DISTANCE_MULTIPLIER = 2;
+	public static double DECELERATE_FRACTION = 0.25;
 
 	/**
 	 * Table of offsets to apply for the listed distances
@@ -122,10 +123,12 @@ public class DriveInchesAccelerate extends Command {
     	requires(Robot.mecanumDriveTrain);
     	
     	SLOW_DISTANCE_MULTIPLIER = SmartDashboard.getNumber("Decelerate Multiplier", 2);
+    	DECELERATE_FRACTION = SmartDashboard.getNumber("Decelerate Fraction", 0.25);
     	
         this.acceleration = acceleration / 50;
 		this.distance = distance; /* - getOffset(distance);*/
-        this.partway = distance / (SLOW_DISTANCE_MULTIPLIER + 1);
+        //this.partway = distance / (SLOW_DISTANCE_MULTIPLIER + 1);
+		this.partway = distance * (1.0-DECELERATE_FRACTION);
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
         if(inReverse) {
@@ -179,7 +182,7 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
 		} else if(phase == 2) {
-			if((distanceNow + accelDistance) >= distance) {
+			if((distanceNow) >= partway) {
 				phase = 3;
 				syslog.log("Entering Phase 3; current distance: " + distanceNow);
 			}
@@ -233,13 +236,14 @@ public class DriveInchesAccelerate extends Command {
 			}
 			if((distanceNow) >= partway) {
 				phase = 3;
+				kP = currentSpeed/accelDistance;
 				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
 		} else if(phase == 2) {
 			if((distanceNow + accelDistance) >= distance) {
 				phase = 3;
 				syslog.log("Entering Phase 3; current distance: " + distanceNow);
-				kP = maxSpeed/accelDistance; 
+				kP = currentSpeed/accelDistance; 
 			}
 		} else if(phase == 3) {
 			currentSpeed = kP*(distance - distanceNow);
