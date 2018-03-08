@@ -36,6 +36,8 @@ public class DriveInchesAccelerate extends Command {
 	double targetAngle;
 	
 	int phase = 1;
+	boolean onTarget = false;
+	int doneCount = 0;
 	boolean finished = false;
 	
 	Logger syslog = new Logger("1317", "DriveInchesAccelerate");
@@ -43,9 +45,11 @@ public class DriveInchesAccelerate extends Command {
 	
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
-	public static final double SLOW_SPEED = 0.2;
+	public static final double SLOW_SPEED = 0.15;
+	public static final int WAIT_COUNT = 25;
 	public static double SLOW_DISTANCE_MULTIPLIER = 2;
-	public static double DECELERATE_FRACTION = 0.25;
+	public static double DECELERATE_FRACTION = 0.45;
+	
 
 	/**
 	 * Table of offsets to apply for the listed distances
@@ -123,7 +127,7 @@ public class DriveInchesAccelerate extends Command {
     	requires(Robot.mecanumDriveTrain);
     	
     	SLOW_DISTANCE_MULTIPLIER = SmartDashboard.getNumber("Decelerate Multiplier", 2);
-    	DECELERATE_FRACTION = SmartDashboard.getNumber("Decelerate Fraction", 0.25);
+    	DECELERATE_FRACTION = SmartDashboard.getNumber("Decelerate Fraction", 0.45);
     	
         this.acceleration = acceleration / 50;
 		this.distance = distance; /* - getOffset(distance);*/
@@ -156,6 +160,7 @@ public class DriveInchesAccelerate extends Command {
     	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
     	usingGyro = driveTrain.navX.isConnected();
+    	doneCount = 0;
     	if(targetAngle == 1000.0&& usingGyro) {
     		targetAngle = driveTrain.navX.getAngle();
     	}
@@ -224,35 +229,51 @@ public class DriveInchesAccelerate extends Command {
 	
 	protected void execute() {
 		distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
-    	double angleNow = driveTrain.navX.getAngle();
-		if(phase == 1) {
-			currentSpeed += acceleration;
-			if(currentSpeed >= maxSpeed) {
-				currentSpeed = maxSpeed;
-				phase = 2;
-				accelDistance = distanceNow;
-				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
-				accelDistance *= 4;
+		double angleNow = driveTrain.navX.getAngle();
+		if(Math.abs(distanceNow - distance) <= AllowableError) {
+			onTarget = true;
+			doneCount++;
+			currentSpeed = 0;
+			syslog.log("On Target; current distance: " + distanceNow);
+		}
+		else { 
+			doneCount = 0;
+			if(phase == 1) {
+				currentSpeed += acceleration;
+				if(currentSpeed >= maxSpeed) {
+					currentSpeed = maxSpeed;
+					phase = 2;
+					accelDistance = distanceNow;
+					syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
+					accelDistance *= 4;
+				}
+				if((distanceNow) >= partway) {
+					phase = 3;
+					kP = currentSpeed/distanceNow;
+					syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
+				}
+			} else if(phase == 2) {
+				if((distanceNow) >= partway) {
+					phase = 3;
+					syslog.log("Entering Phase 3; current distance: " + distanceNow);
+					kP = currentSpeed/distanceNow; 
+				}
+			} else if(phase == 3) {
+				currentSpeed = kP*(distance - distanceNow);
+				if(currentSpeed <= SLOW_SPEED) {
+					phase = 4;
+				}
+
+			} else if(phase == 4) {
+				if(distanceNow < distance ) {
+					currentSpeed = SLOW_SPEED;
+				}
+				else {
+					currentSpeed = -SLOW_SPEED;
+				}
 			}
-			if((distanceNow) >= partway) {
-				phase = 3;
-				kP = currentSpeed/distanceNow;
-				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
-			}
-		} else if(phase == 2) {
-			if((distanceNow) >= partway) {
-				phase = 3;
-				syslog.log("Entering Phase 3; current distance: " + distanceNow);
-				kP = currentSpeed/distanceNow; 
-			}
-		} else if(phase == 3) {
-			currentSpeed = kP*(distance - distanceNow);
-			if(Math.abs(distanceNow - distance) <= AllowableError) {
-				currentSpeed = 0;
-				phase = 5;
-				syslog.log("Entering Phase 5 from Phase 3; current distance: " + distanceNow);
-			}
-		} 
+		}
+
 		double angleError = 0;
 		if(usingGyro) {
 			angleError = angleNow - targetAngle;
@@ -271,7 +292,7 @@ public class DriveInchesAccelerate extends Command {
     }
     
     protected boolean isFinished() {
-    	return (Math.abs(distanceNow - distance) <= AllowableError);
+    	return (onTarget && doneCount >= WAIT_COUNT );
     }
 
     // Called once after isFinished returns true
