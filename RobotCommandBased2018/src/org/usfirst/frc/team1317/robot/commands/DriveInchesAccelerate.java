@@ -236,14 +236,14 @@ public class DriveInchesAccelerate extends Command {
 			}
 			if((distanceNow) >= partway) {
 				phase = 3;
-				kP = currentSpeed/accelDistance;
+				kP = currentSpeed/distanceNow;
 				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
 		} else if(phase == 2) {
-			if((distanceNow + accelDistance) >= distance) {
+			if((distanceNow) >= partway) {
 				phase = 3;
 				syslog.log("Entering Phase 3; current distance: " + distanceNow);
-				kP = currentSpeed/accelDistance; 
+				kP = currentSpeed/distanceNow; 
 			}
 		} else if(phase == 3) {
 			currentSpeed = kP*(distance - distanceNow);
