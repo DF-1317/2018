@@ -33,7 +33,7 @@
 * Button 9 zeroes the gyro rotation.
 
 * POV turns robot to specified angle.
-* Button 1 moves the robot to a specified distance from a wall using the ultrasonic sensor (for testing Autonomous)
+* Button 1 (Trigger) moves the robot to a specified distance from a wall using the ultrasonic sensor (for testing Autonomous)
 * Button 3 moves the robot forward the number of inches specified in the SmartDashboard (for testing autonomous)
 * Button 4 moves the robot backward the number of inches specified in the SmartDashboard (for testing autonomous)
 
@@ -47,6 +47,8 @@
 * Joystick x-axis controls sideways movement.
 
 * Button 1 (trigger) toggles the traction wheels (which actually don't exist).
+
+* Button 1 (trigger) cancels all temporary commands.
 
 * Button 10 toggles field-oriented drive on and off.
 
