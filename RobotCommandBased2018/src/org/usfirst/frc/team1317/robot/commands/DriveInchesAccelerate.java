@@ -24,7 +24,7 @@ public class DriveInchesAccelerate extends Command {
 	double acceleration;
 	double distance;
 	double maxSpeed;
-	double thirdway;
+	double partway;
 	
 	double startingDistance;
 	double multiplier;
@@ -44,6 +44,7 @@ public class DriveInchesAccelerate extends Command {
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
 	public static final double SLOW_SPEED = 0.2;
+	public static double SLOW_DISTANCE_MULTIPLIER = 2;
 
 	/**
 	 * Table of offsets to apply for the listed distances
@@ -94,6 +95,7 @@ public class DriveInchesAccelerate extends Command {
 	}
 	
 	double kP = 0.0;
+	boolean usingGyro = false;
 
 	/**
 	 * Use the configured offset table to figure out what correction is needed
@@ -116,10 +118,14 @@ public class DriveInchesAccelerate extends Command {
 	}
 	
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
-
+    	
+    	requires(Robot.mecanumDriveTrain);
+    	
+    	SLOW_DISTANCE_MULTIPLIER = SmartDashboard.getNumber("Decelerate Multiplier", 2);
+    	
         this.acceleration = acceleration / 50;
 		this.distance = distance; /* - getOffset(distance);*/
-        this.thirdway = distance / 3;
+        this.partway = distance / (SLOW_DISTANCE_MULTIPLIER + 1);
         this.maxSpeed = maxSpeed;
         this.targetAngle = targetAngle;
         if(inReverse) {
@@ -146,16 +152,19 @@ public class DriveInchesAccelerate extends Command {
     	driveTrain.resetEncoderDistance();
     	driveTrain.driveNavigator.setPIDSourceType(PIDSourceType.kDisplacement);
     	startingDistance = driveTrain.getDrivingController().pidGet();
-    	if(targetAngle == 1000.0) {
+    	usingGyro = driveTrain.navX.isConnected();
+    	if(targetAngle == 1000.0&& usingGyro) {
     		targetAngle = driveTrain.navX.getAngle();
     	}
     	syslog.log("Target Distance: " + distance);
     }
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+	protected void executeOld() {
     	distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
-    	double angleNow = driveTrain.navX.getAngle();
+    	double angleNow = 0.0;
+    	if(usingGyro)
+    		angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
 			currentSpeed += acceleration;
 			if(currentSpeed >= maxSpeed) {
@@ -165,7 +174,7 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
 				accelDistance *= 4;
 			}
-			if((distanceNow) >= thirdway) {
+			if((distanceNow) >= partway) {
 				phase = 3;
 				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
@@ -198,7 +207,10 @@ public class DriveInchesAccelerate extends Command {
 			finished = true;
 			syslog.log("Finished; current distance: " + distanceNow);
 		}
-		double angleError = angleNow - targetAngle;
+		double angleError = 0.0;
+		if(usingGyro) {
+			angleError = angleNow - targetAngle;
+		}
 		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError + "; Ultrasonic Distance: " + Robot.Ultrasonic.getRangeInches());
 		//periodicLog.log("Current Speed: " + currentSpeed);
 		//periodicLog.log("Angle Error: " + angleError);
@@ -207,7 +219,7 @@ public class DriveInchesAccelerate extends Command {
 				+ ", remaining distance " + (distance - distanceNow));
 	}
 	
-	protected void execute2() {
+	protected void execute() {
 		distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
     	double angleNow = driveTrain.navX.getAngle();
 		if(phase == 1) {
@@ -219,7 +231,7 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 2; accelDistance: " + accelDistance);
 				accelDistance *= 4;
 			}
-			if((distanceNow) >= thirdway) {
+			if((distanceNow) >= partway) {
 				phase = 3;
 				syslog.log("Entering Phase 3 early; current distance: " + distanceNow); 
 			}
@@ -237,7 +249,10 @@ public class DriveInchesAccelerate extends Command {
 				syslog.log("Entering Phase 5 from Phase 3; current distance: " + distanceNow);
 			}
 		} 
-		double angleError = angleNow - targetAngle;
+		double angleError = 0;
+		if(usingGyro) {
+			angleError = angleNow - targetAngle;
+		}
 		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError + "; Ultrasonic Distance: " + Robot.Ultrasonic.getRangeInches());
 		//periodicLog.log("Current Speed: " + currentSpeed);
 		//periodicLog.log("Angle Error: " + angleError);
@@ -247,11 +262,11 @@ public class DriveInchesAccelerate extends Command {
 	}
 	
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    protected boolean isFinishedOld() {
         return (distanceNow >= distance);
     }
     
-    protected boolean isFinished2() {
+    protected boolean isFinished() {
     	return (Math.abs(distanceNow - distance) <= AllowableError);
     }
 

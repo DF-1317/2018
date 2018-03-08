@@ -158,6 +158,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Drive Inches", 60.0);
 		SmartDashboard.putNumber("Elevator Seconds", 1.0);
 		SmartDashboard.putNumber("Arm Seconds", 1.0);
+		SmartDashboard.putNumber("Decelerate Multiplier", 3);
 		
 		LiveWindow.add(armDown);
 		LiveWindow.add(armUp);
