@@ -59,7 +59,7 @@ public class DriveInchesAccelerate extends Command {
 	 */
 	private static final Map<Double,Double> Offsets;
 
-	private static final double AllowableError = 2.0;
+	private static final double AllowableError = 1.0;
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
 		if(RobotMap.isCompetitionRobot) {
