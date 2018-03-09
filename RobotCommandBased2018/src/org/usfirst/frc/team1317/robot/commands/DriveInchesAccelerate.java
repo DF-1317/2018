@@ -20,6 +20,7 @@ import java.util.TreeMap;
 public class DriveInchesAccelerate extends Command {
 
 	final double turnProportion = 0.02;
+	final double turnProportionEncoder = 0.02;
 	
 	double acceleration;
 	double distance;
@@ -275,11 +276,16 @@ public class DriveInchesAccelerate extends Command {
 		double angleError = 0;
 		if(usingGyro) {
 			angleError = angleNow - targetAngle;
+			driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
+		}
+		else {
+			angleError = calculateEncoderSteeringError();
+			driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportionEncoder);
 		}
 		periodicLog.log("Current Distance: " + distanceNow + "; Current Speed: " + currentSpeed + "; Angle Error: " + angleError + "; Ultrasonic Distance: " + Robot.Ultrasonic.getRangeInches());
 		//periodicLog.log("Current Speed: " + currentSpeed);
 		//periodicLog.log("Angle Error: " + angleError);
-		driveTrain.driveCartesian(0.0, currentSpeed * multiplier, -angleError*turnProportion);
+		
 		Console.show(4, "currentSpeed " + currentSpeed
 				+ ", remaining distance " + (distance - distanceNow));
 	}
@@ -304,5 +310,10 @@ public class DriveInchesAccelerate extends Command {
     protected void interrupted() {
     	driveTrain.stop();
     	syslog.log("Interrupted");
+    }
+    
+    
+    private double calculateEncoderSteeringError() {
+    	return -RobotMap.RightEncoderDirection * driveTrain.BREncoder.getDistance() + RobotMap.LeftEncoderDirection * driveTrain.BLEncoder.getDistance();
     }
 }
