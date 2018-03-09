@@ -125,8 +125,6 @@ public class DriveInchesAccelerate extends Command {
     public DriveInchesAccelerate(double acceleration, double distance, double maxSpeed, double targetAngle, boolean inReverse) {
     	
     	requires(Robot.mecanumDriveTrain);
-    	
-    	SLOW_DISTANCE_MULTIPLIER = SmartDashboard.getNumber("Decelerate Multiplier", 2);
     	DECELERATE_FRACTION = SmartDashboard.getNumber("Decelerate Fraction", 0.45);
     	
         this.acceleration = acceleration / 50;
