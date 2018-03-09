@@ -101,23 +101,17 @@ public class AutonomousDrivingController implements PIDSource, PIDOutput {
 	public double pidGet() {
 		if(m_pidSource == PIDSourceType.kDisplacement) {
 			if(LeftEncoder.getDistance() == 0){
-				return RightEncoder.getDistance() * (RobotMap.isCompetitionRobot ? -1.0 : -1.0);
+				return RightEncoder.getDistance() * RobotMap.RightEncoderDirection;
 			}
 			else if(RightEncoder.getDistance() == 0) {
-				return LeftEncoder.getDistance() * (RobotMap.isCompetitionRobot ? 1.0 : 1.0);
+				return LeftEncoder.getDistance() * RobotMap.LeftEncoderDirection;
 			}
 			else {
-				if(RobotMap.isCompetitionRobot)
-					return (LeftEncoder.getDistance() - RightEncoder.getDistance())/2.0;
-				else
-					return (LeftEncoder.getDistance() - RightEncoder.getDistance())/2.0;
+				return (LeftEncoder.getDistance()*RobotMap.LeftEncoderDirection + RightEncoder.getDistance()*RobotMap.RightEncoderDirection)/2.0;
 			}
 		}
 		else {
-			if(RobotMap.isCompetitionRobot)
-				return (LeftEncoder.getRate() - RightEncoder.getRate())/2.0;
-			else
-				return (LeftEncoder.getRate() - RightEncoder.getRate())/2.0;
+			return (LeftEncoder.getRate() * RobotMap.LeftEncoderDirection + RightEncoder.getRate() * RobotMap.RightEncoderDirection);
 		}
 	}
 

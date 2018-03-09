@@ -58,7 +58,9 @@ public class RobotMap {
 	public final static int UltrasonicPort = 0;
 	public final static int AnalogGyroPort = 1;
 	
-	
+	//directions the encoders rotate
+	public final static double RightEncoderDirection = -1.0;
+	public final static double LeftEncoderDirection = 1.0;
 	
 	//THIS IS THE TEST CONFIGURATION
 	
