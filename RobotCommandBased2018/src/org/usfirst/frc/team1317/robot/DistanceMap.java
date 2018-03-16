@@ -34,6 +34,8 @@ public class DistanceMap {
 	public static final double AUTO_LINE = 100.0;
 	public static final double MIDWAY_AUTO_LINE = 50.0;
 	public static final double HORIZONTAL_PAST_SWITCH = 115.5; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
+	public static final double HORIZONTAL_PAST_SWITCH_LEFT = 126.0;
+	public static final double HORIZONTAL_PAST_SWITCH_RIGHT = 105.0;	
 	public static final double CROSS_COURT = 231.0; 
 	public static final double MIDWAY_AUTO_TO_SCALE = 254.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
 	public static final double MIDWAY_AUTO_TO_SWITCH = 98.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
@@ -47,6 +49,9 @@ public class DistanceMap {
 	public static final double ROBOT_WALL_TO_SWITCH = 148.25; 
 	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 215.49;
 	public static final double CENTER_TO_SWITCH = 55.0;
+	public static final double CENTER_TO_SWITCH_LEFT = 65.5;
+	public static final double CENTER_TO_SWITCH_RIGHT = 45.5;
+	public static final double SWITCH_CROSS_FRONT = 170.5;
 	
 	//the following values are used when aligning the robot by ultrasonic sensor
 	
