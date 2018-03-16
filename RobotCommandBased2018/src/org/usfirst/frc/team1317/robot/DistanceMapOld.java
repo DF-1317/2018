@@ -4,7 +4,7 @@ package org.usfirst.frc.team1317.robot;
  * This class contains constants for field dimensions
  */
 
-public class DistanceMap {
+public class DistanceMapOld {
 	//all values are in inches, except where otherwise noted.
 	
 	//These are constants that reflect actual field dimensions that can be used for calculating the paths if we want to be more flexible
@@ -31,22 +31,22 @@ public class DistanceMap {
 	public static final double COURT_WIDTH = PORTAL_WIDTH * 2 + PLAYER_STATION_WIDTH;
 	public static final double SWITCH_WIDTH = COURT_WIDTH - SIDE_WALL_TO_SWITCH * 2;
 	
-	public static final double AUTO_LINE = 100.0;
-	public static final double MIDWAY_AUTO_LINE = 50.0;
-	public static final double HORIZONTAL_PAST_SWITCH = 115.5; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
-	public static final double CROSS_COURT = 231.0; 
-	public static final double MIDWAY_AUTO_TO_SCALE = 254.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
-	public static final double MIDWAY_AUTO_TO_SWITCH = 98.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
-	public static final double APPROACH_SWITCH = 19.31;
-	public static final double APPROACH_SWITCH_SIDE = 50.5;
-	public static final double APPROACH_SCALE = 5.63;
+	public static final double AUTO_LINE = 80.0; //updated through testing, actual value 100 in.
+	public static final double MIDWAY_AUTO_LINE = 25.0; //updated through testing, actual value 50 in.
+	public static final double HORIZONTAL_PAST_SWITCH = 177.285; // old value: (COURT_WIDTH + SIDE_WALL_TO_SWITCH * 2)/2 + 10.0;
+	public static final double CROSS_COURT = 175.0; 
+	public static final double MIDWAY_AUTO_TO_SCALE = 249.25; //old value: WALL_TO_NULL_ZONE - MIDWAY_AUTO_LINE ;
+	public static final double MIDWAY_AUTO_TO_SWITCH = 93.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
+	public static final double APPROACH_SWITCH = 8.0;
+	public static final double APPROACH_SWITCH_SIDE = 40.0; //updated through testing, actual value 50 in.
+	public static final double APPROACH_SCALE = -10.0;
 	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
-	public static final double SWITCH_TO_MIDWAY_SCALE = 67.24; //old value: SWITCH_TO_SCALE / 2;
-	public static final double MIDWAY_SCALE_TO_SCALE = 88.77;
-	public static final double ROBOT_WALL_TO_SCALE = 304.25; 
-	public static final double ROBOT_WALL_TO_SWITCH = 148.25; 
-	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 215.49;
-	public static final double CENTER_TO_SWITCH = 55.0;
+	public static final double SWITCH_TO_MIDWAY_SCALE = 40.0; //old value: SWITCH_TO_SCALE / 2;
+	public static final double MIDWAY_SCALE_TO_SCALE = 60.0;
+	public static final double ROBOT_WALL_TO_SCALE = 260.0; //updated through testing
+	public static final double ROBOT_WALL_TO_SWITCH = 113.0; //updated through testing; actual value 148
+	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 165.0;
+	public static final double CENTER_TO_SWITCH = 27.0;//Updated through testing; actual value 50 inches
 	
 	//the following values are used when aligning the robot by ultrasonic sensor
 	
