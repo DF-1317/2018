@@ -92,9 +92,10 @@ public class Robot extends TimedRobot {
 	Command m_autonomousCommand;
 	
 	//Choosers for autonomous mode
-	SendableChooser<String> m_chooser = new SendableChooser<>();
-	SendableChooser<Integer> positionChooser = new SendableChooser<>();
-	SendableChooser<Boolean> crossChooser = new SendableChooser<>();
+	SendableChooser<String> m_chooser = new SendableChooser<String>();
+	SendableChooser<Integer> positionChooser = new SendableChooser<Integer>();
+	SendableChooser<Boolean> crossChooser = new SendableChooser<Boolean>();
+	SendableChooser<Boolean> crossCourtChooser = new SendableChooser<Boolean>();
 	
 	Command TurnCommand = new TurnToAngle(90.0);
 	Command endgameAlert = new ClimbAlertWait();
@@ -148,6 +149,9 @@ public class Robot extends TimedRobot {
 		crossChooser.addObject("Front", true);
 		crossChooser.addDefault("Behind", false);
 		SmartDashboard.putData("Cross", crossChooser);
+		
+		crossCourtChooser.addDefault("Don't cross Court", false);
+		crossCourtChooser.addObject("Cross court", true);
 		
 		log("Cross: " + crossChooser);
 		
@@ -215,6 +219,7 @@ public class Robot extends TimedRobot {
 		int position = positionChooser.getSelected();
 		boolean crossFront = crossChooser.getSelected();
 		double delay = SmartDashboard.getNumber("Delay", 0);
+		boolean crossCourt = crossCourtChooser.getSelected();
 		
 		log("Game Data: " + GameData);
 		log("Auto Mode: " + mode);
@@ -227,10 +232,10 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new AutonomousForward(position, delay);
 		}
 		else if(mode == "Switch") {
-			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossFront, delay);
+			m_autonomousCommand = new AutonomousSwitch(GameData, position, crossFront, delay, crossCourt);
 		}
 		else if(mode == "Scale") {
-			m_autonomousCommand = new AutonomousScale(GameData, position, crossFront, delay);
+			m_autonomousCommand = new AutonomousScale(GameData, position, crossFront, delay, crossCourt);
 		}
 		else if(mode == "Exchange") {
 			m_autonomousCommand = new AutonomousExchange(position, delay);

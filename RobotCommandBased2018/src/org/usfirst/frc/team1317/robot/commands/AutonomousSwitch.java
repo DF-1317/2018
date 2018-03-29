@@ -29,11 +29,12 @@ public class AutonomousSwitch extends CommandGroup {
 	 * @param crossFront Boolean representing whether the robot crosses the court in front of or behind the switch
 	 * @param delay Delay in seconds the robot waits after the match starts before running this command (The elevator will still go up immediately.)
 	 */
-    public AutonomousSwitch(String plateLocations, int startingPosition, boolean crossFront, double delay) {
+    public AutonomousSwitch(String plateLocations, int startingPosition, boolean crossFront, double delay, boolean crossCourt) {
 		super("AutonomousSwitch");
 		this.startingPosition	= startingPosition;
 		this.crossFront			= crossFront;
 		this.delay				= delay;
+		this.crossCourt = crossCourt;
 		requires(Robot.mecanumDriveTrain);
     	requires(Robot.claw);
     	requires(Robot.el);
@@ -74,8 +75,9 @@ public class AutonomousSwitch extends CommandGroup {
 				addSequential( new Wait(1.0));
 				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
     		} else {
-    			addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE), 1.0);
-        		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+    			addSequential( new DriveInchesAccelerate(Robot.DEFAULT_ACCELERATION, DistanceMap.APPROACH_SWITCH_SIDE, 0.5), 2.0);
+    			addParallel( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
+    			addSequential( _driveTo(DistanceMap.APPROACH_SWITCH_SIDE), 2.0);
         		addSequential( new PlaceCube());
         		addSequential( new ArmUp(DistanceMap.ARM_MOVE_TIME));
         		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, -0.7));

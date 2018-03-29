@@ -31,10 +31,11 @@ public class AutonomousScale extends CommandGroup {
 	 * 
 	 * @see AutonomousSwitch
 	 */
-	public AutonomousScale(String plateLocations, int startingPosition, boolean crossFront, double delay) {
+	public AutonomousScale(String plateLocations, int startingPosition, boolean crossFront, double delay, boolean crossCourt) {
 		this.startingPosition = startingPosition;
 		this.crossFront = crossFront;
 		this.delay = delay;
+		this.crossCourt = crossCourt;
 		requires(Robot.mecanumDriveTrain);
 		requires(Robot.claw);
 		requires(Robot.el);
