@@ -47,9 +47,9 @@ public class DriveInchesAccelerate extends Command {
 	MecanumDriveTrainCAN driveTrain = Robot.mecanumDriveTrain;
 	
 	public static final double SLOW_SPEED = 0.15;
-	public static final int WAIT_COUNT = 25;
+	public static final int WAIT_COUNT = 15;
 	public static double SLOW_DISTANCE_MULTIPLIER = 2;
-	public static double DECELERATE_FRACTION = 0.45;
+	public static double DECELERATE_FRACTION = 0.5;
 	
 
 	/**
@@ -60,7 +60,7 @@ public class DriveInchesAccelerate extends Command {
 	 */
 	private static final Map<Double,Double> Offsets;
 
-	private static final double AllowableError = 1.0;
+	private static final double AllowableError = 2.0;
 	static {
 		Map<Double,Double> tmp = new TreeMap<Double,Double>();
 		if(RobotMap.isCompetitionRobot) {
