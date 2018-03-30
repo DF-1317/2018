@@ -59,8 +59,8 @@ public class RobotMap {
 	public final static int UltrasonicPort = 0;
 	public final static int AnalogGyroPort = 1;
 	
-	public final static double RightEncoderDirection = -1.0;
-	public final static double LeftEncoderDirection = -1.0;
+	public static double RightEncoderDirection = 1.0;
+	public static double LeftEncoderDirection = -1.0;
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
