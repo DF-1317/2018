@@ -152,6 +152,7 @@ public class Robot extends TimedRobot {
 		
 		crossCourtChooser.addDefault("Don't cross Court", false);
 		crossCourtChooser.addObject("Cross court", true);
+		SmartDashboard.putData(crossCourtChooser);
 		
 		log("Cross: " + crossChooser);
 		
