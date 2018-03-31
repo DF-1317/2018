@@ -239,6 +239,7 @@ public class DriveInchesAccelerate extends Command {
 			doneCount = 0;
 			if(phase == 1) {
 				currentSpeed += acceleration;
+				//correctEncoders();
 				if(currentSpeed >= maxSpeed) {
 					currentSpeed = maxSpeed;
 					phase = 2;
@@ -315,5 +316,14 @@ public class DriveInchesAccelerate extends Command {
     
     private double calculateEncoderSteeringError() {
     	return -RobotMap.RightEncoderDirection * driveTrain.BREncoder.getDistance() + RobotMap.LeftEncoderDirection * driveTrain.BLEncoder.getDistance();
+    }
+    
+    void correctEncoders() {
+    	if((driveTrain.BLEncoder.get() > 0 && multiplier < 0) || (driveTrain.BLEncoder.get() < 0 && multiplier > 0)) {
+    		RobotMap.LeftEncoderDirection *= -1;
+    	}
+    	if((driveTrain.BREncoder.get() > 0 && multiplier < 0) || (driveTrain.BREncoder.get() < 0 && multiplier > 0)) {
+    		RobotMap.RightEncoderDirection *= -1;
+    	}
     }
 }

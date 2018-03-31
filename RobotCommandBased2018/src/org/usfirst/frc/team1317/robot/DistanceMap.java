@@ -41,7 +41,7 @@ public class DistanceMap {
 	public static final double MIDWAY_AUTO_TO_SWITCH = 98.25; //WALL_TO_SWITCH - MIDWAY_AUTO_LINE;
 	public static final double APPROACH_SWITCH = 19.31;
 	public static final double APPROACH_SWITCH_SIDE = 50.5;
-	public static final double APPROACH_SCALE = 5.63;
+	public static final double APPROACH_SCALE = 5.63 - 3;
 	public static final double SWITCH_TO_SCALE = 156.0; // old value: WALL_TO_NULL_ZONE - WALL_TO_SWITCH;
 	public static final double SWITCH_TO_MIDWAY_SCALE = 67.24; //old value: SWITCH_TO_SCALE / 2;
 	public static final double MIDWAY_SCALE_TO_SCALE = 88.77;

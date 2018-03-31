@@ -96,7 +96,7 @@ public class AutonomousSwitch extends CommandGroup {
     				addSequential( new ApproachAndElevate(DistanceMap.DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH, DistanceMap.ELEVATOR_TO_SWITCH_TIME));
     			}
     			else {
-    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH));
+    				addSequential( _driveTo(DistanceMap.APPROACH_SWITCH), 1.0);
             		addSequential( new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SWITCH_TIME, 1.0));
     			}
     			System.out.println("Finished Driving");
