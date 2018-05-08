@@ -22,10 +22,12 @@ public class TurnToAngle extends Command implements PIDOutput {
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kToleranceDegrees = 1.0;
+	static double currentAngle = 0;
 	
 	// Variables representing speed and angle to turn
 	double TargetAngle = 0.0;
 	double speed = 1.0;
+	boolean usingGyro = true;
 	
 	Timer AutoTimer = new Timer();
 	static final double MAX_TIME = 2.0;
@@ -58,17 +60,24 @@ public class TurnToAngle extends Command implements PIDOutput {
 	{
 		DriveTrain.setTurnControllerMode(TurnMode.withoutDriving);
 		Robot.log("Starting to turn");
+		usingGyro = DriveTrain.navX.isConnected();
 	}
 	
 	@Override
 	protected void execute()
 	{
-		DriveTrain.enableTurnController(TargetAngle);
+		if(usingGyro)
+		{
+			DriveTrain.enableTurnController(TargetAngle);
+		}
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return DriveTrain.turnControllerOnTarget() || AutoTimer.get() >= MAX_TIME;
+		if(usingGyro) {
+			return DriveTrain.turnControllerOnTarget() || AutoTimer.get() >= MAX_TIME;
+		}
+		else return true; //write actual code here
 	}
 	
 	@Override
@@ -76,8 +85,15 @@ public class TurnToAngle extends Command implements PIDOutput {
 	{
 		DriveTrain.disableTurnController();
 		DriveTrain.stop();
+		if(usingGyro) {
+			TurnToAngle.currentAngle = DriveTrain.navX.getYaw();
+		}
 		Robot.log("Done Turning");
 		Robot.log("Current Angle: " + Robot.mecanumDriveTrain.navX.pidGet());
+	}
+	
+	public double getEncoderAngle() {
+		return 0.0;
 	}
 	
 	@Override

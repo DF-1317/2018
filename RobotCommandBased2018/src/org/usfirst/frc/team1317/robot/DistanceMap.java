@@ -23,7 +23,7 @@ public class DistanceMap {
 	//these are robot constants. They will need to be changed
 	public static final double ROBOT_WIDTH = 26.0+7.0;
 	public static final double ROBOT_LENGTH = 32.5+7.0;
-	
+	public static final double DISTANCE_BETWEEN_WHEELS = 22.0;
 	
 	
 	// These are constants for field distances to be used in autonomous paths
@@ -66,8 +66,8 @@ public class DistanceMap {
 	public static final double DISTANCE_FROM_PLAYERSTATIONWALL_SWITCH = 100.5 - 2.0 + 11.0;
 	
 	//times for moving arm and elevator
-	public static final double ARM_MOVE_TIME = 0.9;
-	public static final double ELEVATOR_TO_SWITCH_TIME = 1.5;
-	public static final double ELEVATOR_TO_SCALE_TIME = 4.5;
+	public static final double ARM_MOVE_TIME = 0.8;
+	public static final double ELEVATOR_TO_SWITCH_TIME = 1.0;
+	public static final double ELEVATOR_TO_SCALE_TIME = 3.6;
 	
 }

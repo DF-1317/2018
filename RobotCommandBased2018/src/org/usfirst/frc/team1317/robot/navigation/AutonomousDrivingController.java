@@ -111,7 +111,7 @@ public class AutonomousDrivingController implements PIDSource, PIDOutput {
 			}
 		}
 		else {
-			return (LeftEncoder.getRate() * RobotMap.LeftEncoderDirection + RightEncoder.getRate() * RobotMap.RightEncoderDirection);
+			return (LeftEncoder.getRate() * RobotMap.LeftEncoderDirection + RightEncoder.getRate() * RobotMap.RightEncoderDirection)/2.0;
 		}
 	}
 

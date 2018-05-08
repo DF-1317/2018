@@ -97,11 +97,10 @@ public class AutonomousScale extends CommandGroup {
 		addSequential(ScaleLeft? Face.right() : Face.left());
 		//drive forward to correct turning error
 		if(usingUltrasonic ) {
-			addSequential(_driveTo(2.0));
-			//elevator starts moving up
-			//approach the scale, regardless of path taken
-			addSequential(new Wait(1.0));
-			addSequential(new ApproachAndElevate(DistanceMap.DISTANCE_FROM_WALL_SCALE, DistanceMap.ELEVATOR_TO_SCALE_TIME));
+			addParallel(new DriveForward(0.5, -0.3));
+			addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
+			
+			addSequential(new DriveInchesUltrasonic(39.5));
 
 			if(deploy) {
 				addSequential(new PlaceCube());

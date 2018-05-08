@@ -20,7 +20,7 @@ import java.util.TreeMap;
 public class DriveInchesAccelerate extends Command {
 
 	final double turnProportion = 0.02;
-	final double turnProportionEncoder = 0.02;
+	final double turnProportionEncoder = 0.03;
 	
 	double acceleration;
 	double distance;
@@ -228,7 +228,11 @@ public class DriveInchesAccelerate extends Command {
 	
 	protected void execute() {
 		distanceNow = (driveTrain.getDrivingController().pidGet() - startingDistance) * multiplier;
-		double angleNow = driveTrain.navX.getAngle();
+		double angleNow = 0.0;
+		if(usingGyro) {
+			driveTrain.navX.getAngle();
+		}
+		
 		if(Math.abs(distanceNow - distance) <= AllowableError) {
 			onTarget = true;
 			doneCount++;
