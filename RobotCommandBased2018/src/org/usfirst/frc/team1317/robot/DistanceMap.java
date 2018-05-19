@@ -49,8 +49,8 @@ public class DistanceMap {
 	public static final double ROBOT_WALL_TO_SWITCH = 148.25; 
 	public static final double ROBOT_WALL_TO_MIDWAY_SCALE = 215.49;
 	public static final double CENTER_TO_SWITCH = 55.0;
-	public static final double CENTER_TO_SWITCH_LEFT = 65.5;
-	public static final double CENTER_TO_SWITCH_RIGHT = 45.5;
+	public static final double CENTER_TO_SWITCH_LEFT = 75.5; //old was 65.5
+	public static final double CENTER_TO_SWITCH_RIGHT = 55.5; //old was 45.5
 	public static final double SWITCH_CROSS_FRONT = 170.5;
 	
 	//the following values are used when aligning the robot by ultrasonic sensor

@@ -19,8 +19,8 @@ import java.util.TreeMap;
  */
 public class DriveInchesAccelerate extends Command {
 
-	final double turnProportion = 0.02;
-	final double turnProportionEncoder = 0.03;
+	final double turnProportion = 0.00;
+	final double turnProportionEncoder = 0.00;
 	
 	double acceleration;
 	double distance;

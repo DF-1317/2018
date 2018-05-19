@@ -18,7 +18,7 @@ public class AutonomousScale extends CommandGroup {
 	int						startingPosition;
 	boolean					crossFront;
 	double					delay;
-	final boolean usingUltrasonic = false;
+	final boolean usingUltrasonic = true;
 	boolean crossCourt = true;
 
 	/**
@@ -97,10 +97,10 @@ public class AutonomousScale extends CommandGroup {
 		addSequential(ScaleLeft? Face.right() : Face.left());
 		//drive forward to correct turning error
 		if(usingUltrasonic ) {
-			addParallel(new DriveForward(0.5, -0.3));
+			addSequential(new DriveForward(0.5, -0.3));
 			addSequential(new PositionElevatorTime(DistanceMap.ELEVATOR_TO_SCALE_TIME, 1.0));
 			
-			addSequential(new DriveInchesUltrasonic(39.5));
+			addSequential(new DriveInchesUltrasonic(39.5-1.75));
 
 			if(deploy) {
 				addSequential(new PlaceCube());
